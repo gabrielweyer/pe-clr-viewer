@@ -1,3 +1,176 @@
-<h1>
-  {{title}}
-</h1>
+<div>
+  <p>Welcome to my useless Portable Executable CLR viewer. I was reading through the second chapter of Advanced .NET Debugging
+    and didn't manage to find the entry point. This is why I created this project. This only supports CLR binaries.</p>
+  <p>Explain offset: hex, add x axis + y axis: i.e. 00000000 + 0F = 0000000F and not 000000000F</p>
+  <p>Read bytes: little-endian</p>
+  <p>RVA</p>
+  <p>If this was not boring enough I recommend a couple of links:</p>
+  <ul>
+    <li>
+      <a href="https://www.red-gate.com/simple-talk/blogs/anatomy-of-a-net-assembly-pe-headers/" target="_blank" rel="noopener noreferrer">Anatomy of a .NET Assembly – PE Headers</a> Great blog post</li>
+    <li>
+      <a href="https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx" target="_blank" rel="noopener noreferrer">The PE Format specification</a> The official specification from Microsoft
+    </li>
+  </ul>
+</div>
+<div>
+  <input type="file" (change)="onFileChange($event)">
+</div>
+<span *ngIf="fileName || isReading">{{isReading ? 'Reading' : 'Read'}} "{{fileName}}"</span>
+<div class="bytes-container">
+  <div *ngIf="hexes" class="bytes">
+    <span class="offset unit">Offset</span>
+    <span class="unit">00</span>
+    <span class="unit">01</span>
+    <span class="unit">02</span>
+    <span class="unit">03</span>
+    <span class="unit">04</span>
+    <span class="unit">05</span>
+    <span class="unit">06</span>
+    <span class="unit">07</span>
+    <span class="unit">08</span>
+    <span class="unit">09</span>
+    <span class="unit">0A</span>
+    <span class="unit">0B</span>
+    <span class="unit">0C</span>
+    <span class="unit">0D</span>
+    <span class="unit">0E</span>
+    <span class="unit">0F</span>
+    <ng-template ngFor let-hex [ngForOf]="hexes" let-i="index">
+      <span *ngIf="i % 16 === 0" class="offset unit">{{i | byte | leftpad:8 }}</span>
+      <span [ngClass]="{
+      'dos-header': hex.isDosHeader(),
+      'signature-offset': hex.isSignatureOffset(),
+      'signature': hex.isSignature(),
+      'coff-header': hex.isCoffHeader(),
+      'standard-fields': hex.isStandardFields(),
+      'magic-number': hex.isMagicNumber(),
+      'address-entry-point': hex.isAddressOfEntryPoint(),
+      'dos-stub': hex.isDosStub(),
+      'nt-specific-fields-headers': hex.isNtSpecificFieldsHeaders(),
+      'data-directories': hex.isDataDirectories(),
+      'import-table-directory-size': hex.isImportTableDirectorySize(),
+      'import-table-directory-rva': hex.isImportTableDirectoryRva(),
+      'import-address-table-directory-size': hex.isImportAddressTableDirectorySize(),
+      'import-address-table-directory-rva': hex.isImportAddressTableDirectoryRva(),
+      'cli-header-directory-size': hex.isCliHeaderDirectorySize(),
+      'cli-header-directory-rva': hex.isCliHeaderDirectoryRva(),
+      'text-section-header': hex.isTextSectionHeader(),
+      'rsrc-section-header': hex.isRsrcSectionHeader(),
+      'reloc-section-header': hex.isRelocSectionHeader(),
+      'text-base-rva': hex.isTextBaseRva(),
+      'text-file-offset': hex.isTextFileOffset(),
+      'rsrc-base-rva': hex.isRsrcBaseRva(),
+      'rsrc-file-offset': hex.isRsrcFileOffset(),
+      'reloc-base-rva': hex.isRelocBaseRva(),
+      'reloc-file-offset': hex.isRelocFileOffset(),
+      'cli-header': hex.isCliHeader()
+    }">{{hex.value | byte | leftpad:2 }}</span>
+    </ng-template>
+  </div>
+  <div *ngIf="hexes" class="bytes-legend">
+    <div class="part">
+      <p>
+        <span class="dos-header">DOS header ({{dosHeaderSize}} bytes)</span>
+      </p>
+      <p>From 00000000 to 0000003F</p>
+      <p>We don't really care about this one except for the
+        <span class="dos-header signature-offset">signature offset</span> ({{signatureOffsetSize}} bytes) which value is
+        <span class="dos-header signature-offset">{{signatureStartOffsetDec | byte | leftpad:8}}</span>.</p>
+      <p>We ignore the
+        <span class="dos-stub">DOS stub</span> and go to the signature.</p>
+    </div>
+    <div class="part">
+      <p>
+        <span class="signature">Signature ({{signatureSize}} bytes)</span>
+      </p>
+      <p>From
+        <span class="dos-header signature-offset">{{signatureStartOffsetDec | byte | leftpad:8 }}</span> to {{signatureEndOffsetDec | byte | leftpad:8 }}</p>
+      <p>We couldn't care less about the signature because it's always the same. It's only use is to mark the beginning of the
+        sections we're interested in. The signature is directly followed by the
+        <span class="coff-header">COFF header / PE file header ({{coffHeaderSize}} bytes)</span> which we skip to go to the standard fields.</p>
+    </div>
+    <div class="part">
+      <p>
+        <span class="standard-fields">PE standard fields ({{standardFieldsSize}} bytes)</span>
+      </p>
+      <p>From {{standardFieldsStartOffsetDec | byte | leftpad:8}} to {{standardFieldsEndOffsetDec | byte | leftpad:8}}</p>
+      <p>It contains the
+        <span class="standard-fields magic-number">magic number</span> (the first {{magicNumberSize}} bytes) which value is {{magicNumberHex | hex}}. The magic number
+        encodes the bitness of the binary, 0x10B is 32-bit (PE32 format) and 0x20B is 64-bit (PE32+ format). Here we are
+        dealing with a {{is64Bit ? '64' : '32'}}-bit binary.</p>
+      <p>For PE32, the size of the standard fields is {{standardFieldsPE32Size}} bytes; for PE32+ it is {{standardFieldsPE32PlusSize}}
+        bytes.
+      </p>
+      <p>The
+        <span class="standard-fields address-entry-point">address of entry point</span> ({{addressOfEntryPointSize}} bytes) is located at offset {{addressOfEntryPointSubOffsetDec}}
+        of the standard fields and has a value of
+        <span class="standard-fields address-entry-point">{{addressOfEntryPoint | hex}}</span>. We skip over the
+        <span class="nt-specific-fields-headers">NT specific fields header ({{ntSpecificFieldsSize}} bytes).</span>For PE32, the size of the NT specific fields header
+        is {{ntSpecificFieldsPE32Size}} bytes; for PE32+ it is {{ntSpecificFieldsPE32PlusSize}} bytes.
+      </p>
+    </div>
+    <div class="part">
+      <p>
+        <span class="data-directories">Data directories ({{dataDirectoriesSize}} bytes)</span>
+      </p>
+      <p>From {{dataDirectoriesStartOffsetDec | byte | leftpad:8}} to {{dataDirectoriesEndOffsetDec | byte | leftpad:8}}</p>
+      <ul>
+        <li>
+          Import table: <span class="data-directories import-table-directory-size mono-font">{{importTableDirectory.sizeHex | hex}}</span>
+           bytes located at base RVA <span class="data-directories import-table-directory-rva mono-font">{{importTableDirectory.rvaHex | hex}}</span>
+        </li>
+        <li>
+          Import address table: <span class="data-directories import-address-table-directory-size mono-font">{{importAddressTableDirectory.sizeHex | hex}}</span>
+           bytes located at base RVA <span class="data-directories import-address-table-directory-rva mono-font">{{importAddressTableDirectory.rvaHex | hex}}</span>
+        </li>
+        <li>
+          CLI header: <span class="data-directories cli-header-directory-size mono-font">{{cliHeaderDirectory.sizeHex | hex}}</span>
+           bytes located at base RVA <span class="data-directories cli-header-directory-rva mono-font">{{cliHeaderDirectory.rvaHex | hex}}</span>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="isCli" class="part">
+      <ul>
+        <li>
+          <span class="text-section-header">Text section header ({{sectionHeaderSize}} bytes)</span>
+          : pointing to base RVA <span class="text-section-header text-base-rva mono-font">{{textSectionItem.baseRvaHex | hex}}</span>
+          , file offset <span class="text-section-header text-file-offset mono-font">{{textSectionItem.fileOffsetHex | hex}}</span>
+        </li>
+        <li>
+          <span class="rsrc-section-header">Rsrc section header ({{sectionHeaderSize}} bytes)</span>
+          : pointing to base RVA <span class="rsrc-section-header rsrc-base-rva mono-font">{{rsrcSectionItem.baseRvaHex | hex}}</span>
+          , file offset <span class="rsrc-section-header rsrc-file-offset mono-font">{{rsrcSectionItem.fileOffsetHex | hex}}</span>
+        </li>
+        <li>
+          <span class="reloc-section-header">Reloc section header ({{sectionHeaderSize}} bytes)</span>
+          : pointing to base RVA <span class="reloc-section-header reloc-base-rva mono-font">{{relocSectionItem.baseRvaHex | hex}}</span>
+          , file offset <span class="reloc-section-header reloc-file-offset mono-font">{{relocSectionItem.fileOffsetHex | hex}}</span>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="isCli" class="part">
+        <p>
+            <span class="cli-header">CLI header ({{cliHeaderSize}} bytes)</span>
+          </p>
+          <p>From {{cliHeaderSegment.startOffsetDec | byte | leftpad:8}} to {{cliHeaderSegment.endOffsetDec | byte | leftpad:8}}</p>
+    </div>
+    <div *ngIf="!isCli" class="part">
+      <p>
+          <span class="cli-header">CLI header ({{cliHeaderSize}} bytes)</span>
+        </p>
+        <p>This is a native binary.</p>
+  </div>
+  </div>
+</div>
+<div>
+  <p>I will not collect data in any way:</p>
+  <ul>
+    <li>No ads</li>
+    <li>No analytics</li>
+    <li>No telemtry</li>
+  </ul>
+  <p>Azure will collect your IP address when you visit this page.</p>
+  <p>I'm using third-party libraries, be mindful of the HTTP requests they initiate if any.</p>
+  <p>If you don't want to use the hosted version you can run it on your machine instead.</p>
+</div>
