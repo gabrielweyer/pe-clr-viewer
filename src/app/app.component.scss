@@ -1,0 +1,145 @@
+$mono-font-family: "Consolas";
+
+.bytes-container {
+  display: flex;
+
+  span {
+    &.dos-header {
+      color: #538135;
+    }
+
+    &.signature-offset {
+      background-color: #ffff00;
+    }
+
+    &.dos-stub {
+      color: #ffb06b;
+    }
+
+    &.signature {
+      color: #2e75b5;
+    }
+
+    &.coff-header {
+      color: #c55a11;
+    }
+
+    &.standard-fields {
+      color: #00b0f0;
+    }
+
+    &.magic-number {
+      background-color: #ccffcc;
+    }
+
+    &.address-entry-point {
+      background-color: #00ffff;
+    }
+
+    &.nt-specific-fields-headers {
+      color: #359357;
+    }
+
+    &.data-directories {
+      color: #634491;
+    }
+
+    &.import-table-directory-size {
+      background-color: #e83dff;
+    }
+
+    &.import-table-directory-rva {
+      background-color: #d23dff;
+    }
+
+    &.import-address-table-directory-size {
+      background-color: #5bff7f;
+    }
+
+    &.import-address-table-directory-rva {
+      background-color: #9dff5b;
+    }
+
+    &.cli-header-directory-size {
+      background-color: #ffac5e;
+    }
+
+    &.cli-header-directory-rva {
+      background-color: #ffcc5e;
+    }
+
+    &.text-section-header {
+      color: #ff7700;
+    }
+
+    &.text-base-rva {
+      background-color: #e83dff;
+    }
+
+    &.text-file-offset {
+      background-color: #359357;
+    }
+
+    &.rsrc-section-header {
+      color: #ff291e;
+    }
+
+    &.rsrc-base-rva {
+      background-color: #0004ff;
+    }
+
+    &.rsrc-file-offset {
+      background-color: #c47b4e;
+    }
+
+    &.reloc-section-header {
+      color: #0004ff;
+    }
+
+    &.reloc-base-rva {
+      background-color: #ff291e;
+    }
+
+    &.reloc-file-offset {
+      background-color: #538135;
+    }
+
+    &.cli-header {
+      color: #a977ff;
+    }
+  }
+
+  .bytes {
+    font-family: $mono-font-family;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 0 36%;
+
+    span {
+      flex: 1 0 5.5%;
+
+      &.offset {
+        flex: 1 0 12%;
+      }
+
+      &.unit {
+        font-weight: bolder;
+      }
+    }
+  }
+
+  .bytes-legend {
+    display: flex;
+    flex-direction: column;
+
+    .part {
+      border: 2px solid #b5fcff;
+      padding: 5px;
+      margin: 5px;
+
+      .mono-font {
+        font-family: $mono-font-family;
+      }
+    }
+  }
+}
