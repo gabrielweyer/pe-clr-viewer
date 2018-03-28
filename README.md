@@ -11,7 +11,7 @@ At the moment it's fairly limited and only highlights:
 
 If you feel adventurous you can try the [hosted version][pe-clr-viewer].
 
-**Fair warning**: this is probably the ugliest web app in the world and not only in terms of `UI`. The code is pretty horrific too :joycat:.
+**Fair warning**: this is probably the ugliest web app in the world and not only in terms of `UI`. The code is pretty horrific too :joy_cat:.
 
 This is very much a **work in progress**. If I manage to motivate myself I'll work on the cards listed in this [public Trello board][trello-board].
 
