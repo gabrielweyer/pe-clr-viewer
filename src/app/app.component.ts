@@ -15,6 +15,7 @@ import { Segment } from "./segment";
 })
 export class AppComponent {
   public isReading: boolean = false;
+  public showGuide = true;
   public fileName: string;
   public hexes: Array<Byte>;
 
@@ -343,5 +344,9 @@ export class AppComponent {
     }
 
     return PortableExecutableSubPart.None;
+  }
+
+  handleShowGuide() {
+    this.showGuide = !this.showGuide;
   }
 }

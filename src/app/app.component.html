@@ -1,9 +1,10 @@
-<div>
-  <p>Welcome to my useless Portable Executable CLR viewer. I was reading through the second chapter of Advanced .NET Debugging
-    and didn't manage to find the entry point. This is why I created this project. This only supports CLR binaries.</p>
-  <p>Explain offset: hex, add x axis + y axis: i.e. 00000000 + 0F = 0000000F and not 000000000F</p>
-  <p>Read bytes: little-endian</p>
-  <p>RVA</p>
+<a (click)="handleShowGuide()">{{showGuide ? 'Hide guide' : 'Show guide'}}</a>
+<div *ngIf="showGuide">
+  <ul>
+    <li><em>File offset</em>: expressed in hexadecimal. The bytes are displayed from left to right and top to bottom. The left column represents the 7 most significant digits while the top row represents the least significant digit. The cell on the third row (00000020) and last column (0F) has a file offset of 0000002F.</li>
+    <li><em>Little-endian</em>: Windows is a <a href="https://en.wikipedia.org/wiki/Endianness" target="_blank" rel="noopener noreferrer">little-endian</a> system. This means than the least significant bytes will appear before the most significant ones. So if you were to find the following value: E0 93 01 00, the address would be 00 01 93 E0 - only the byte order is inverted, not the order within a byte - which would commonly be written as 0x193E0 (0x denotes a hex notation and the leading 0s are dropped as they are not significant).</li>
+    <li><em>Relative Virtual Address (RVA)</em>: the address of an item after it is loaded into memory, with the base address of the image file subtracted from it.</li>
+  </ul>
   <p>If this was not boring enough I recommend a couple of links:</p>
   <ul>
     <li>
@@ -159,7 +160,7 @@
       <p>
           <span class="cli-header">CLI header ({{cliHeaderSize}} bytes)</span>
         </p>
-        <p>This is a native binary.</p>
+        <p>This is a native binary, there is no CLI header.</p>
   </div>
   </div>
 </div>
@@ -168,9 +169,9 @@
   <ul>
     <li>No ads</li>
     <li>No analytics</li>
-    <li>No telemtry</li>
+    <li>No telemetry</li>
   </ul>
   <p>Azure will collect your IP address when you visit this page.</p>
   <p>I'm using third-party libraries, be mindful of the HTTP requests they initiate if any.</p>
-  <p>If you don't want to use the hosted version you can run it on your machine instead.</p>
+  <p>If you don't want to use the hosted version you can <a href="https://github.com/gabrielweyer/pe-clr-viewer#running-locally" target="_blank" rel="noopener noreferrer">run it on your machine instead</a>.</p>
 </div>
