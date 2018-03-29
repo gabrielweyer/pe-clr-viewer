@@ -20,7 +20,6 @@ steps:
   inputs:
     Arguments: 'build-prod'
 
-steps:
 - task: geeklearningio.gl-vsts-tasks-file-patch.json-patch-task.JsonPatch@2
   displayName: Version web Artifact
   inputs:
