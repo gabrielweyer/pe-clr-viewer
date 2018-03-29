@@ -2,8 +2,6 @@ resources:
 - repo: self
 queue:
   name: Hosted Linux Preview
-trigger:
-- master
 
 steps:
 
