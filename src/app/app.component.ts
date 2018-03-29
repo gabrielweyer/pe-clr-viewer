@@ -7,6 +7,7 @@ import { LeftPadPipe } from "./leftpad.pipe";
 import { DataDirectoryItem } from "./dataDirectoyItem";
 import { SectionItem } from "./sectionItem";
 import { Segment } from "./segment";
+import { AppConfig } from './app.config';
 
 @Component({
   selector: "app-root",
@@ -90,15 +91,21 @@ export class AppComponent {
   public cliHeaderSize: number;
   public cliHeaderSegment: Segment;
 
+  public build: string;
+  public commit: string;
+
   private readonly fileReader = new FileReader();
 
   private static readonly bytePipe = new BytePipe();
   private static readonly leftPadPipe = new LeftPadPipe();
 
-  constructor() {
+  constructor(private appConfig: AppConfig) {
     this.fileReader.onload = e => {
       this.onRead(this.fileReader.result);
     };
+
+    this.build = appConfig.build;
+    this.commit = appConfig.commit;
   }
 
   public onFileChange(event: EventTarget): void {
