@@ -1,0 +1,43 @@
+resources:
+
+- repo: self
+
+queue:
+
+  name: Hosted Linux Preview
+
+  demands:
+
+  - npm
+
+  - yarn
+
+
+
+
+
+steps:
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@2
+  inputs:
+    versionSpec: 1.5.1
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+  inputs:
+    Arguments: install
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+  inputs:
+    Arguments: 'build-prod'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'dist/'
+    ArtifactName: web
+    publishLocation: Container
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'template/template.json'
+    ArtifactName: arm
+    publishLocation: Container
