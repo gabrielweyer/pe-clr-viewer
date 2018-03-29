@@ -114,6 +114,7 @@ $mono-font-family: "Consolas";
     display: flex;
     flex-wrap: wrap;
     flex: 1 0 36%;
+    min-width: 630px;
 
     span {
       flex: 1 0 5.5%;
