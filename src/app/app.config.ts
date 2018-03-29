@@ -19,7 +19,7 @@ export class AppConfig {
   public load() {
     return new Promise((resolve, reject) => {
       this.http
-        .get<Config>('./assets/environment.json')
+        .get<Config>('./environment.json')
         .pipe(catchError(this.handleError))
         .subscribe(config => {
           this.build = config.build;

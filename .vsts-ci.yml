@@ -23,7 +23,7 @@ steps:
 - task: geeklearningio.gl-vsts-tasks-file-patch.json-patch-task.JsonPatch@2
   displayName: Version web Artifact
   inputs:
-    JsonWorkingDir: 'dist/assets/'
+    JsonWorkingDir: 'dist/'
     JsonTargetFilters: environment.json
     JsonPatchContent: |
      = /build => "$(BUILD_BUILDNUMBER)"
