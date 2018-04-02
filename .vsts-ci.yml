@@ -16,7 +16,7 @@ steps:
     Arguments: install
 
 - script: |
-    sudo apt-get install libxss1
+    sudo aptitude search libXss
     cd /opt/vsts/work/1/s/node_modules/puppeteer/.local-chromium/linux-543305/chrome-linux
     ldd chrome | grep not
   displayName: List missing modules
