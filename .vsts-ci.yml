@@ -16,9 +16,14 @@ steps:
     Arguments: install
 
 - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+  displayName: yarn test-ci
+  inputs:
+    Arguments: test-ci
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
   displayName: yarn build
   inputs:
-    Arguments: 'build-prod'
+    Arguments: build-prod
 
 - task: geeklearningio.gl-vsts-tasks-file-patch.json-patch-task.JsonPatch@2
   displayName: Version web Artifact
@@ -44,3 +49,9 @@ steps:
     PathtoPublish: 'template/template.json'
     ArtifactName: arm
     publishLocation: Container
+
+- task: PublishTestResults@2
+  displayName: Publish tests results
+  inputs:
+    testResultsFiles: 'tests-results/tests-results.xml'
+  condition: succeededOrFailed()

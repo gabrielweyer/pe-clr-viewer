@@ -43,3 +43,6 @@ Thumbs.db
 
 # Yarn
 yarn-error.log
+
+# Tests
+/tests-results

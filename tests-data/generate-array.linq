@@ -1,6 +1,6 @@
 <Query Kind="Statements" />
 
-var fileName = "native-x64.exe";
+var fileName = "native-x86.exe";
 
 var scriptDirectory = Path.GetDirectoryName(Util.CurrentQueryPath);
 var filePath = Path.Combine(scriptDirectory, fileName);
