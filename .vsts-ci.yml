@@ -23,7 +23,7 @@ steps:
     sudo aptitude search libgtk
     sudo apt-get install libgtk-3-0 -y -qq
     sudo aptitude search libgdk
-    sudo apt-get install libgdk3.0-cil -y -qq
+    # sudo apt-get install libgdk3.0-cil -y -qq
     cd /opt/vsts/work/1/s/node_modules/puppeteer/.local-chromium/linux-543305/chrome-linux
     ldd chrome | grep not
   displayName: List missing modules
