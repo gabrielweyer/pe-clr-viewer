@@ -46,7 +46,7 @@ export class HexesGenerator {
     visitors.push(new PartVisitor(pe.ntSpecificFields, PortableExecutablePart.NtSpecificFields));
     visitors.push(new PartVisitor(pe.dataDirectories, PortableExecutablePart.DataDirectories));
     visitors.push(new PartVisitor(pe.textSectionHeader, PortableExecutablePart.TextSectionHeader));
-    visitors.push(new PartVisitor(pe.rsrcSectionHeader, PortableExecutablePart.TextSectionHeader));
+    visitors.push(new PartVisitor(pe.rsrcSectionHeader, PortableExecutablePart.RsrcSectionHeader));
     visitors.push(new PartVisitor(pe.relocSectionHeader, PortableExecutablePart.RelocSectionHeader));
     visitors.push(new PartVisitor(pe.cliHeader, PortableExecutablePart.CliHeader));
 

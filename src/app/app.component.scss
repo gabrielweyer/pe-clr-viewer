@@ -1,7 +1,52 @@
+@import '~variables.scss';
+
 $mono-font-family: 'Consolas';
+
+.container {
+  min-height: 100%;
+  position: relative;
+}
+
+.mono-font {
+  font-family: $mono-font-family;
+  font-size: $mono-font-size-normal;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 0 5px;
+  color: #7a7a7a;
+}
+
+.guide-container {
+  .guide-bottom {
+    padding-bottom: 1em;
+  }
+}
+
+.upload-container {
+  padding-bottom: 1em;
+
+  input[type='file'] {
+    display: none;
+  }
+
+  .custom-file-upload {
+    color: $action-color;
+    border: 1px solid $action-border-color;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+
+    &.disabled {
+      color: $action-disabled-color;
+      border: 1px solid $action-disabled-border-color;
+      cursor: default;
+    }
+  }
+}
 
 .bytes-container {
   display: flex;
+  padding-bottom: 9em;
 
   span {
     &.dos-header {
@@ -118,6 +163,10 @@ $mono-font-family: 'Consolas';
 
     span {
       flex: 1 0 5.5%;
+      line-height: 1em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
       &.offset {
         flex: 1 0 12%;
@@ -133,14 +182,46 @@ $mono-font-family: 'Consolas';
     display: flex;
     flex-direction: column;
 
+    h2 {
+      font-size: $font-size-big;
+      margin-top: 0;
+    }
+
     .part {
       border: 2px solid #b5fcff;
       padding: 5px;
       margin: 5px;
 
-      .mono-font {
-        font-family: $mono-font-family;
+      p:last-child {
+        margin-bottom: 0;
       }
+    }
+  }
+}
+
+.disclaimer-container {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 4em;
+  font-size: $font-size-small;
+  text-align: center;
+  padding: 4em 0;
+
+  .mono-font {
+    font-size: $mono-font-size-small;
+  }
+
+  p {
+    line-height: 1em;
+    padding: 0 20%;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
