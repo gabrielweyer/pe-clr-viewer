@@ -10,9 +10,10 @@ import { HexPipe } from './../shared/hex.pipe';
 
 import { APP_INITIALIZER } from '@angular/core';
 import { AppConfig } from './../shared/app.config';
+import { LinkComponent } from './link/link.component';
 
 @NgModule({
-  declarations: [AppComponent, BytePipe, LeftPadPipe, HexPipe],
+  declarations: [AppComponent, BytePipe, LeftPadPipe, HexPipe, LinkComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule],
   providers: [
     AppConfig,
