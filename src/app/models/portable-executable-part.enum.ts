@@ -1,5 +1,5 @@
 export enum PortableExecutablePart {
-  CantBeBothered,
+  None,
   DosHeader,
   DosStub,
   Signature,

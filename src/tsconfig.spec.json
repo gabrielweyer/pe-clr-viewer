@@ -6,6 +6,7 @@
     "module": "commonjs",
     "types": [
       "jasmine",
+      "jasmine-expect",
       "node"
     ]
   },

@@ -11,7 +11,7 @@ At the moment it's fairly limited and only highlights:
 
 If you feel adventurous you can try the [hosted version][pe-clr-viewer].
 
-**Fair warning**: this is probably the ugliest web app in the world and not only in terms of `UI`. The code is pretty horrific too :joy_cat:.
+**Fair warning**: this is probably the ugliest web app in the world :joy_cat:.
 
 This is very much a **work in progress**. If I manage to motivate myself I'll work on the cards listed in this [public Trello board][trello-board].
 
@@ -31,7 +31,7 @@ yarn start
 
 ## CI/CD
 
-Each push to `master` triggers a build in `VSTS` and a deployment to `Azure Blob storage`. `VSTS` does not support anonymous browsing but I'm planning on converting the build pipeline to `YAML`.
+Each push to `master` triggers a build in `VSTS` and a deployment to `Azure Blob storage`. `VSTS` does not support anonymous browsing but the build pipeline is available as [YAML](.vsts-ci.yml).
 
 [advanced-dotnet-debugging-book]: https://www.goodreads.com/book/show/7306509-advanced-net-debugging
 [pe-format]: https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx

@@ -1,16 +1,14 @@
-import { PortableExecutablePart } from "./portableExecutablePart.enum";
-import { PortableExecutableSubPart } from "./portableExecutableSubPart.enum";
+import { PortableExecutablePart } from './portable-executable-part.enum';
+import { PortableExecutableSubPart } from './portable-executable-sub-part.enum';
 
 export class Byte {
-  constructor(public value: string, public part: PortableExecutablePart, public subPart: PortableExecutableSubPart) {
+  constructor(public value: string, public part: PortableExecutablePart, public subPart: PortableExecutableSubPart) {}
 
-  }
-
-  public isDosHeader():boolean {
+  public isDosHeader(): boolean {
     return this.part === PortableExecutablePart.DosHeader;
   }
 
-  public isDosStub():boolean {
+  public isDosStub(): boolean {
     return this.part === PortableExecutablePart.DosStub;
   }
 
