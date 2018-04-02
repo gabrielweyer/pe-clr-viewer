@@ -1,7 +1,7 @@
 resources:
 - repo: self
 queue:
-  name: Hosted VS2017
+  name: Hosted Linux Preview
 
 steps:
 
@@ -14,6 +14,11 @@ steps:
   displayName: yarn install
   inputs:
     Arguments: install
+
+- script: |
+  displayName: List missing modules
+    cd /opt/vsts/work/1/s/node_modules/puppeteer/.local-chromium/linux-543305/chrome-linux
+    ldd chrome | grep not
 
 - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
   displayName: yarn test-ci
