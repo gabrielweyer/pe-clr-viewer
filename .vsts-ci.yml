@@ -16,9 +16,9 @@ steps:
     Arguments: install
 
 - script: |
-  displayName: List missing modules
     cd /opt/vsts/work/1/s/node_modules/puppeteer/.local-chromium/linux-543305/chrome-linux
     ldd chrome | grep not
+  displayName: List missing modules
 
 - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
   displayName: yarn test-ci
