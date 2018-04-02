@@ -16,7 +16,8 @@ steps:
     Arguments: install
 
 - script: |
-    sudo apt install aptitude
+    sudo apt-get update
+    sudo apt-get install aptitude
     sudo aptitude search libXss
     cd /opt/vsts/work/1/s/node_modules/puppeteer/.local-chromium/linux-543305/chrome-linux
     ldd chrome | grep not
