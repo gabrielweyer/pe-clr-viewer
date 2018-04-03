@@ -8,7 +8,7 @@
     "build": "ng build --prod",
     "build-prod": "ng build -prod",
     "test": "ng test --browsers=Chrome --reporters=progress",
-    "test-ci": "ng test --watch=false --single-run=true --reporters=junit --browsers=ChromeHeadless",
+    "test-ci": "ng test --watch=false --single-run=true --reporters=junit --browsers=ChromeHeadlessNoSandbox",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
