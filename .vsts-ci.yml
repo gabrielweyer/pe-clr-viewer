@@ -16,21 +16,11 @@ steps:
     Arguments: install
 
 - script: |
-    sudo apt-get -qq update
-    echo 'apt-get update' $?
-    # sudo apt-get install aptitude -y -qq
-    # sudo aptitude search libXss
-    sudo apt-get -y -qq install libxss1
-    echo 'apt-get install libxss1' $?
-    # sudo aptitude search libgtk
-    sudo apt-get -y -qq install libgtk-3-0
-    echo 'apt-get install libgtk-3-0' $?
-    # sudo aptitude search libgdk
-    sudo apt-get -y -qq install libgdk3.0-cil
-    echo 'apt-get install libgdk3.0-cil' $?
-    # cd /opt/vsts/work/1/s/node_modules/puppeteer/.local-chromium/linux-543305/chrome-linux
-    # ldd chrome | grep not
-  displayName: List missing modules
+    sudo apt-get -qq update > /dev/null
+    sudo apt-get -y -qq install libxss1 > /dev/null
+    sudo apt-get -y -qq install libgtk-3-0 > /dev/null
+    sudo apt-get -y -qq install libgdk3.0-cil > /dev/null
+  displayName: Install modules required to run headless Chrome
 
 - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
   displayName: yarn test-ci
