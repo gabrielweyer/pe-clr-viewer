@@ -37,7 +37,7 @@ describe('LeftPadPipe', () => {
       const actualOutput = pipe.transform(input, desiredLength);
 
       it('Output "01234" has been left-padded with one zero', () => {
-        expect(actualOutput).toBe('1234');
+        expect(actualOutput).toBe('01234');
       });
     });
   });
