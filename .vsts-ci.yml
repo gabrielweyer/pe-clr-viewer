@@ -17,13 +17,17 @@ steps:
 
 - script: |
     sudo apt-get update
+    echo 'apt-get update' $?
     # sudo apt-get install aptitude -y -qq
     # sudo aptitude search libXss
     sudo apt-get install libxss1 -y -qq
+    echo 'apt-get install libxss1' $?
     # sudo aptitude search libgtk
     sudo apt-get install libgtk-3-0 -y -qq
+    echo 'apt-get install libgtk-3-0' $?
     # sudo aptitude search libgdk
     sudo apt-get install libgdk3.0-cil -y -qq
+    echo 'apt-get install libgdk3.0-cil' $?
     cd /opt/vsts/work/1/s/node_modules/puppeteer/.local-chromium/linux-543305/chrome-linux
     ldd chrome | grep not
   displayName: List missing modules
