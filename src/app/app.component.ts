@@ -22,7 +22,7 @@ export class AppComponent {
   private static readonly leftPadPipe = new LeftPadPipe();
 
   public isReading = false;
-  public showGuide = true;
+  public showGuide = false;
   public fileName: string;
   public build: string;
   public commit: string;

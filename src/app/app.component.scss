@@ -16,12 +16,6 @@ $mono-font-family: 'Consolas';
   color: #7a7a7a;
 }
 
-.guide-container {
-  .guide-bottom {
-    padding-bottom: 1em;
-  }
-}
-
 .upload-container {
   padding-bottom: 1em;
 
@@ -160,16 +154,19 @@ $mono-font-family: 'Consolas';
     flex-wrap: wrap;
     flex: 1 0 36%;
     min-width: 630px;
+    align-content: flex-start;
 
     span {
       flex: 1 0 5.5%;
-      line-height: 1em;
+      font-size: $mono-font-size-normal;
+      line-height: 1.5em;
       display: inline-flex;
       align-items: center;
       justify-content: center;
 
       &.offset {
         flex: 1 0 12%;
+        justify-content: flex-start;
       }
 
       &.unit {
@@ -192,7 +189,15 @@ $mono-font-family: 'Consolas';
       padding: 5px;
       margin: 5px;
 
-      p:last-child {
+      :last-child {
+        margin-bottom: 0;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
         margin-bottom: 0;
       }
     }
@@ -214,7 +219,7 @@ $mono-font-family: 'Consolas';
 
   p {
     line-height: 1em;
-    padding: 0 20%;
+    padding: 0 18%;
 
     &:first-child {
       margin-top: 0;
