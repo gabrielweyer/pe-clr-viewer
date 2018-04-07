@@ -42,9 +42,10 @@
       View DLL / EXE
     </label>
     <input id="file-upload" type="file" (change)="fileChanged($event)" [disabled]="isReading">
+    <span class="error" *ngIf="pe === null">This file is not a Portable Executable.</span>
   </div>
-  <div class="bytes-container">
-    <div *ngIf="pe" class="bytes">
+  <div class="bytes-container" *ngIf="pe">
+    <div class="bytes">
       <span class="offset unit">Offset</span>
       <span class="unit">00</span>
       <span class="unit">01</span>
@@ -95,7 +96,7 @@
     }">{{hex.value | byte | leftpad:2 }}</span>
       </ng-template>
     </div>
-    <div *ngIf="pe" class="bytes-legend">
+    <div class="bytes-legend">
       <div class="part">
         <h2>
           <span class="dos-header">DOS header ({{peConstants.dosHeaderSizeDec}} bytes)</span>

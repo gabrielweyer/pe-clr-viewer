@@ -36,6 +36,13 @@ $mono-font-family: 'Consolas';
       cursor: default;
     }
   }
+
+  .error {
+    display: block;
+    color: #ff291e;
+    font-size: $font-size-small;
+    font-style: italic;
+  }
 }
 
 .bytes-container {

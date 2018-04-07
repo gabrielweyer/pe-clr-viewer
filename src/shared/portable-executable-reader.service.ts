@@ -21,6 +21,10 @@ export class PortableExecutableReader {
   }
 
   read(): PortableExecutable {
+    if (this.file.bytes[0] !== 77 || this.file.bytes[1] !== 90) {
+      return null;
+    }
+
     const pe = new PortableExecutable();
 
     this.setDosHeader(pe);
