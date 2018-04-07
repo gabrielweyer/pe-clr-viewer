@@ -59,7 +59,7 @@ $mono-font-family: 'Consolas';
     }
 
     &.dos-stub {
-      color: #ffb06b;
+      color: #cc7d38;
     }
 
     &.signature {
@@ -67,7 +67,7 @@ $mono-font-family: 'Consolas';
     }
 
     &.coff-header {
-      color: #c55a11;
+      color: #922700;
     }
 
     &.standard-fields {
@@ -79,7 +79,7 @@ $mono-font-family: 'Consolas';
     }
 
     &.address-entry-point {
-      background-color: #00ffff;
+      background-color: #9df3f4;
     }
 
     &.nt-specific-fields-headers {
@@ -95,7 +95,7 @@ $mono-font-family: 'Consolas';
     }
 
     &.import-table-directory-size {
-      background-color: #e83dff;
+      background-color: #ff57ff;
     }
 
     &.import-table-directory-rva {
@@ -103,7 +103,7 @@ $mono-font-family: 'Consolas';
     }
 
     &.import-address-table-directory-size {
-      background-color: #5bff7f;
+      background-color: #42e666;
     }
 
     &.import-address-table-directory-rva {
@@ -115,19 +115,19 @@ $mono-font-family: 'Consolas';
     }
 
     &.cli-header-directory-rva {
-      background-color: #ffcc5e;
+      background-color: #ffe678;
     }
 
     &.text-section-header {
-      color: #ff7700;
+      color: #29b000;
     }
 
     &.text-base-rva {
-      background-color: #e83dff;
+      background-color: #ffdb29;
     }
 
     &.text-file-offset {
-      background-color: #359357;
+      background-color: #fffe27;
     }
 
     &.rsrc-section-header {
@@ -139,7 +139,7 @@ $mono-font-family: 'Consolas';
     }
 
     &.rsrc-file-offset {
-      background-color: #c47b4e;
+      background-color: #4dc1ff;
     }
 
     &.reloc-section-header {
@@ -147,15 +147,15 @@ $mono-font-family: 'Consolas';
     }
 
     &.reloc-base-rva {
-      background-color: #ff291e;
+      background-color: #f31d12;
     }
 
     &.reloc-file-offset {
-      background-color: #538135;
+      background-color: #ff6e3d;
     }
 
     &.cli-header {
-      color: #a977ff;
+      color: #b684ff;
     }
   }
 
