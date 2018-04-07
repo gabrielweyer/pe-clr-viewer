@@ -30,6 +30,9 @@ export class PortableExecutableConstants {
   public static readonly ntSpecificFieldsPE32SizeDec: number = 68;
   public static readonly ntSpecificFieldsPE32PlusSizeDec: number = 88;
 
+  public static readonly imageBasePE32SizeDec: number = 4;
+  public static readonly imageBasePE32PlusSizeDec: number = 8;
+
   public static readonly dataDirectoriesSizeDec: number = 128;
   public static readonly importTableDirectorySubOffsetDec: number = 8;
   public static readonly importAddressTableDirectorySubOffsetDec: number = 96;

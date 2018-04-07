@@ -219,6 +219,31 @@ describe('PortableExecutableReader', () => {
             expect(element.isNtSpecificFieldsHeaders).toBeTruthy(offset);
           });
         });
+
+        describe('ImageBase', () => {
+          const expectedSubStartOffsetDec = 280;
+          const expectedSubEndOffsetDec = 287;
+          const expectedSubSizeDec = 8;
+
+          it('Then set property: "imageBase"', () => {
+            const expected = new HexSegment(
+              expectedSubStartOffsetDec,
+              expectedSubEndOffsetDec,
+              expectedSubSizeDec,
+              '0000000140000000'
+            );
+
+            expect(pe.imageBase).toEqual(expected);
+          });
+
+          it('Then set ImageBase hexes', () => {
+            const imageBase = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            imageBase.forEach((element, offset) => {
+              expect(element.isImageBase).toBeTruthy(offset);
+            });
+          });
+        });
       });
 
       describe('data directories fields', () => {

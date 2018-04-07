@@ -109,6 +109,15 @@ export class PortableExecutableReader {
       : PortableExecutableConstants.ntSpecificFieldsPE32SizeDec;
 
     pe.ntSpecificFields = this.file.getSegment(startOffsetDec, sizeDec);
+    this.setImageBase(pe, startOffsetDec);
+  }
+
+  private setImageBase(pe: PortableExecutable, startOffsetDec: number) {
+    const sizeDec = pe.is64Bit
+      ? PortableExecutableConstants.imageBasePE32PlusSizeDec
+      : PortableExecutableConstants.imageBasePE32SizeDec;
+
+    pe.imageBase = this.file.getHexSegment(startOffsetDec, sizeDec);
   }
 
   private setDataDirectories(pe: PortableExecutable) {

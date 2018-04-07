@@ -3,6 +3,7 @@ export enum PortableExecutableSubPart {
   SignatureOffset,
   MagicNumber,
   AddressOfEntryPoint,
+  ImageBase,
   ImportTableDirectorySize,
   ImportTableDirectoryRva,
   ImportAddressTableDirectorySize,

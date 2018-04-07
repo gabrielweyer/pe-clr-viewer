@@ -70,6 +70,7 @@ export class HexesGenerator {
       new SubPartVisitor(pe.signatureOffset, PortableExecutableSubPart.SignatureOffset),
       new SubPartVisitor(pe.magicNumber, PortableExecutableSubPart.MagicNumber),
       new SubPartVisitor(pe.addressOfEntryPoint, PortableExecutableSubPart.AddressOfEntryPoint),
+      new SubPartVisitor(pe.imageBase, PortableExecutableSubPart.ImageBase),
       new SubPartVisitor(pe.importTableDirectory.size, PortableExecutableSubPart.ImportTableDirectorySize),
       new SubPartVisitor(pe.importTableDirectory.rva, PortableExecutableSubPart.ImportTableDirectoryRva),
       new SubPartVisitor(

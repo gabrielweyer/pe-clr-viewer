@@ -40,6 +40,10 @@ export class Byte {
     return this.part === PortableExecutablePart.NtSpecificFields;
   }
 
+  public isImageBase(): boolean {
+    return this.subPart === PortableExecutableSubPart.ImageBase;
+  }
+
   public isDataDirectories(): boolean {
     return this.part === PortableExecutablePart.DataDirectories;
   }

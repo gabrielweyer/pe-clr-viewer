@@ -14,6 +14,7 @@ export class PortableExecutable {
   public standardFields: Segment;
   public addressOfEntryPoint: RvaSegment;
   public ntSpecificFields: Segment;
+  public imageBase: HexSegment;
   public dataDirectories: Segment;
   public importTableDirectory: DataDirectoryItem;
   public importAddressTableDirectory: DataDirectoryItem;

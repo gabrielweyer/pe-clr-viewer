@@ -79,6 +79,10 @@ $mono-font-family: 'Consolas';
       color: #359357;
     }
 
+    &.image-base {
+      background-color: #000;
+    }
+
     &.data-directories {
       color: #634491;
     }

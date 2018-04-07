@@ -74,6 +74,7 @@
       'address-entry-point': hex.isAddressOfEntryPoint(),
       'dos-stub': hex.isDosStub(),
       'nt-specific-fields-headers': hex.isNtSpecificFieldsHeaders(),
+      'image-base': hex.isImageBase(),
       'data-directories': hex.isDataDirectories(),
       'import-table-directory-size': hex.isImportTableDirectorySize(),
       'import-table-directory-rva': hex.isImportTableDirectoryRva(),
@@ -141,19 +142,33 @@
           <span class="mono-font">0x10B</span> is 32-bit (PE32 format) and
           <span class="mono-font">0x20B</span> is 64-bit (PE32+ format).
           We are dealing with a <em>{{pe.is64Bit ? '64' : '32'}}-bit</em> binary.</p>
-        <p>For PE32, the size of the
-          <span class="standard-fields">standard fields</span> is {{peConstants.standardFieldsPE32SizeDec}} bytes; for PE32+ it is {{peConstants.standardFieldsPE32PlusSizeDec}}
-          bytes.
-        </p>
         <p>The
           <span class="standard-fields address-entry-point">address of entry point</span> ({{peConstants.addressOfEntryPointSizeDec}} bytes) is located at offset {{peConstants.addressOfEntryPointSubOffsetDec}}
           of the
           <span class="standard-fields">standard fields</span> and has a value of
-          <span class="mono-font standard-fields address-entry-point">{{pe.addressOfEntryPoint.rva | hex}}</span>. We skip over the
-          <span class="nt-specific-fields-headers">NT specific fields header ({{pe.ntSpecificFields.sizeDec}} bytes)</span>. For PE32, the size of the
-          <span class="nt-specific-fields-headers">NT specific fields header</span> is {{peConstants.ntSpecificFieldsPE32SizeDec}} bytes; for PE32+ it is {{peConstants.ntSpecificFieldsPE32PlusSizeDec}}
+          <span class="mono-font standard-fields address-entry-point">{{pe.addressOfEntryPoint.rva | hex}}</span>.
+        </p>
+        <p>For PE32, the size of the
+          <span class="standard-fields">standard fields</span> is {{peConstants.standardFieldsPE32SizeDec}} bytes; for PE32+ it is {{peConstants.standardFieldsPE32PlusSizeDec}}
           bytes.
         </p>
+      </div>
+      <div class="part">
+        <h2>
+          <span class="nt-specific-fields-headers">NT specific fields header ({{pe.ntSpecificFields.sizeDec}} bytes)</span>
+        </h2>
+        <p>From
+          <span class="mono-font">{{pe.ntSpecificFields.startOffsetDec | byte | leftpad:8}}</span> to
+          <span class="mono-font">{{pe.ntSpecificFields.endOffsetDec | byte | leftpad:8}}</span>
+        </p>
+        <p>It contains the
+          <span class="nt-specific-fields-headers image-base">image base</span> (the first {{pe.imageBase.sizeDec}} bytes) which value is
+          <span class="mono-font nt-specific-fields-headers image-base">{{pe.imageBase.hexValue | hex}}</span>. For PE32, the size of the
+          <span class="nt-specific-fields-headers image-base">image base</span> is {{peConstants.imageBasePE32SizeDec}} bytes;
+          for PE32+ it is {{peConstants.imageBasePE32PlusSizeDec}} bytes.
+        </p>
+        <p>For PE32, the size of the <span class="nt-specific-fields-headers">NT specific fields header</span> is {{peConstants.ntSpecificFieldsPE32SizeDec}} bytes;
+          for PE32+ it is {{peConstants.ntSpecificFieldsPE32PlusSizeDec}} bytes.</p>
       </div>
       <div class="part">
         <h2>
