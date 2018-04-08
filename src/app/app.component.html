@@ -74,7 +74,7 @@
       'magic-number': hex.isMagicNumber(),
       'address-entry-point': hex.isAddressOfEntryPoint(),
       'dos-stub': hex.isDosStub(),
-      'nt-specific-fields-headers': hex.isNtSpecificFieldsHeaders(),
+      'nt-specific-fields': hex.isNtSpecificFields(),
       'image-base': hex.isImageBase(),
       'data-directories': hex.isDataDirectories(),
       'import-table-directory-size': hex.isImportTableDirectorySize(),
@@ -156,19 +156,19 @@
       </div>
       <div class="part">
         <h2>
-          <span class="nt-specific-fields-headers">NT specific fields header ({{pe.ntSpecificFields.sizeDec}} bytes)</span>
+          <span class="nt-specific-fields">NT specific fields header ({{pe.ntSpecificFields.sizeDec}} bytes)</span>
         </h2>
         <p>From
           <span class="mono-font">{{pe.ntSpecificFields.startOffsetDec | byte | leftpad:8}}</span> to
           <span class="mono-font">{{pe.ntSpecificFields.endOffsetDec | byte | leftpad:8}}</span>
         </p>
         <p>It contains the
-          <span class="nt-specific-fields-headers image-base">image base</span> (the first {{pe.imageBase.sizeDec}} bytes) which value is
-          <span class="mono-font nt-specific-fields-headers image-base">{{pe.imageBase.hexValue | hex}}</span>. For PE32, the size of the
-          <span class="nt-specific-fields-headers image-base">image base</span> is {{peConstants.imageBasePE32SizeDec}} bytes;
+          <span class="nt-specific-fields image-base">image base</span> (the first {{pe.imageBase.sizeDec}} bytes) which value is
+          <span class="mono-font nt-specific-fields image-base">{{pe.imageBase.hexValue | hex}}</span>. For PE32, the size of the
+          <span class="nt-specific-fields image-base">image base</span> is {{peConstants.imageBasePE32SizeDec}} bytes;
           for PE32+ it is {{peConstants.imageBasePE32PlusSizeDec}} bytes.
         </p>
-        <p>For PE32, the size of the <span class="nt-specific-fields-headers">NT specific fields header</span> is {{peConstants.ntSpecificFieldsPE32SizeDec}} bytes;
+        <p>For PE32, the size of the <span class="nt-specific-fields">NT specific fields header</span> is {{peConstants.ntSpecificFieldsPE32SizeDec}} bytes;
           for PE32+ it is {{peConstants.ntSpecificFieldsPE32PlusSizeDec}} bytes.</p>
       </div>
       <div class="part">
