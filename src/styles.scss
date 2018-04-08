@@ -31,6 +31,10 @@ em {
 ul {
   list-style-type: none;
 
+  @include lg {
+    padding-left: 5px;
+  }
+
   li {
     padding: 0.25em 0;
 

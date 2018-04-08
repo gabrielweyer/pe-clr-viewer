@@ -49,6 +49,10 @@ $mono-font-family: 'Consolas';
   display: flex;
   padding-bottom: 9em;
 
+  @include lg {
+    padding-bottom: 15em;
+  }
+
   span {
     &.dos-header {
       color: #538135;
@@ -220,6 +224,11 @@ $mono-font-family: 'Consolas';
   width: 100%;
   bottom: 0;
   height: 4em;
+
+  @include lg {
+    height: 12em;
+  }
+
   font-size: $font-size-small;
   text-align: center;
   padding: 4em 0;
@@ -231,6 +240,10 @@ $mono-font-family: 'Consolas';
   p {
     line-height: 1em;
     padding: 0 18%;
+
+    @include lg {
+      padding: 0 5px;
+    }
 
     &:first-child {
       margin-top: 0;

@@ -11,3 +11,10 @@ $font-size-small: 12px;
 $mono-font-size-normal: 17px;
 $mono-font-size-small: 13px;
 
+$screen-lg-min: 992px;
+
+@mixin lg {
+  @media (max-width: #{$screen-lg-min}) {
+      @content;
+  }
+}
