@@ -67,7 +67,7 @@ steps:
   displayName: Publish coverage
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: '$(SYSTEM_DEFAULTWORKINGDIRECTORY)/tests-results/coverage/cobertura-coverage.xml'
-    reportDirectory: '$(SYSTEM_DEFAULTWORKINGDIRECTORY)/tests-results/coverage/'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/tests-results/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/tests-results/coverage/'
     failIfCoverageEmpty: true
   condition: succeededOrFailed()
