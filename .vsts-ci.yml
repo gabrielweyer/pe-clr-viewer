@@ -57,13 +57,6 @@ steps:
     ArtifactName: arm
     publishLocation: Container
 
-- task: PublishBuildArtifacts@1
-  displayName: Publish Artifact - test-results
-  inputs:
-    PathtoPublish: 'tests-results/'
-    ArtifactName: 'test-results'
-    publishLocation: Container
-
 - task: PublishTestResults@2
   displayName: Publish tests results
   inputs:
@@ -74,6 +67,6 @@ steps:
   displayName: Publish coverage
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: 'tests-results/coverage/cobertura-coverage.xml'
-    reportDirectory: 'tests-results/coverage/'
+    summaryFileLocation: '$(SYSTEM_DEFAULTWORKINGDIRECTORY)/tests-results/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(SYSTEM_DEFAULTWORKINGDIRECTORY)/tests-results/coverage/'
   condition: succeededOrFailed()
