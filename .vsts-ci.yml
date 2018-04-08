@@ -69,4 +69,5 @@ steps:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(SYSTEM_DEFAULTWORKINGDIRECTORY)/tests-results/coverage/cobertura-coverage.xml'
     reportDirectory: '$(SYSTEM_DEFAULTWORKINGDIRECTORY)/tests-results/coverage/'
+    failIfCoverageEmpty: true
   condition: succeededOrFailed()
