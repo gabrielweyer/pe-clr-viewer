@@ -51,6 +51,13 @@
   "test": {
     "karma": {
       "config": "./karma.conf.js"
+    },
+    "codeCoverage": {
+      "exclude": [
+        "tests-data/*.ts",
+        "src/polyfills.ts",
+        "src/test.ts"
+      ]
     }
   },
   "defaults": {
