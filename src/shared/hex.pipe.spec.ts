@@ -20,4 +20,17 @@ describe('HexPipe', () => {
       });
     });
   });
+
+  describe('Given only zeros "00000000"', () => {
+    const hex = '00000000';
+
+    describe('When transform', () => {
+      const actualFormattedHex = pipe.transform(hex);
+
+      it('Then return "0x0"', () => {
+        // Assert
+        expect(actualFormattedHex).toStartWith('0x0');
+      });
+    });
+  });
 });

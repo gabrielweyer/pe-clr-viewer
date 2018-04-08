@@ -214,7 +214,7 @@ describe('PortableExecutableReader', () => {
           const ntSpecificFields = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           ntSpecificFields.forEach((element, offset) => {
-            expect(element.isNtSpecificFieldsHeaders).toBeTruthy(offset);
+            expect(element.isNtSpecificFields).toBeTruthy(offset);
           });
         });
 

@@ -2,7 +2,11 @@ import { PortableExecutablePart } from './portable-executable-part.enum';
 import { PortableExecutableSubPart } from './portable-executable-sub-part.enum';
 
 export class Byte {
-  constructor(public value: string, public part: PortableExecutablePart, public subPart: PortableExecutableSubPart) {}
+  constructor(
+    public readonly value: string,
+    public readonly part: PortableExecutablePart,
+    public readonly subPart: PortableExecutableSubPart
+  ) {}
 
   public isDosHeader(): boolean {
     return this.part === PortableExecutablePart.DosHeader;
@@ -36,7 +40,7 @@ export class Byte {
     return this.subPart === PortableExecutableSubPart.AddressOfEntryPoint;
   }
 
-  public isNtSpecificFieldsHeaders(): boolean {
+  public isNtSpecificFields(): boolean {
     return this.part === PortableExecutablePart.NtSpecificFields;
   }
 
