@@ -1,3 +1,4 @@
+import { CliFlags } from './cli-flags';
 import { Byte } from './byte';
 import { PortableExecutablePart } from './portable-executable-part.enum';
 import { PortableExecutableSubPart } from './portable-executable-sub-part.enum';
@@ -320,6 +321,18 @@ describe('Byte', () => {
 
     describe('When "isCliHeader()"', () => {
       const actual = target.isCliHeader();
+
+      it('Then "true"', () => {
+        expect(actual).toBeTruthy();
+      });
+    });
+  });
+
+  describe('Given byte is CLI flag', () => {
+    const target = new Byte('0', PortableExecutablePart.None, PortableExecutableSubPart.CliFlags);
+
+    describe('When "isCliFlags()"', () => {
+      const actual = target.isCliFlags();
 
       it('Then "true"', () => {
         expect(actual).toBeTruthy();

@@ -1,3 +1,4 @@
+import { CliFlags } from './../app/models/cli-flags';
 import { PartVisitor } from './../app/models/part-visitor';
 import { PortableExecutable } from './../app/models/portable-executable';
 import { Byte } from '../app/models/byte';
@@ -55,7 +56,7 @@ export class HexesGenerator {
 
   private static getPart(pe: PortableExecutable, offset: number, visitors: Array<PartVisitor>): PortableExecutablePart {
     for (const visitor of visitors) {
-      if (offset >= visitor.segment.startOffsetDec && offset <= visitor.segment.endOffsetDec) {
+      if (visitor.segment && offset >= visitor.segment.startOffsetDec && offset <= visitor.segment.endOffsetDec) {
         return visitor.part;
       }
     }
@@ -85,7 +86,8 @@ export class HexesGenerator {
       new SubPartVisitor(pe.rsrcSectionItem.baseRva, PortableExecutableSubPart.RsrcBaseRva),
       new SubPartVisitor(pe.rsrcSectionItem.fileOffset, PortableExecutableSubPart.RsrcFileOffset),
       new SubPartVisitor(pe.relocSectionItem.baseRva, PortableExecutableSubPart.RelocBaseRva),
-      new SubPartVisitor(pe.relocSectionItem.fileOffset, PortableExecutableSubPart.RelocFileOffset)
+      new SubPartVisitor(pe.relocSectionItem.fileOffset, PortableExecutableSubPart.RelocFileOffset),
+      new SubPartVisitor(pe.cliFlags, PortableExecutableSubPart.CliFlags)
     );
 
     return visitors;
@@ -97,7 +99,7 @@ export class HexesGenerator {
     visitors: Array<SubPartVisitor>
   ): PortableExecutableSubPart {
     for (const visitor of visitors) {
-      if (offset >= visitor.segment.startOffsetDec && offset <= visitor.segment.endOffsetDec) {
+      if (visitor.segment && offset >= visitor.segment.startOffsetDec && offset <= visitor.segment.endOffsetDec) {
         return visitor.subPart;
       }
     }

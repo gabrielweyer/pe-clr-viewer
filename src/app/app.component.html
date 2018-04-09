@@ -92,7 +92,8 @@
       'rsrc-file-offset': hex.isRsrcFileOffset(),
       'reloc-base-rva': hex.isRelocBaseRva(),
       'reloc-file-offset': hex.isRelocFileOffset(),
-      'cli-header': hex.isCliHeader()
+      'cli-header': hex.isCliHeader(),
+      'cli-flags': hex.isCliFlags()
     }">{{hex.value | byte | leftpad:2 }}</span>
       </ng-template>
     </div>
@@ -236,12 +237,24 @@
       </div>
       <div *ngIf="pe.isManaged" class="part">
         <h2>
-          <span class="cli-header">CLI header ({{pe.cliHeaderSize}} bytes)</span>
+          <span class="cli-header">CLI header (always {{pe.cliHeaderSize}} bytes)</span>
         </h2>
         <p>From
           <span class="mono-font">{{pe.cliHeader.startOffsetDec | byte | leftpad:8}}</span> to
           <span class="mono-font">{{pe.cliHeader.endOffsetDec | byte | leftpad:8}}</span>
         </p>
+        <p>The <span class="cli-header cli-flags">CLI flags</span> ({{peConstants.cliFlagsSizeDec}} bytes) are located at offset
+          {{peConstants.cliFlagsSubOffsetDec}} of the <span class="cli-header">CLI header</span> and have a value of
+          <span class="mono-font cli-header cli-flags">{{pe.cliFlags.hexValue | hex}}</span>. The <span class="cli-header cli-flags">CLI flags</span>
+          are leveraging <app-link [href]="'https://en.wikipedia.org/wiki/Mask_(computing)'">bitmask</app-link>:
+        </p>
+        <ul>
+          <li><span class="mono-font">1</span> (contains only managed code) - <em>{{pe.cliFlags.isIlOnly}}</em></li>
+          <li><span class="mono-font">2</span> (32-bit required when compiled in AnyCPU) - <em>{{pe.cliFlags.is32BitRequired}}</em></li>
+          <li><span class="mono-font">8</span>
+            (<app-link [href]="'https://docs.microsoft.com/en-us/dotnet/framework/app-domains/strong-named-assemblies'">strong named</app-link>)
+            - <em>{{pe.cliFlags.isStrongNamed}}</em></li>
+        </ul>
       </div>
       <div *ngIf="!pe.isManaged" class="part">
         <h2>

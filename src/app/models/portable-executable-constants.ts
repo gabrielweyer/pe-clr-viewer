@@ -1,3 +1,4 @@
+import { CliFlags } from './cli-flags';
 import { File } from './file';
 
 export class PortableExecutableConstants {
@@ -41,4 +42,7 @@ export class PortableExecutableConstants {
   public static readonly sectionHeaderSize: number = 40;
   public static readonly baseRvaSubOffsetDec: number = 12;
   public static readonly fileOffsetSubOffsetDec: number = 20;
+
+  public static readonly cliFlagsSubOffsetDec: number = 16;
+  public static readonly cliFlagsSizeDec: number = 4;
 }

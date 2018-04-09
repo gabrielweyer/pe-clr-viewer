@@ -4,6 +4,7 @@ import { FileOffsetSegment, Segment, HexSegment, RvaSegment } from './../app/mod
 import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutableReader } from './portable-executable-reader.service';
 import { Net461_x86 } from '../../tests-data/net461-x86';
+import { CliFlags } from '../app/models/cli-flags';
 
 describe('PortableExecutableReader', () => {
   describe('Given net461 x86', () => {
@@ -16,9 +17,7 @@ describe('PortableExecutableReader', () => {
     const expectedCliHeaderSizeHex = '00000048';
     const expectedCliHeaderSizeDec = 72;
     const expectedTextSectionFileOffsetHex = '00000200';
-    const expectedTextSectionFileOffsetDec = 512;
     const expectedImportAddressTableDirectorySizeHex = '00000008';
-    const expectedImportAddressTableDirectorySizeDec = 8;
 
     describe('When read', () => {
       const pe = target.read();
@@ -566,7 +565,7 @@ describe('PortableExecutableReader', () => {
       });
 
       describe('CLI header', () => {
-        const expectedStartOffsetDec = expectedTextSectionFileOffsetDec + expectedImportAddressTableDirectorySizeDec;
+        const expectedStartOffsetDec = 520;
         const expectedEndOffsetDec = 591;
         const expectedSizeDec = expectedCliHeaderSizeDec;
 
@@ -582,6 +581,12 @@ describe('PortableExecutableReader', () => {
           cliHeader.forEach((element, offset) => {
             expect(element.isCliHeader).toBeTruthy(offset);
           });
+        });
+
+        it('Then set property: "cliFlags"', () => {
+          const expected = new CliFlags(536, 539, 4, '00000003');
+
+          expect(pe.cliFlags).toEqual(expected);
         });
       });
     });

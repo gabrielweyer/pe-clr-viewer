@@ -569,6 +569,10 @@ describe('PortableExecutableReader', () => {
         it('Then does not set property: "cliHeader"', () => {
           expect(pe.cliHeader).toBeUndefined();
         });
+
+        it('Then does not set property: "cliFlags"', () => {
+          expect(pe.cliFlags).toBeUndefined();
+        });
       });
     });
   });

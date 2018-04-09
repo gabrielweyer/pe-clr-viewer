@@ -15,5 +15,6 @@ export enum PortableExecutableSubPart {
   RsrcBaseRva,
   RsrcFileOffset,
   RelocBaseRva,
-  RelocFileOffset
+  RelocFileOffset,
+  CliFlags
 }

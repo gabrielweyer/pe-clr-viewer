@@ -1,3 +1,4 @@
+import { CliFlags } from './cli-flags';
 import { PortableExecutablePart } from './portable-executable-part.enum';
 import { PortableExecutableSubPart } from './portable-executable-sub-part.enum';
 
@@ -114,5 +115,9 @@ export class Byte {
 
   public isCliHeader(): boolean {
     return this.part === PortableExecutablePart.CliHeader;
+  }
+
+  public isCliFlags(): boolean {
+    return this.subPart === PortableExecutableSubPart.CliFlags;
   }
 }

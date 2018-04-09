@@ -2,6 +2,7 @@ import { SectionItem } from './section-item';
 import { HexSegment, Segment, RvaSegment, FileOffsetSegment } from './segment';
 import { DataDirectoryItem } from './data-directory-item';
 import { Byte } from './byte';
+import { CliFlags } from './cli-flags';
 
 export class PortableExecutable {
   public dosHeader: Segment;
@@ -28,5 +29,6 @@ export class PortableExecutable {
   public relocSectionItem: SectionItem;
   public cliHeaderSize: number;
   public cliHeader: Segment;
+  public cliFlags: CliFlags;
   public hexes: Byte[];
 }

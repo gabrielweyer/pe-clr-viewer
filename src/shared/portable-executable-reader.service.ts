@@ -12,6 +12,7 @@ import { SectionItem } from './../app/models/section-item';
 import { PortableExecutableSubPart } from './../app/models/portable-executable-sub-part.enum';
 import { PartVisitor } from '../app/models/part-visitor';
 import { SubPartVisitor } from '../app/models/sub-part-visitor';
+import { CliFlags } from '../app/models/cli-flags';
 
 export class PortableExecutableReader {
   private readonly file: File;
@@ -206,5 +207,10 @@ export class PortableExecutableReader {
     pe.cliHeaderSize = HexHelper.getDecimal(pe.cliHeaderDirectory.size.hexValue);
 
     pe.cliHeader = this.file.getSegment(cliHeaderStartOffsetDec, pe.cliHeaderSize);
+
+    const flagsStartOffsetDec = cliHeaderStartOffsetDec + PortableExecutableConstants.cliFlagsSubOffsetDec;
+    const flags = this.file.getHexSegment(flagsStartOffsetDec, PortableExecutableConstants.cliFlagsSizeDec);
+
+    pe.cliFlags = new CliFlags(flags.startOffsetDec, flags.endOffsetDec, flags.sizeDec, flags.hexValue);
   }
 }

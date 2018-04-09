@@ -1,3 +1,4 @@
+import { CliFlags } from './../app/models/cli-flags';
 import { SectionItem } from './../app/models/section-item';
 import { DataDirectoryItem } from './../app/models/data-directory-item';
 import { FileOffsetSegment, Segment, HexSegment, RvaSegment } from './../app/models/segment';
@@ -16,7 +17,6 @@ describe('PortableExecutableReader', () => {
     const expectedCliHeaderSizeHex = '00000048';
     const expectedCliHeaderSizeDec = 72;
     const expectedTextSectionFileOffsetHex = '00000200';
-    const expectedTextSectionFileOffsetDec = 512;
 
     describe('When read', () => {
       const pe = target.read();
@@ -564,7 +564,7 @@ describe('PortableExecutableReader', () => {
       });
 
       describe('CLI header', () => {
-        const expectedStartOffsetDec = expectedTextSectionFileOffsetDec;
+        const expectedStartOffsetDec = 512;
         const expectedEndOffsetDec = 583;
         const expectedSizeDec = expectedCliHeaderSizeDec;
 
@@ -580,6 +580,12 @@ describe('PortableExecutableReader', () => {
           cliHeader.forEach((element, offset) => {
             expect(element.isCliHeader).toBeTruthy(offset);
           });
+        });
+
+        it('Then set property: "cliFlags"', () => {
+          const expected = new CliFlags(528, 531, 4, '00000001');
+
+          expect(pe.cliFlags).toEqual(expected);
         });
       });
     });
