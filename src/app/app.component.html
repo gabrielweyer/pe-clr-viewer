@@ -249,11 +249,21 @@
           are leveraging <app-link [href]="'https://en.wikipedia.org/wiki/Mask_(computing)'">bitmask</app-link>:
         </p>
         <ul>
-          <li><span class="mono-font">1</span> (contains only managed code) - <em>{{pe.cliFlags.isIlOnly}}</em></li>
-          <li><span class="mono-font">2</span> (32-bit required when compiled in AnyCPU) - <em>{{pe.cliFlags.is32BitRequired}}</em></li>
-          <li><span class="mono-font">8</span>
+          <li><span class="mono-font">ILOnly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x00001</span>: <em>{{pe.cliFlags.ILOnly}}</em>
+            ({{pe.cliFlags.ILOnly ? 'contains only managed code' : 'contains managed and native code'}})
+          </li>
+          <li><span class="mono-font">Requires32Bit&nbsp;&nbsp;&nbsp; 0x00002</span>: <em>{{pe.cliFlags.Requires32Bit}}</em>
+            (<app-link [href]="'http://blogs.microsoft.co.il/sasha/2012/04/04/what-anycpu-really-means-as-of-net-45-and-visual-studio-11/'">requires</app-link>
+            32-bit when compiled in AnyCPU)</li>
+          <li><span class="mono-font">ILLibrary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x00004</span>: <em>{{pe.cliFlags.ILLibrary}}</em></li>
+          <li><span class="mono-font">StrongNameSigned 0x00008</span>: <em>{{pe.cliFlags.StrongNameSigned}}</em>
             (<app-link [href]="'https://docs.microsoft.com/en-us/dotnet/framework/app-domains/strong-named-assemblies'">strong named</app-link>)
-            - <em>{{pe.cliFlags.isStrongNamed}}</em></li>
+          </li>
+          <li><span class="mono-font">NativeEntryPoint 0x00010</span>: <em>{{pe.cliFlags.NativeEntryPoint}}</em></li>
+          <li><span class="mono-font">TrackDebugData&nbsp;&nbsp; 0x10000</span>: <em>{{pe.cliFlags.TrackDebugData}}</em></li>
+          <li><span class="mono-font">Prefers32Bit&nbsp;&nbsp;&nbsp;&nbsp; 0x20000</span>: <em>{{pe.cliFlags.Prefers32Bit}}</em>
+            (<app-link [href]="'http://blogs.microsoft.co.il/sasha/2012/04/04/what-anycpu-really-means-as-of-net-45-and-visual-studio-11/'">prefers</app-link>
+            32-bit when compiled in AnyCPU)</li>
         </ul>
       </div>
       <div *ngIf="!pe.isManaged" class="part">
