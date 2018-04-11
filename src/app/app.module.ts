@@ -12,9 +12,10 @@ import { SubsystemPipe } from './../shared/subsystem-pipe';
 import { APP_INITIALIZER } from '@angular/core';
 import { AppConfig } from './../shared/app.config';
 import { LinkComponent } from './link/link.component';
+import { SectionContainerComponent } from './section-container/section-container.component';
 
 @NgModule({
-  declarations: [AppComponent, BytePipe, LeftPadPipe, HexPipe, LinkComponent, SubsystemPipe],
+  declarations: [AppComponent, BytePipe, LeftPadPipe, HexPipe, LinkComponent, SubsystemPipe, SectionContainerComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule],
   providers: [
     AppConfig,

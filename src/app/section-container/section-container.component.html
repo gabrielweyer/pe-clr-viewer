@@ -1,0 +1,6 @@
+<div class="section-container" [ngClass]="{
+  'collapsed': !isExpanded
+}">
+  <a (click)="toggleIsExpanded()">{{isExpanded ? 'Collapse' : 'Expand'}}</a>
+  <ng-content></ng-content>
+</div>

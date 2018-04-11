@@ -99,188 +99,204 @@
       </ng-template>
     </div>
     <div class="bytes-legend" *ngIf="pe">
-      <div class="part">
-        <h2>
-          <span class="dos-header">DOS header ({{peConstants.dosHeaderSizeDec}} bytes)</span>
-        </h2>
-        <p>From
-          <span class="mono-font">00000000</span> to
-          <span class="mono-font">0000003F</span>
-        </p>
-        <p>We don't really care about this one except for the
-          <span class="dos-header signature-offset">signature offset</span> ({{peConstants.signatureOffsetSizeDec}} bytes) which value is
-          <span class="mono-font dos-header signature-offset">{{pe.signatureOffset.fileOffset | byte | leftpad:8}}</span>.</p>
-        <p>We ignore the
-          <span class="dos-stub">DOS stub</span> and go to the signature.</p>
-      </div>
-      <div class="part">
-        <h2>
-          <span class="signature">Signature ({{peConstants.signatureSizeDec}} bytes)</span>
-        </h2>
-        <p>From
-          <span class="mono-font dos-header signature-offset">{{pe.signature.startOffsetDec | byte | leftpad:8 }}</span> to
-          <span class="mono-font">{{pe.signature.endOffsetDec | byte | leftpad:8 }}</span>
-        </p>
-        <p>We couldn't care less about the
-          <span class="signature">signature</span> because it's always the same. It's only use is to mark the beginning of the sections we're interested
-          in. The
-          <span class="signature">signature</span> is directly followed by the
-          <span class="coff-header">COFF header / PE file header ({{peConstants.coffHeaderSizeDec}} bytes)</span> which we skip to go to the
-          <span class="standard-fields">standard fields
-          </span>.
-        </p>
-      </div>
-      <div class="part">
-        <h2>
-          <span class="standard-fields">PE standard fields ({{pe.standardFields.sizeDec}} bytes)</span>
-        </h2>
-        <p>From
-          <span class="mono-font">{{pe.standardFields.startOffsetDec | byte | leftpad:8}}</span> to
-          <span class="mono-font">{{pe.standardFields.endOffsetDec | byte | leftpad:8}}</span>
-        </p>
-        <p>It contains the
-          <span class="standard-fields magic-number">magic number</span> (the first {{peConstants.magicNumberSizeDec}} bytes) which value is
-          <span class="mono-font">{{pe.magicNumber.hexValue | hex}}</span>. The
-          <span class="standard-fields magic-number">magic number</span> encodes the bitness of the binary,
-          <span class="mono-font">0x10B</span> is 32-bit (PE32 format) and
-          <span class="mono-font">0x20B</span> is 64-bit (PE32+ format).
-          We are dealing with a <em>{{pe.is64Bit ? '64' : '32'}}-bit</em> binary.</p>
-        <p>The
-          <span class="standard-fields address-entry-point">address of entry point</span> ({{peConstants.addressOfEntryPointSizeDec}} bytes) is located at offset {{peConstants.addressOfEntryPointSubOffsetDec}}
-          of the
-          <span class="standard-fields">standard fields</span> and has a value of
-          <span class="mono-font standard-fields address-entry-point">{{pe.addressOfEntryPoint.rva | hex}}</span>.
-        </p>
-        <p>For PE32, the size of the
-          <span class="standard-fields">standard fields</span> is {{peConstants.standardFieldsPE32SizeDec}} bytes; for PE32+ it is {{peConstants.standardFieldsPE32PlusSizeDec}}
-          bytes.
-        </p>
-      </div>
-      <div class="part">
-        <h2>
-          <span class="nt-specific-fields">NT specific fields header ({{pe.ntSpecificFields.sizeDec}} bytes)</span>
-        </h2>
-        <p>From
-          <span class="mono-font">{{pe.ntSpecificFields.startOffsetDec | byte | leftpad:8}}</span> to
-          <span class="mono-font">{{pe.ntSpecificFields.endOffsetDec | byte | leftpad:8}}</span>
-        </p>
-        <p>It contains the
-          <span class="nt-specific-fields image-base">image base</span> (the first {{pe.imageBase.sizeDec}} bytes) which value is
-          <span class="mono-font nt-specific-fields image-base">{{pe.imageBase.hexValue | hex}}</span>. For PE32, the size of the
-          <span class="nt-specific-fields image-base">image base</span> is {{peConstants.imageBasePE32SizeDec}} bytes;
-          for PE32+ it is {{peConstants.imageBasePE32PlusSizeDec}} bytes.
-        </p>
-        <p>The
-          <span class="nt-specific-fields subsystem">subsystem</span> ({{peConstants.subsystemSizeDec}} bytes) is located at offset
-          {{pe.is64Bit ? peConstants.subsystemPE32PlusSubOffsetDec : peConstants.subsystemPE32SubOffsetDec}} of the
-          <span class="nt-specific-fields">NT specific fields header</span> and has a value of
-          <span class="mono-font nt-specific-fields subsystem">{{pe.subsystem.hexValue | hex}}</span> (<em>{{pe.subsystem.type | subsystem}}</em>
-           - see <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx#windows_subsystem'">Windows Subsystem</app-link>).
-          For PE32, the offset is {{peConstants.subsystemPE32SubOffsetDec}}; for PE32+ it is {{peConstants.subsystemPE32PlusSubOffsetDec}}.
-        </p>
-        <p>For PE32, the size of the <span class="nt-specific-fields">NT specific fields header</span> is {{peConstants.ntSpecificFieldsPE32SizeDec}} bytes;
-          for PE32+ it is {{peConstants.ntSpecificFieldsPE32PlusSizeDec}} bytes.</p>
-      </div>
-      <div class="part">
-        <h2>
-          <span class="data-directories">Data directories ({{peConstants.dataDirectoriesSizeDec}} bytes)</span>
-        </h2>
-        <p>From
-          <span class="mono-font">{{pe.dataDirectories.startOffsetDec | byte | leftpad:8}}</span> to
-          <span class="mono-font">{{pe.dataDirectories.endOffsetDec | byte | leftpad:8}}</span>
-        </p>
-        <p>
-          The
-          <span class="data-directories">Data directories</span> describe important parts of the executable. The relevant parts are:
-        </p>
-        <ul>
-          <li>
-            Import table:
-            <span class="data-directories import-table-directory-size mono-font">{{pe.importTableDirectory.size.hexValue | hex}}</span>
-            bytes located at base RVA
-            <span class="data-directories import-table-directory-rva mono-font">{{pe.importTableDirectory.rva.rva | hex}}</span>
-          </li>
-          <li>
-            Import address table:
-            <span class="data-directories import-address-table-directory-size mono-font">{{pe.importAddressTableDirectory.size.hexValue | hex}}</span>
-            bytes located at base RVA
-            <span class="data-directories import-address-table-directory-rva mono-font">{{pe.importAddressTableDirectory.rva.rva | hex}}</span>
-          </li>
-          <li>
-            CLI header:
-            <span class="data-directories cli-header-directory-size mono-font">{{pe.cliHeaderDirectory.size.hexValue | hex}}</span>
-            bytes located at base RVA
-            <span class="data-directories cli-header-directory-rva mono-font">{{pe.cliHeaderDirectory.rva.rva | hex}}</span> -
-            We are dealing with a <em>{{pe.isManaged ? 'managed': 'native'}}</em> binary
-          </li>
-        </ul>
-      </div>
-      <div *ngIf="pe.isManaged" class="part">
-        <h2>
-          <span>Section headers</span>
-        </h2>
-        <p>The sections headers point to the .text, .rsrc and .reloc sections:</p>
-        <ul>
-          <li>
-            <span class="text-section-header">Text section header ({{peConstants.sectionHeaderSize}} bytes)</span>:
-            pointing to base RVA
-            <span class="text-section-header text-base-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>,
-            file offset
-            <span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
-          </li>
-          <li>
-            <span class="rsrc-section-header">Rsrc section header ({{peConstants.sectionHeaderSize}} bytes)</span>:
-            pointing to base RVA
-            <span class="rsrc-section-header rsrc-base-rva mono-font">{{pe.rsrcSectionItem.baseRva.rva | hex}}</span>,
-            file offset
-            <span class="rsrc-section-header rsrc-file-offset mono-font">{{pe.rsrcSectionItem.fileOffset.fileOffset | hex}}</span>
-          </li>
-          <li>
-            <span class="reloc-section-header">Reloc section header ({{peConstants.sectionHeaderSize}} bytes)</span>:
-            pointing to base RVA
-            <span class="reloc-section-header reloc-base-rva mono-font">{{pe.relocSectionItem.baseRva.rva | hex}}</span>,
-            file offset
-            <span class="reloc-section-header reloc-file-offset mono-font">{{pe.relocSectionItem.fileOffset.fileOffset | hex}}</span>
-          </li>
-        </ul>
-      </div>
-      <div *ngIf="pe.isManaged" class="part">
-        <h2>
-          <span class="cli-header">CLI header (always {{pe.cliHeaderSize}} bytes)</span>
-        </h2>
-        <p>From
-          <span class="mono-font">{{pe.cliHeader.startOffsetDec | byte | leftpad:8}}</span> to
-          <span class="mono-font">{{pe.cliHeader.endOffsetDec | byte | leftpad:8}}</span>
-        </p>
-        <p>The <span class="cli-header cli-flags">CLI flags</span> ({{peConstants.cliFlagsSizeDec}} bytes) are located at offset
-          {{peConstants.cliFlagsSubOffsetDec}} of the <span class="cli-header">CLI header</span> and have a value of
-          <span class="mono-font cli-header cli-flags">{{pe.cliFlags.hexValue | hex}}</span>. The <span class="cli-header cli-flags">CLI flags</span>
-          are leveraging <app-link [href]="'https://en.wikipedia.org/wiki/Mask_(computing)'">bitmask</app-link>:
-        </p>
-        <ul>
-          <li><span class="mono-font">ILOnly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x00001</span>: <em>{{pe.cliFlags.ILOnly}}</em>
-            ({{pe.cliFlags.ILOnly ? 'contains only managed code' : 'contains managed and native code'}})
-          </li>
-          <li><span class="mono-font">Requires32Bit&nbsp;&nbsp;&nbsp; 0x00002</span>: <em>{{pe.cliFlags.Requires32Bit}}</em>
-            (<app-link [href]="'http://blogs.microsoft.co.il/sasha/2012/04/04/what-anycpu-really-means-as-of-net-45-and-visual-studio-11/'">requires</app-link>
-            32-bit when compiled in AnyCPU)</li>
-          <li><span class="mono-font">ILLibrary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x00004</span>: <em>{{pe.cliFlags.ILLibrary}}</em></li>
-          <li><span class="mono-font">StrongNameSigned 0x00008</span>: <em>{{pe.cliFlags.StrongNameSigned}}</em>
-            (see <app-link [href]="'https://docs.microsoft.com/en-us/dotnet/framework/app-domains/strong-named-assemblies'">strong named</app-link>)
-          </li>
-          <li><span class="mono-font">NativeEntryPoint 0x00010</span>: <em>{{pe.cliFlags.NativeEntryPoint}}</em></li>
-          <li><span class="mono-font">TrackDebugData&nbsp;&nbsp; 0x10000</span>: <em>{{pe.cliFlags.TrackDebugData}}</em></li>
-          <li><span class="mono-font">Prefers32Bit&nbsp;&nbsp;&nbsp;&nbsp; 0x20000</span>: <em>{{pe.cliFlags.Prefers32Bit}}</em>
-            (<app-link [href]="'http://blogs.microsoft.co.il/sasha/2012/04/04/what-anycpu-really-means-as-of-net-45-and-visual-studio-11/'">prefers</app-link>
-            32-bit when compiled in AnyCPU)</li>
-        </ul>
-      </div>
-      <div *ngIf="!pe.isManaged" class="part">
-        <h2>
-          <span class="cli-header">CLI header (0 bytes)</span>
-        </h2>
-        <p>This is a native binary, there is no CLI header.</p>
-      </div>
+      <app-section-container [isExpanded]="false">
+        <div class="part">
+          <h2>
+            <span class="dos-header">DOS header ({{peConstants.dosHeaderSizeDec}} bytes)</span>
+          </h2>
+          <p>From
+            <span class="mono-font">00000000</span> to
+            <span class="mono-font">0000003F</span>
+          </p>
+          <p>We don't really care about this one except for the
+            <span class="dos-header signature-offset">signature offset</span> ({{peConstants.signatureOffsetSizeDec}} bytes) which value is
+            <span class="mono-font dos-header signature-offset">{{pe.signatureOffset.fileOffset | byte | leftpad:8}}</span>.</p>
+          <p>We ignore the
+            <span class="dos-stub">DOS stub</span> and go to the signature.</p>
+        </div>
+      </app-section-container>
+      <app-section-container [isExpanded]="false">
+        <div class="part">
+          <h2>
+            <span class="signature">Signature ({{peConstants.signatureSizeDec}} bytes)</span>
+          </h2>
+          <p>From
+            <span class="mono-font dos-header signature-offset">{{pe.signature.startOffsetDec | byte | leftpad:8 }}</span> to
+            <span class="mono-font">{{pe.signature.endOffsetDec | byte | leftpad:8 }}</span>
+          </p>
+          <p>We couldn't care less about the
+            <span class="signature">signature</span> because it's always the same. It's only use is to mark the beginning of the sections we're interested
+            in. The
+            <span class="signature">signature</span> is directly followed by the
+            <span class="coff-header">COFF header / PE file header ({{peConstants.coffHeaderSizeDec}} bytes)</span> which we skip to go to the
+            <span class="standard-fields">standard fields
+            </span>.
+          </p>
+        </div>
+      </app-section-container>
+      <app-section-container>
+        <div class="part">
+          <h2>
+            <span class="standard-fields">PE standard fields ({{pe.standardFields.sizeDec}} bytes)</span>
+          </h2>
+          <p>From
+            <span class="mono-font">{{pe.standardFields.startOffsetDec | byte | leftpad:8}}</span> to
+            <span class="mono-font">{{pe.standardFields.endOffsetDec | byte | leftpad:8}}</span>
+          </p>
+          <p>It contains the
+            <span class="standard-fields magic-number">magic number</span> (the first {{peConstants.magicNumberSizeDec}} bytes) which value is
+            <span class="mono-font">{{pe.magicNumber.hexValue | hex}}</span>. The
+            <span class="standard-fields magic-number">magic number</span> encodes the bitness of the binary,
+            <span class="mono-font">0x10B</span> is 32-bit (PE32 format) and
+            <span class="mono-font">0x20B</span> is 64-bit (PE32+ format).
+            We are dealing with a <em>{{pe.is64Bit ? '64' : '32'}}-bit</em> binary.</p>
+          <p>The
+            <span class="standard-fields address-entry-point">address of entry point</span> ({{peConstants.addressOfEntryPointSizeDec}} bytes) is located at offset {{peConstants.addressOfEntryPointSubOffsetDec}}
+            of the
+            <span class="standard-fields">standard fields</span> and has a value of
+            <span class="mono-font standard-fields address-entry-point">{{pe.addressOfEntryPoint.rva | hex}}</span>.
+          </p>
+          <p>For PE32, the size of the
+            <span class="standard-fields">standard fields</span> is {{peConstants.standardFieldsPE32SizeDec}} bytes; for PE32+ it is {{peConstants.standardFieldsPE32PlusSizeDec}}
+            bytes.
+          </p>
+        </div>
+      </app-section-container>
+      <app-section-container [isExpanded]="false">
+        <div class="part">
+          <h2>
+            <span class="nt-specific-fields">NT specific fields header ({{pe.ntSpecificFields.sizeDec}} bytes)</span>
+          </h2>
+          <p>From
+            <span class="mono-font">{{pe.ntSpecificFields.startOffsetDec | byte | leftpad:8}}</span> to
+            <span class="mono-font">{{pe.ntSpecificFields.endOffsetDec | byte | leftpad:8}}</span>
+          </p>
+          <p>It contains the
+            <span class="nt-specific-fields image-base">image base</span> (the first {{pe.imageBase.sizeDec}} bytes) which value is
+            <span class="mono-font nt-specific-fields image-base">{{pe.imageBase.hexValue | hex}}</span>. For PE32, the size of the
+            <span class="nt-specific-fields image-base">image base</span> is {{peConstants.imageBasePE32SizeDec}} bytes;
+            for PE32+ it is {{peConstants.imageBasePE32PlusSizeDec}} bytes.
+          </p>
+          <p>The
+            <span class="nt-specific-fields subsystem">subsystem</span> ({{peConstants.subsystemSizeDec}} bytes) is located at offset
+            {{pe.is64Bit ? peConstants.subsystemPE32PlusSubOffsetDec : peConstants.subsystemPE32SubOffsetDec}} of the
+            <span class="nt-specific-fields">NT specific fields header</span> and has a value of
+            <span class="mono-font nt-specific-fields subsystem">{{pe.subsystem.hexValue | hex}}</span> (<em>{{pe.subsystem.type | subsystem}}</em>
+            - see <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx#windows_subsystem'">Windows Subsystem</app-link>).
+            For PE32, the offset is {{peConstants.subsystemPE32SubOffsetDec}}; for PE32+ it is {{peConstants.subsystemPE32PlusSubOffsetDec}}.
+          </p>
+          <p>For PE32, the size of the <span class="nt-specific-fields">NT specific fields header</span> is {{peConstants.ntSpecificFieldsPE32SizeDec}} bytes;
+            for PE32+ it is {{peConstants.ntSpecificFieldsPE32PlusSizeDec}} bytes.</p>
+        </div>
+      </app-section-container>
+      <app-section-container [isExpanded]="false">
+        <div class="part">
+          <h2>
+            <span class="data-directories">Data directories ({{peConstants.dataDirectoriesSizeDec}} bytes)</span>
+          </h2>
+          <p>From
+            <span class="mono-font">{{pe.dataDirectories.startOffsetDec | byte | leftpad:8}}</span> to
+            <span class="mono-font">{{pe.dataDirectories.endOffsetDec | byte | leftpad:8}}</span>
+          </p>
+          <p>
+            The
+            <span class="data-directories">Data directories</span> describe important parts of the executable. The relevant parts are:
+          </p>
+          <ul>
+            <li>
+              Import table:
+              <span class="data-directories import-table-directory-size mono-font">{{pe.importTableDirectory.size.hexValue | hex}}</span>
+              bytes located at base RVA
+              <span class="data-directories import-table-directory-rva mono-font">{{pe.importTableDirectory.rva.rva | hex}}</span>
+            </li>
+            <li>
+              Import address table:
+              <span class="data-directories import-address-table-directory-size mono-font">{{pe.importAddressTableDirectory.size.hexValue | hex}}</span>
+              bytes located at base RVA
+              <span class="data-directories import-address-table-directory-rva mono-font">{{pe.importAddressTableDirectory.rva.rva | hex}}</span>
+            </li>
+            <li>
+              CLI header:
+              <span class="data-directories cli-header-directory-size mono-font">{{pe.cliHeaderDirectory.size.hexValue | hex}}</span>
+              bytes located at base RVA
+              <span class="data-directories cli-header-directory-rva mono-font">{{pe.cliHeaderDirectory.rva.rva | hex}}</span> -
+              We are dealing with a <em>{{pe.isManaged ? 'managed': 'native'}}</em> binary
+            </li>
+          </ul>
+        </div>
+      </app-section-container>
+      <app-section-container *ngIf="pe.isManaged" [isExpanded]="false">
+        <div class="part">
+          <h2>
+            <span>Section headers</span>
+          </h2>
+          <p>The sections headers point to the .text, .rsrc and .reloc sections:</p>
+          <ul>
+            <li>
+              <span class="text-section-header">Text section header ({{peConstants.sectionHeaderSize}} bytes)</span>:
+              pointing to base RVA
+              <span class="text-section-header text-base-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>,
+              file offset
+              <span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
+            </li>
+            <li>
+              <span class="rsrc-section-header">Rsrc section header ({{peConstants.sectionHeaderSize}} bytes)</span>:
+              pointing to base RVA
+              <span class="rsrc-section-header rsrc-base-rva mono-font">{{pe.rsrcSectionItem.baseRva.rva | hex}}</span>,
+              file offset
+              <span class="rsrc-section-header rsrc-file-offset mono-font">{{pe.rsrcSectionItem.fileOffset.fileOffset | hex}}</span>
+            </li>
+            <li>
+              <span class="reloc-section-header">Reloc section header ({{peConstants.sectionHeaderSize}} bytes)</span>:
+              pointing to base RVA
+              <span class="reloc-section-header reloc-base-rva mono-font">{{pe.relocSectionItem.baseRva.rva | hex}}</span>,
+              file offset
+              <span class="reloc-section-header reloc-file-offset mono-font">{{pe.relocSectionItem.fileOffset.fileOffset | hex}}</span>
+            </li>
+          </ul>
+        </div>
+      </app-section-container>
+      <app-section-container *ngIf="pe.isManaged">
+        <div class="part">
+          <h2>
+            <span class="cli-header">CLI header (always {{pe.cliHeaderSize}} bytes)</span>
+          </h2>
+          <p>From
+            <span class="mono-font">{{pe.cliHeader.startOffsetDec | byte | leftpad:8}}</span> to
+            <span class="mono-font">{{pe.cliHeader.endOffsetDec | byte | leftpad:8}}</span>
+          </p>
+          <p>The <span class="cli-header cli-flags">CLI flags</span> ({{peConstants.cliFlagsSizeDec}} bytes) are located at offset
+            {{peConstants.cliFlagsSubOffsetDec}} of the <span class="cli-header">CLI header</span> and have a value of
+            <span class="mono-font cli-header cli-flags">{{pe.cliFlags.hexValue | hex}}</span>. The <span class="cli-header cli-flags">CLI flags</span>
+            are leveraging <app-link [href]="'https://en.wikipedia.org/wiki/Mask_(computing)'">bitmask</app-link>:
+          </p>
+          <ul>
+            <li><span class="mono-font">ILOnly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x00001</span>: <em>{{pe.cliFlags.ILOnly}}</em>
+              ({{pe.cliFlags.ILOnly ? 'contains only managed code' : 'contains managed and native code'}})
+            </li>
+            <li><span class="mono-font">Requires32Bit&nbsp;&nbsp;&nbsp; 0x00002</span>: <em>{{pe.cliFlags.Requires32Bit}}</em>
+              (<app-link [href]="'http://blogs.microsoft.co.il/sasha/2012/04/04/what-anycpu-really-means-as-of-net-45-and-visual-studio-11/'">requires</app-link>
+              32-bit when compiled in AnyCPU)</li>
+            <li><span class="mono-font">ILLibrary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0x00004</span>: <em>{{pe.cliFlags.ILLibrary}}</em></li>
+            <li><span class="mono-font">StrongNameSigned 0x00008</span>: <em>{{pe.cliFlags.StrongNameSigned}}</em>
+              (see <app-link [href]="'https://docs.microsoft.com/en-us/dotnet/framework/app-domains/strong-named-assemblies'">strong named</app-link>)
+            </li>
+            <li><span class="mono-font">NativeEntryPoint 0x00010</span>: <em>{{pe.cliFlags.NativeEntryPoint}}</em></li>
+            <li><span class="mono-font">TrackDebugData&nbsp;&nbsp; 0x10000</span>: <em>{{pe.cliFlags.TrackDebugData}}</em></li>
+            <li><span class="mono-font">Prefers32Bit&nbsp;&nbsp;&nbsp;&nbsp; 0x20000</span>: <em>{{pe.cliFlags.Prefers32Bit}}</em>
+              (<app-link [href]="'http://blogs.microsoft.co.il/sasha/2012/04/04/what-anycpu-really-means-as-of-net-45-and-visual-studio-11/'">prefers</app-link>
+              32-bit when compiled in AnyCPU)</li>
+          </ul>
+        </div>
+      </app-section-container>
+      <app-section-container *ngIf="!pe.isManaged">
+        <div class="part">
+          <h2>
+            <span class="cli-header">CLI header (0 bytes)</span>
+          </h2>
+          <p>This is a native binary, there is no CLI header.</p>
+        </div>
+      </app-section-container>
     </div>
   </div>
   <div class="disclaimer-container">

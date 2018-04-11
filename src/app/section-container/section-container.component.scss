@@ -1,0 +1,18 @@
+@import '~variables.scss';
+
+.section-container {
+  border: 2px solid #b5fcff;
+  padding: 5px;
+  margin: 5px;
+
+  a {
+    float: right;
+    line-height: 1em;
+    font-size: $font-size-small;
+  }
+
+  &.collapsed {
+    height: 20px;
+    overflow: hidden;
+  }
+}
