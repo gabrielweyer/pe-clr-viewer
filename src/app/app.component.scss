@@ -201,10 +201,16 @@ $mono-font-family: 'Consolas';
   .bytes-legend {
     display: flex;
     flex-direction: column;
+    font-size: $mono-font-size-small + 1;
+    line-height: 1.2em;
 
     h2 {
-      font-size: $font-size-big;
+      font-size: $font-size-big - 1;
       margin-top: 0;
+    }
+
+    .mono-font {
+      font-size: $mono-font-size-small + 1;
     }
 
     .part {
