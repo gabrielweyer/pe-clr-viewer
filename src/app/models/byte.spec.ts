@@ -124,6 +124,18 @@ describe('Byte', () => {
     });
   });
 
+  describe('Given byte is subsystem', () => {
+    const target = new Byte('0', PortableExecutablePart.None, PortableExecutableSubPart.Subsystem);
+
+    describe('When "isSubsystem()"', () => {
+      const actual = target.isSubsystem();
+
+      it('Then "true"', () => {
+        expect(actual).toBeTruthy();
+      });
+    });
+  });
+
   describe('Given byte is data directories', () => {
     const target = new Byte('0', PortableExecutablePart.DataDirectories, PortableExecutableSubPart.None);
 

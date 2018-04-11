@@ -4,6 +4,8 @@ import { FileOffsetSegment, Segment, HexSegment, RvaSegment } from './../app/mod
 import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutableReader } from './portable-executable-reader.service';
 import { Native_x64 } from '../../tests-data/native-x64';
+import { Subsystem } from '../app/models/subsystem';
+import { SubsystemType } from '../app/models/subsystem-type.enum';
 
 describe('PortableExecutableReader', () => {
   describe('Given native x64', () => {
@@ -241,6 +243,35 @@ describe('PortableExecutableReader', () => {
 
             imageBase.forEach((element, offset) => {
               expect(element.isImageBase()).toBeTruthy(offset);
+            });
+          });
+        });
+
+        describe('Subsystem', () => {
+          const expectedSubStartOffsetDec = 324;
+          const expectedSubEndOffsetDec = 325;
+          const expectedSubSizeDec = 2;
+
+          it('Then set property: "subsystem"', () => {
+            const expected = new Subsystem(
+              expectedSubStartOffsetDec,
+              expectedSubEndOffsetDec,
+              expectedSubSizeDec,
+              '0003'
+            );
+
+            expect(pe.subsystem).toEqual(expected);
+          });
+
+          it('Then set subsystem as "WindowsCui"', () => {
+            expect(pe.subsystem.type).toBe(SubsystemType.WindowsCui);
+          });
+
+          it('Then set Subsystem hexes', () => {
+            const subsystem = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            subsystem.forEach((element, offset) => {
+              expect(element.isSubsystem()).toBeTruthy(offset);
             });
           });
         });

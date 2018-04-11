@@ -5,6 +5,8 @@ import { PortableExecutablePart } from './../app/models/portable-executable-part
 import { PortableExecutableReader } from './portable-executable-reader.service';
 import { Net461_x86 } from '../../tests-data/net461-x86';
 import { CliFlags } from '../app/models/cli-flags';
+import { Subsystem } from '../app/models/subsystem';
+import { SubsystemType } from '../app/models/subsystem-type.enum';
 
 describe('PortableExecutableReader', () => {
   describe('Given net461 x86', () => {
@@ -240,6 +242,35 @@ describe('PortableExecutableReader', () => {
 
             imageBase.forEach((element, offset) => {
               expect(element.isImageBase()).toBeTruthy(offset);
+            });
+          });
+        });
+
+        describe('Subsystem', () => {
+          const expectedSubStartOffsetDec = 220;
+          const expectedSubEndOffsetDec = 221;
+          const expectedSubSizeDec = 2;
+
+          it('Then set property: "subsystem"', () => {
+            const expected = new Subsystem(
+              expectedSubStartOffsetDec,
+              expectedSubEndOffsetDec,
+              expectedSubSizeDec,
+              '0003'
+            );
+
+            expect(pe.subsystem).toEqual(expected);
+          });
+
+          it('Then set subsystem as "WindowsCui"', () => {
+            expect(pe.subsystem.type).toBe(SubsystemType.WindowsCui);
+          });
+
+          it('Then set Subsystem hexes', () => {
+            const subsystem = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            subsystem.forEach((element, offset) => {
+              expect(element.isSubsystem()).toBeTruthy(offset);
             });
           });
         });

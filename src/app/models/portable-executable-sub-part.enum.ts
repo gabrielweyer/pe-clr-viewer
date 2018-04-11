@@ -4,6 +4,7 @@ export enum PortableExecutableSubPart {
   MagicNumber,
   AddressOfEntryPoint,
   ImageBase,
+  Subsystem,
   ImportTableDirectorySize,
   ImportTableDirectoryRva,
   ImportAddressTableDirectorySize,

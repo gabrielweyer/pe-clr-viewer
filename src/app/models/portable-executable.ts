@@ -3,6 +3,7 @@ import { HexSegment, Segment, RvaSegment, FileOffsetSegment } from './segment';
 import { DataDirectoryItem } from './data-directory-item';
 import { Byte } from './byte';
 import { CliFlags } from './cli-flags';
+import { Subsystem } from './subsystem';
 
 export class PortableExecutable {
   public dosHeader: Segment;
@@ -16,6 +17,7 @@ export class PortableExecutable {
   public addressOfEntryPoint: RvaSegment;
   public ntSpecificFields: Segment;
   public imageBase: HexSegment;
+  public subsystem: Subsystem;
   public dataDirectories: Segment;
   public importTableDirectory: DataDirectoryItem;
   public importAddressTableDirectory: DataDirectoryItem;

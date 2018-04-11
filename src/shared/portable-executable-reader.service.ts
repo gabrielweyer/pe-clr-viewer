@@ -13,6 +13,7 @@ import { PortableExecutableSubPart } from './../app/models/portable-executable-s
 import { PartVisitor } from '../app/models/part-visitor';
 import { SubPartVisitor } from '../app/models/sub-part-visitor';
 import { CliFlags } from '../app/models/cli-flags';
+import { Subsystem } from '../app/models/subsystem';
 
 export class PortableExecutableReader {
   private readonly file: File;
@@ -115,6 +116,12 @@ export class PortableExecutableReader {
 
     pe.ntSpecificFields = this.file.getSegment(startOffsetDec, sizeDec);
     this.setImageBase(pe, startOffsetDec);
+
+    const subsystemSubOffsetDec = pe.is64Bit
+      ? PortableExecutableConstants.subsystemPE32PlusSubOffsetDec
+      : PortableExecutableConstants.subsystemPE32SubOffsetDec;
+    const subsystemStartOffsetDec = startOffsetDec + subsystemSubOffsetDec;
+    this.setSubsystem(pe, subsystemStartOffsetDec);
   }
 
   private setImageBase(pe: PortableExecutable, startOffsetDec: number) {
@@ -123,6 +130,13 @@ export class PortableExecutableReader {
       : PortableExecutableConstants.imageBasePE32SizeDec;
 
     pe.imageBase = this.file.getHexSegment(startOffsetDec, sizeDec);
+  }
+
+  private setSubsystem(pe: PortableExecutable, startOffsetDec: number) {
+    const sizeDec = PortableExecutableConstants.subsystemSizeDec;
+
+    const subsystem = this.file.getHexSegment(startOffsetDec, sizeDec);
+    pe.subsystem = new Subsystem(subsystem.startOffsetDec, subsystem.endOffsetDec, subsystem.sizeDec, subsystem.hexValue);
   }
 
   private setDataDirectories(pe: PortableExecutable) {

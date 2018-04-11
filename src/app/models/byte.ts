@@ -49,6 +49,10 @@ export class Byte {
     return this.subPart === PortableExecutableSubPart.ImageBase;
   }
 
+  public isSubsystem(): boolean {
+    return this.subPart === PortableExecutableSubPart.Subsystem;
+  }
+
   public isDataDirectories(): boolean {
     return this.part === PortableExecutablePart.DataDirectories;
   }
