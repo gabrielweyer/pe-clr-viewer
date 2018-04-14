@@ -8,6 +8,7 @@ import { CliFlags } from '../app/models/cli-flags';
 import { Subsystem } from '../app/models/subsystem';
 import { SubsystemType } from '../app/models/subsystem-type.enum';
 import { Characteristics } from '../app/models/characteristics';
+import { DllCharacteristics } from '../app/models/dll-characteristics';
 
 describe('PortableExecutableReader', () => {
   describe('Given net461 x86', () => {
@@ -297,6 +298,31 @@ describe('PortableExecutableReader', () => {
 
             subsystem.forEach((element, offset) => {
               expect(element.isSubsystem()).toBeTruthy(offset);
+            });
+          });
+        });
+
+        describe('DLL Characteristics', () => {
+          const expectedSubStartOffsetDec = 222;
+          const expectedSubEndOffsetDec = 223;
+          const expectedSubSizeDec = 2;
+
+          it('Then set property: "dllCharacteristics"', () => {
+            const expected = new DllCharacteristics(
+              expectedSubStartOffsetDec,
+              expectedSubEndOffsetDec,
+              expectedSubSizeDec,
+              '8560'
+            );
+
+            expect(pe.dllCharacteristics).toEqual(expected);
+          });
+
+          it('Then set DLL Characteristics hexes', () => {
+            const dllCharacteristics = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            dllCharacteristics.forEach((element, offset) => {
+              expect(element.isDllCharacteristics()).toBeTruthy(offset);
             });
           });
         });

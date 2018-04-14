@@ -6,6 +6,7 @@ export enum PortableExecutableSubPart {
   AddressOfEntryPoint,
   ImageBase,
   Subsystem,
+  DllCharacteristics,
   ImportTableDirectorySize,
   ImportTableDirectoryRva,
   ImportAddressTableDirectorySize,

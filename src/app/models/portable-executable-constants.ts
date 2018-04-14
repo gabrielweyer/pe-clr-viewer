@@ -40,6 +40,10 @@ export class PortableExecutableConstants {
   public static readonly subsystemPE32PlusSubOffsetDec: number = 44;
   public static readonly subsystemSizeDec: number = 2;
 
+  public static readonly dllCharacteristicsPE32SubOffsetDec: number = 42;
+  public static readonly dllCharacteristicsPE32PlusSubOffsetDec: number = 46;
+  public static readonly dllCharacteristicsSizeDec: number = 2;
+
   public static readonly dataDirectoriesSizeDec: number = 128;
   public static readonly importTableDirectorySubOffsetDec: number = 8;
   public static readonly importAddressTableDirectorySubOffsetDec: number = 96;

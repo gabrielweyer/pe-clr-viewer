@@ -5,6 +5,7 @@ import { Byte } from './byte';
 import { CliFlags } from './cli-flags';
 import { Subsystem } from './subsystem';
 import { Characteristics } from './characteristics';
+import { DllCharacteristics } from './dll-characteristics';
 
 export class PortableExecutable {
   public dosHeader: Segment;
@@ -20,6 +21,7 @@ export class PortableExecutable {
   public ntSpecificFields: Segment;
   public imageBase: HexSegment;
   public subsystem: Subsystem;
+  public dllCharacteristics: DllCharacteristics;
   public dataDirectories: Segment;
   public importTableDirectory: DataDirectoryItem;
   public importAddressTableDirectory: DataDirectoryItem;

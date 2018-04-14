@@ -74,6 +74,7 @@ export class HexesGenerator {
       new SubPartVisitor(pe.addressOfEntryPoint, PortableExecutableSubPart.AddressOfEntryPoint),
       new SubPartVisitor(pe.imageBase, PortableExecutableSubPart.ImageBase),
       new SubPartVisitor(pe.subsystem, PortableExecutableSubPart.Subsystem),
+      new SubPartVisitor(pe.dllCharacteristics, PortableExecutableSubPart.DllCharacteristics),
       new SubPartVisitor(pe.importTableDirectory.size, PortableExecutableSubPart.ImportTableDirectorySize),
       new SubPartVisitor(pe.importTableDirectory.rva, PortableExecutableSubPart.ImportTableDirectoryRva),
       new SubPartVisitor(

@@ -57,6 +57,10 @@ export class Byte {
     return this.subPart === PortableExecutableSubPart.Subsystem;
   }
 
+  public isDllCharacteristics(): boolean {
+    return this.subPart === PortableExecutableSubPart.DllCharacteristics;
+  }
+
   public isDataDirectories(): boolean {
     return this.part === PortableExecutablePart.DataDirectories;
   }

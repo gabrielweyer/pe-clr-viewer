@@ -7,6 +7,7 @@ import { Native_x86 } from '../../tests-data/native-x86';
 import { Subsystem } from '../app/models/subsystem';
 import { SubsystemType } from '../app/models/subsystem-type.enum';
 import { Characteristics } from '../app/models/characteristics';
+import { DllCharacteristics } from '../app/models/dll-characteristics';
 
 describe('PortableExecutableReader', () => {
   describe('Given native x86', () => {
@@ -298,6 +299,31 @@ describe('PortableExecutableReader', () => {
 
             subsystem.forEach((element, offset) => {
               expect(element.isSubsystem()).toBeTruthy(offset);
+            });
+          });
+        });
+
+        describe('DLL Characteristics', () => {
+          const expectedSubStartOffsetDec = 342;
+          const expectedSubEndOffsetDec = 343;
+          const expectedSubSizeDec = 2;
+
+          it('Then set property: "dllCharacteristics"', () => {
+            const expected = new DllCharacteristics(
+              expectedSubStartOffsetDec,
+              expectedSubEndOffsetDec,
+              expectedSubSizeDec,
+              '8140'
+            );
+
+            expect(pe.dllCharacteristics).toEqual(expected);
+          });
+
+          it('Then set DLL Characteristics hexes', () => {
+            const dllCharacteristics = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            dllCharacteristics.forEach((element, offset) => {
+              expect(element.isDllCharacteristics()).toBeTruthy(offset);
             });
           });
         });

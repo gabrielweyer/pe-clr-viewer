@@ -15,6 +15,7 @@ import { SubPartVisitor } from '../app/models/sub-part-visitor';
 import { CliFlags } from '../app/models/cli-flags';
 import { Subsystem } from '../app/models/subsystem';
 import { Characteristics } from '../app/models/characteristics';
+import { DllCharacteristics } from '../app/models/dll-characteristics';
 
 export class PortableExecutableReader {
   private readonly file: File;
@@ -137,6 +138,12 @@ export class PortableExecutableReader {
       : PortableExecutableConstants.subsystemPE32SubOffsetDec;
     const subsystemStartOffsetDec = startOffsetDec + subsystemSubOffsetDec;
     this.setSubsystem(pe, subsystemStartOffsetDec);
+
+    const dllCharacteristicsSubOffsetDec = pe.is64Bit
+      ? PortableExecutableConstants.dllCharacteristicsPE32PlusSubOffsetDec
+      : PortableExecutableConstants.dllCharacteristicsPE32SubOffsetDec;
+    const dllCharacteristicsStartOffsetDec = startOffsetDec + dllCharacteristicsSubOffsetDec;
+    this.setDllCharacteristics(pe, dllCharacteristicsStartOffsetDec);
   }
 
   private setImageBase(pe: PortableExecutable, startOffsetDec: number) {
@@ -156,6 +163,18 @@ export class PortableExecutableReader {
       subsystem.endOffsetDec,
       subsystem.sizeDec,
       subsystem.hexValue
+    );
+  }
+
+  private setDllCharacteristics(pe: PortableExecutable, startOffsetDec: number) {
+    const sizeDec = PortableExecutableConstants.dllCharacteristicsSizeDec;
+
+    const dllCharacteristics = this.file.getHexSegment(startOffsetDec, sizeDec);
+    pe.dllCharacteristics = new DllCharacteristics(
+      dllCharacteristics.startOffsetDec,
+      dllCharacteristics.endOffsetDec,
+      dllCharacteristics.sizeDec,
+      dllCharacteristics.hexValue
     );
   }
 

@@ -45,7 +45,7 @@
     <span class="error" *ngIf="pe === null">This file is not a Portable Executable.</span>
   </div>
   <div class="bytes-container" >
-    <div class="bytes" *ngIf="pe">
+    <div class="bytes" *ngIf="pe && !isReading">
       <span class="offset unit">Offset</span>
       <span class="unit">00</span>
       <span class="unit">01</span>
@@ -78,6 +78,7 @@
       'nt-specific-fields': hex.isNtSpecificFields(),
       'image-base': hex.isImageBase(),
       'subsystem': hex.isSubsystem(),
+      'dll-characteristics': hex.isDllCharacteristics(),
       'data-directories': hex.isDataDirectories(),
       'import-table-directory-size': hex.isImportTableDirectorySize(),
       'import-table-directory-rva': hex.isImportTableDirectoryRva(),
@@ -99,7 +100,7 @@
     }">{{hex.value | byte | leftpad:2 }}</span>
       </ng-template>
     </div>
-    <div class="bytes-legend" *ngIf="pe">
+    <div class="bytes-legend" *ngIf="pe && !isReading">
       <app-section-container [isExpanded]="false">
         <div class="part">
           <h2>
@@ -202,6 +203,16 @@
             <span class="mono-font nt-specific-fields subsystem">{{pe.subsystem.hexValue | hex}}</span> (<em>{{pe.subsystem.type | subsystem}}</em>
             - see <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx#windows_subsystem'">Windows Subsystem</app-link>).
             For PE32, the offset is {{peConstants.subsystemPE32SubOffsetDec}}; for PE32+ it is {{peConstants.subsystemPE32PlusSubOffsetDec}}.
+          </p>
+          <p>The
+            <span class="nt-specific-fields dll-characteristics">DLL characteristics</span> ({{peConstants.dllCharacteristicsSizeDec}} bytes)
+            are located at offset {{pe.is64Bit ? peConstants.dllCharacteristicsPE32PlusSubOffsetDec : peConstants.dllCharacteristicsPE32SubOffsetDec}}
+            of the <span class="nt-specific-fields">NT specific fields</span> and have a value of
+            <span class="mono-font nt-specific-fields dll-characteristics">{{pe.dllCharacteristics.hexValue | hex}}</span>. The
+            <span class="nt-specific-fields dll-characteristics">characteristics</span> are documented
+            <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx#dll_characteristics'">here</app-link>
+            (leveraging <app-link [href]="'https://en.wikipedia.org/wiki/Mask_(computing)'">bitmask</app-link>):
+            {{pe.dllCharacteristics.type | dllCharacteristics }}
           </p>
           <p>For PE32, the size of the <span class="nt-specific-fields">NT specific fields header</span> is {{peConstants.ntSpecificFieldsPE32SizeDec}} bytes;
             for PE32+ it is {{peConstants.ntSpecificFieldsPE32PlusSizeDec}} bytes.</p>
