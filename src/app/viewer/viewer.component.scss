@@ -1,0 +1,42 @@
+@import '~variables.scss';
+
+.bytes {
+  font-family: $mono-font-family;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 0 36%;
+  min-width: 630px;
+  align-content: flex-start;
+}
+
+@import '~bytes.scss';
+
+.bytes-legend {
+  display: flex;
+  flex-direction: column;
+  font-size: $mono-font-size-small + 1;
+  line-height: 1.2em;
+
+  h2 {
+    font-size: $font-size-big - 1;
+    margin-top: 0;
+  }
+
+  .mono-font {
+    font-size: $mono-font-size-small + 1;
+  }
+
+  .part {
+    :last-child {
+      margin-bottom: 0;
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

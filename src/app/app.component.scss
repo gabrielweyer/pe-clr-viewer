@@ -5,42 +5,8 @@
   position: relative;
 }
 
-.mono-font {
-  font-family: $mono-font-family;
-  font-size: $mono-font-size-normal;
-  background-color: #eee;
-  border-radius: 5px;
-  padding: 0 5px;
-  color: #7a7a7a;
-}
-
 .upload-container {
   padding-bottom: 1em;
-
-  input[type='file'] {
-    display: none;
-  }
-
-  .custom-file-upload {
-    color: $action-color;
-    border: 1px solid $action-border-color;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-
-    &.disabled {
-      color: $action-disabled-color;
-      border: 1px solid $action-disabled-border-color;
-      cursor: default;
-    }
-  }
-
-  .error {
-    display: block;
-    color: #ff291e;
-    font-size: $font-size-small;
-    font-style: italic;
-  }
 }
 
 .bytes-container {
@@ -49,47 +15,6 @@
 
   @include lg {
     padding-bottom: 15em;
-  }
-
-  .bytes {
-    font-family: $mono-font-family;
-    display: flex;
-    flex-wrap: wrap;
-    flex: 1 0 36%;
-    min-width: 630px;
-    align-content: flex-start;
-  }
-
-  @import '~bytes.scss';
-
-  .bytes-legend {
-    display: flex;
-    flex-direction: column;
-    font-size: $mono-font-size-small + 1;
-    line-height: 1.2em;
-
-    h2 {
-      font-size: $font-size-big - 1;
-      margin-top: 0;
-    }
-
-    .mono-font {
-      font-size: $mono-font-size-small + 1;
-    }
-
-    .part {
-      :last-child {
-        margin-bottom: 0;
-      }
-
-      &:first-child {
-        margin-top: 0;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
   }
 }
 
@@ -106,25 +31,4 @@
   font-size: $font-size-small;
   text-align: center;
   padding: 4em 0;
-
-  .mono-font {
-    font-size: $mono-font-size-small;
-  }
-
-  p {
-    line-height: 1em;
-    padding: 0 18%;
-
-    @include lg {
-      padding: 0 5px;
-    }
-
-    &:first-child {
-      margin-top: 0;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
 }

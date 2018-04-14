@@ -18,6 +18,10 @@ import { LinkComponent } from './link/link.component';
 import { SectionContainerComponent } from './section-container/section-container.component';
 import { DllCharacteristicsPipe } from '../shared/dll-characteristics.pipe';
 import { BytesContainerComponent } from './bytes-container/bytes-container.component';
+import { ViewerComponent } from './viewer/viewer.component';
+import { GuideContainerComponent } from './guide-container/guide-container.component';
+import { DisclaimerContainerComponent } from './disclaimer-container/disclaimer-container.component';
+import { UploadContainerComponent } from './upload-container/upload-container.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,11 @@ import { BytesContainerComponent } from './bytes-container/bytes-container.compo
     SectionContainerComponent,
     CharacteristicsPipe,
     DllCharacteristicsPipe,
-    BytesContainerComponent
+    BytesContainerComponent,
+    ViewerComponent,
+    GuideContainerComponent,
+    DisclaimerContainerComponent,
+    UploadContainerComponent
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule],
   providers: [

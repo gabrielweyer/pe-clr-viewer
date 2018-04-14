@@ -1,0 +1,22 @@
+@import '~variables.scss';
+
+.mono-font {
+  font-size: $mono-font-size-small;
+}
+
+p {
+  line-height: 1em;
+  padding: 0 18%;
+
+  @include lg {
+    padding: 0 5px;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

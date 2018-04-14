@@ -1,0 +1,26 @@
+@import '~variables.scss';
+
+input[type='file'] {
+  display: none;
+}
+
+.custom-file-upload {
+  color: $action-color;
+  border: 1px solid $action-border-color;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  &.disabled {
+    color: $action-disabled-color;
+    border: 1px solid $action-disabled-border-color;
+    cursor: default;
+  }
+}
+
+.error {
+  display: block;
+  color: #ff291e;
+  font-size: $font-size-small;
+  font-style: italic;
+}
