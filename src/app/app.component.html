@@ -44,67 +44,8 @@
     <input id="file-upload" type="file" (change)="fileChanged($event)" [disabled]="isReading">
     <span class="error" *ngIf="pe === null">This file is not a Portable Executable.</span>
   </div>
-  <div class="bytes-container" >
-    <div class="bytes" *ngIf="pe && !isReading">
-      <span class="offset unit">Offset</span>
-      <span class="unit">00</span>
-      <span class="unit">01</span>
-      <span class="unit">02</span>
-      <span class="unit">03</span>
-      <span class="unit">04</span>
-      <span class="unit">05</span>
-      <span class="unit">06</span>
-      <span class="unit">07</span>
-      <span class="unit">08</span>
-      <span class="unit">09</span>
-      <span class="unit">0A</span>
-      <span class="unit">0B</span>
-      <span class="unit">0C</span>
-      <span class="unit">0D</span>
-      <span class="unit">0E</span>
-      <span class="unit">0F</span>
-      <ng-template ngFor let-hex [ngForOf]="pe.hexes" let-i="index">
-        <span *ngIf="i % 16 === 0" class="offset unit">{{i | byte | leftpad:8 }}</span>
-        <span [ngClass]="{
-      'dos-header': hex.isDosHeader(),
-      'signature-offset': hex.isSignatureOffset(),
-      'signature': hex.isSignature(),
-      'coff-header': hex.isCoffHeader(),
-      'characteristics': hex.isCharacteristics(),
-      'standard-fields': hex.isStandardFields(),
-      'magic-number': hex.isMagicNumber(),
-      'address-entry-point': hex.isAddressOfEntryPoint(),
-      'dos-stub': hex.isDosStub(),
-      'nt-specific-fields': hex.isNtSpecificFields(),
-      'image-base': hex.isImageBase(),
-      'subsystem': hex.isSubsystem(),
-      'dll-characteristics': hex.isDllCharacteristics(),
-      'data-directories': hex.isDataDirectories(),
-      'import-table-directory-size': hex.isImportTableDirectorySize(),
-      'import-table-directory-rva': hex.isImportTableDirectoryRva(),
-      'import-address-table-directory-size': hex.isImportAddressTableDirectorySize(),
-      'import-address-table-directory-rva': hex.isImportAddressTableDirectoryRva(),
-      'cli-header-directory-size': hex.isCliHeaderDirectorySize(),
-      'cli-header-directory-rva': hex.isCliHeaderDirectoryRva(),
-      'text-section-header': hex.isTextSectionHeader(),
-      'rsrc-section-header': hex.isRsrcSectionHeader(),
-      'reloc-section-header': hex.isRelocSectionHeader(),
-      'text-base-rva': hex.isTextBaseRva(),
-      'text-file-offset': hex.isTextFileOffset(),
-      'rsrc-base-rva': hex.isRsrcBaseRva(),
-      'rsrc-file-offset': hex.isRsrcFileOffset(),
-      'reloc-base-rva': hex.isRelocBaseRva(),
-      'reloc-file-offset': hex.isRelocFileOffset(),
-      'cli-header': hex.isCliHeader(),
-      'cli-metadata-header-directory-size': hex.isCliMetadataHeaderDirectorySize(),
-      'cli-metadata-header-directory-rva': hex.isCliMetadataHeaderDirectoryRva(),
-      'cli-flags': hex.isCliFlags(),
-      'cli-metadata-header': hex.isCliMetadataHeader(),
-      'clr-version-size': hex.isClrVersionSize(),
-      'clr-version': hex.isClrVersion()
-    }">{{hex.value | byte | leftpad:2 }}</span>
-      </ng-template>
-    </div>
+  <div class="bytes-container">
+    <app-bytes-container class="bytes" *ngIf="pe && !isReading" [bytes]="pe.hexes"></app-bytes-container>
     <div class="bytes-legend" *ngIf="pe && !isReading">
       <app-section-container [isExpanded]="false">
         <div class="part">
@@ -115,11 +56,12 @@
             <span class="mono-font">00000000</span> to
             <span class="mono-font">0000003F</span>
           </p>
-          <p>We don't really care about this one except for the
+          <p>
+            We don't really care about this one except for the
             <span class="dos-header signature-offset">signature offset</span> ({{peConstants.signatureOffsetSizeDec}} bytes) which value is
-            <span class="mono-font dos-header signature-offset">{{pe.signatureOffset.fileOffset | byte | leftpad:8}}</span>.</p>
-          <p>We ignore the
-            <span class="dos-stub">DOS stub</span> and go to the signature.</p>
+            <span class="mono-font dos-header signature-offset">{{pe.signatureOffset.fileOffset | byte | leftpad:8}}</span>. We ignore the
+            <span class="dos-stub">DOS stub</span> and go to the signature.
+          </p>
         </div>
       </app-section-container>
       <app-section-container [isExpanded]="false">

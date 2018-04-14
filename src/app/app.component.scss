@@ -1,7 +1,5 @@
 @import '~variables.scss';
 
-$mono-font-family: 'Consolas';
-
 .container {
   min-height: 100%;
   position: relative;
@@ -53,153 +51,6 @@ $mono-font-family: 'Consolas';
     padding-bottom: 15em;
   }
 
-  span {
-    &.dos-header {
-      color: #538135;
-    }
-
-    &.signature-offset {
-      background-color: #ffff00;
-    }
-
-    &.dos-stub {
-      color: #cc7d38;
-    }
-
-    &.signature {
-      color: #2e75b5;
-    }
-
-    &.coff-header {
-      color: #922700;
-    }
-
-    &.characteristics {
-      background-color: #55C433;
-    }
-
-    &.standard-fields {
-      color: #00b0f0;
-    }
-
-    &.magic-number {
-      background-color: #ccffcc;
-    }
-
-    &.address-entry-point {
-      background-color: #9df3f4;
-    }
-
-    &.nt-specific-fields {
-      color: #359357;
-    }
-
-    &.image-base {
-      background-color: #000;
-    }
-
-    &.subsystem {
-      background-color: #283587;
-    }
-
-    &.dll-characteristics {
-      background-color: #872864;
-    }
-
-    &.data-directories {
-      color: #634491;
-    }
-
-    &.import-table-directory-size {
-      background-color: #ff57ff;
-    }
-
-    &.import-table-directory-rva {
-      background-color: #d23dff;
-    }
-
-    &.import-address-table-directory-size {
-      background-color: #42e666;
-    }
-
-    &.import-address-table-directory-rva {
-      background-color: #9dff5b;
-    }
-
-    &.cli-header-directory-size {
-      background-color: #ffac5e;
-    }
-
-    &.cli-header-directory-rva {
-      background-color: #ffe678;
-    }
-
-    &.text-section-header {
-      color: #29b000;
-    }
-
-    &.text-base-rva {
-      background-color: #ffdb29;
-    }
-
-    &.text-file-offset {
-      background-color: #fffe27;
-    }
-
-    &.rsrc-section-header {
-      color: #ff291e;
-    }
-
-    &.rsrc-base-rva {
-      background-color: #0004ff;
-    }
-
-    &.rsrc-file-offset {
-      background-color: #4dc1ff;
-    }
-
-    &.reloc-section-header {
-      color: #0004ff;
-    }
-
-    &.reloc-base-rva {
-      background-color: #f31d12;
-    }
-
-    &.reloc-file-offset {
-      background-color: #ff6e3d;
-    }
-
-    &.cli-header {
-      color: #b684ff;
-    }
-
-    &.cli-metadata-header-directory-size {
-      background-color: #354294;
-    }
-
-    &.cli-metadata-header-directory-rva {
-      background-color: #5b68ba;
-    }
-
-    &.cli-flags {
-      background-color: #ff9fab;
-    }
-
-    &.cli-metadata-header {
-      color: #fff;
-      background-color: #000;
-    }
-
-    &.clr-version-size {
-      background-color: #f31d12;
-    }
-
-    &.clr-version {
-      background-color: #0004ff;
-    }
-  }
-
   .bytes {
     font-family: $mono-font-family;
     display: flex;
@@ -207,25 +58,9 @@ $mono-font-family: 'Consolas';
     flex: 1 0 36%;
     min-width: 630px;
     align-content: flex-start;
-
-    span {
-      flex: 1 0 5.5%;
-      font-size: $mono-font-size-normal;
-      line-height: 1.5em;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      &.offset {
-        flex: 1 0 12%;
-        justify-content: flex-start;
-      }
-
-      &.unit {
-        font-weight: bolder;
-      }
-    }
   }
+
+  @import '~bytes.scss';
 
   .bytes-legend {
     display: flex;

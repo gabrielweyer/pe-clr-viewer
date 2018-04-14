@@ -1,0 +1,21 @@
+@import '~variables.scss';
+
+span {
+  flex: 1 0 5.5%;
+  font-size: $mono-font-size-normal;
+  line-height: 1.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &.offset {
+    flex: 1 0 12%;
+    justify-content: flex-start;
+  }
+
+  &.unit {
+    font-weight: bolder;
+  }
+}
+
+@import '~bytes.scss';

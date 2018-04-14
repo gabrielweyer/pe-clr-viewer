@@ -17,6 +17,7 @@ import { AppConfig } from './../shared/app.config';
 import { LinkComponent } from './link/link.component';
 import { SectionContainerComponent } from './section-container/section-container.component';
 import { DllCharacteristicsPipe } from '../shared/dll-characteristics.pipe';
+import { BytesContainerComponent } from './bytes-container/bytes-container.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { DllCharacteristicsPipe } from '../shared/dll-characteristics.pipe';
     SubsystemPipe,
     SectionContainerComponent,
     CharacteristicsPipe,
-    DllCharacteristicsPipe
+    DllCharacteristicsPipe,
+    BytesContainerComponent
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule],
   providers: [
