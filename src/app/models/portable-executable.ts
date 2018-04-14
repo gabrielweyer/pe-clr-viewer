@@ -4,6 +4,7 @@ import { DataDirectoryItem } from './data-directory-item';
 import { Byte } from './byte';
 import { CliFlags } from './cli-flags';
 import { Subsystem } from './subsystem';
+import { Characteristics } from './characteristics';
 
 export class PortableExecutable {
   public dosHeader: Segment;
@@ -11,9 +12,10 @@ export class PortableExecutable {
   public dosStub: Segment;
   public signature: Segment;
   public coffHeader: Segment;
+  public characteristics: Characteristics;
+  public standardFields: Segment;
   public magicNumber: HexSegment;
   public is64Bit: boolean;
-  public standardFields: Segment;
   public addressOfEntryPoint: RvaSegment;
   public ntSpecificFields: Segment;
   public imageBase: HexSegment;

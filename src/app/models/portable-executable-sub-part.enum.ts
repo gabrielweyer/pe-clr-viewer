@@ -1,6 +1,7 @@
 export enum PortableExecutableSubPart {
   None,
   SignatureOffset,
+  Characteristics,
   MagicNumber,
   AddressOfEntryPoint,
   ImageBase,

@@ -69,6 +69,7 @@ export class HexesGenerator {
 
     visitors.push(
       new SubPartVisitor(pe.signatureOffset, PortableExecutableSubPart.SignatureOffset),
+      new SubPartVisitor(pe.characteristics, PortableExecutableSubPart.Characteristics),
       new SubPartVisitor(pe.magicNumber, PortableExecutableSubPart.MagicNumber),
       new SubPartVisitor(pe.addressOfEntryPoint, PortableExecutableSubPart.AddressOfEntryPoint),
       new SubPartVisitor(pe.imageBase, PortableExecutableSubPart.ImageBase),

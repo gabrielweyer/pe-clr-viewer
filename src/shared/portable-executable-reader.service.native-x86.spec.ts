@@ -6,6 +6,7 @@ import { PortableExecutableReader } from './portable-executable-reader.service';
 import { Native_x86 } from '../../tests-data/native-x86';
 import { Subsystem } from '../app/models/subsystem';
 import { SubsystemType } from '../app/models/subsystem-type.enum';
+import { Characteristics } from '../app/models/characteristics';
 
 describe('PortableExecutableReader', () => {
   describe('Given native x86', () => {
@@ -125,6 +126,31 @@ describe('PortableExecutableReader', () => {
 
           coffHeader.forEach((element, offset) => {
             expect(element.isCoffHeader()).toBeTruthy(offset);
+          });
+        });
+
+        describe('Characteristics', () => {
+          const expectedSubStartOffsetDec = 270;
+          const expectedSubEndOffsetDec = 271;
+          const expectedSubSizeDec = 2;
+
+          it('Then set property: "characteristics"', () => {
+            const expected = new Characteristics(
+              expectedSubStartOffsetDec,
+              expectedSubEndOffsetDec,
+              expectedSubSizeDec,
+              '0122'
+            );
+
+            expect(pe.characteristics).toEqual(expected);
+          });
+
+          it('Then set characteristics hexes', () => {
+            const characteristics = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            characteristics.forEach((element, offset) => {
+              expect(element.isCharacteristics()).toBeTruthy(offset);
+            });
           });
         });
       });

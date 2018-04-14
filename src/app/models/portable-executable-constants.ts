@@ -19,6 +19,8 @@ export class PortableExecutableConstants {
   public static readonly signatureSizeDec: number = 4;
 
   public static readonly coffHeaderSizeDec = 20;
+  public static readonly characteristicsSubOffsetDec = 18;
+  public static readonly characteristicsSizeDec = 2;
 
   public static readonly magicNumberSizeDec = 2;
 

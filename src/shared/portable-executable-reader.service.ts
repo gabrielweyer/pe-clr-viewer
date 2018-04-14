@@ -14,6 +14,7 @@ import { PartVisitor } from '../app/models/part-visitor';
 import { SubPartVisitor } from '../app/models/sub-part-visitor';
 import { CliFlags } from '../app/models/cli-flags';
 import { Subsystem } from '../app/models/subsystem';
+import { Characteristics } from '../app/models/characteristics';
 
 export class PortableExecutableReader {
   private readonly file: File;
@@ -76,6 +77,20 @@ export class PortableExecutableReader {
     const coffHeaderStartOffsetDec = pe.signature.endOffsetDec + 1;
 
     pe.coffHeader = this.file.getSegment(coffHeaderStartOffsetDec, PortableExecutableConstants.coffHeaderSizeDec);
+
+    const characteristicsStartOffsetDec =
+      coffHeaderStartOffsetDec + PortableExecutableConstants.characteristicsSubOffsetDec;
+    this.setCharacteristics(pe, characteristicsStartOffsetDec);
+  }
+
+  private setCharacteristics(pe: PortableExecutable, startOffsetDec: number) {
+    const characteristics = this.file.getHexSegment(startOffsetDec, PortableExecutableConstants.characteristicsSizeDec);
+    pe.characteristics = new Characteristics(
+      characteristics.startOffsetDec,
+      characteristics.endOffsetDec,
+      characteristics.sizeDec,
+      characteristics.hexValue
+    );
   }
 
   private setStandardFields(pe: PortableExecutable) {
@@ -136,7 +151,12 @@ export class PortableExecutableReader {
     const sizeDec = PortableExecutableConstants.subsystemSizeDec;
 
     const subsystem = this.file.getHexSegment(startOffsetDec, sizeDec);
-    pe.subsystem = new Subsystem(subsystem.startOffsetDec, subsystem.endOffsetDec, subsystem.sizeDec, subsystem.hexValue);
+    pe.subsystem = new Subsystem(
+      subsystem.startOffsetDec,
+      subsystem.endOffsetDec,
+      subsystem.sizeDec,
+      subsystem.hexValue
+    );
   }
 
   private setDataDirectories(pe: PortableExecutable) {
@@ -212,7 +232,9 @@ export class PortableExecutableReader {
   }
 
   private setCliHeader(pe: PortableExecutable) {
-    if (!pe.isManaged) { return; }
+    if (!pe.isManaged) {
+      return;
+    }
 
     const cliHeaderStartOffsetDec =
       HexHelper.getDecimal(pe.textSectionItem.fileOffset.fileOffset) +

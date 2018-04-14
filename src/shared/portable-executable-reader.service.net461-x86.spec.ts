@@ -7,6 +7,7 @@ import { Net461_x86 } from '../../tests-data/net461-x86';
 import { CliFlags } from '../app/models/cli-flags';
 import { Subsystem } from '../app/models/subsystem';
 import { SubsystemType } from '../app/models/subsystem-type.enum';
+import { Characteristics } from '../app/models/characteristics';
 
 describe('PortableExecutableReader', () => {
   describe('Given net461 x86', () => {
@@ -124,6 +125,31 @@ describe('PortableExecutableReader', () => {
 
           coffHeader.forEach((element, offset) => {
             expect(element.isCoffHeader()).toBeTruthy(offset);
+          });
+        });
+
+        describe('Characteristics', () => {
+          const expectedSubStartOffsetDec = 150;
+          const expectedSubEndOffsetDec = 151;
+          const expectedSubSizeDec = 2;
+
+          it('Then set property: "characteristics"', () => {
+            const expected = new Characteristics(
+              expectedSubStartOffsetDec,
+              expectedSubEndOffsetDec,
+              expectedSubSizeDec,
+              '0102'
+            );
+
+            expect(pe.characteristics).toEqual(expected);
+          });
+
+          it('Then set characteristics hexes', () => {
+            const characteristics = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            characteristics.forEach((element, offset) => {
+              expect(element.isCharacteristics()).toBeTruthy(offset);
+            });
           });
         });
       });

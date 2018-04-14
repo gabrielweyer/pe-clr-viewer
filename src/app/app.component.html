@@ -70,6 +70,7 @@
       'signature-offset': hex.isSignatureOffset(),
       'signature': hex.isSignature(),
       'coff-header': hex.isCoffHeader(),
+      'characteristics': hex.isCharacteristics(),
       'standard-fields': hex.isStandardFields(),
       'magic-number': hex.isMagicNumber(),
       'address-entry-point': hex.isAddressOfEntryPoint(),
@@ -126,11 +127,28 @@
           </p>
           <p>We couldn't care less about the
             <span class="signature">signature</span> because it's always the same. It's only use is to mark the beginning of the sections we're interested
-            in. The
-            <span class="signature">signature</span> is directly followed by the
-            <span class="coff-header">COFF header / PE file header ({{peConstants.coffHeaderSizeDec}} bytes)</span> which we skip to go to the
-            <span class="standard-fields">standard fields
-            </span>.
+            in.
+          </p>
+        </div>
+      </app-section-container>
+      <app-section-container [isExpanded]="false">
+        <div class="part">
+          <h2>
+            <span class="coff-header">COFF header / PE file header ({{peConstants.coffHeaderSizeDec}} bytes)</span>
+          </h2>
+          <p>From
+            <span class="mono-font">{{pe.coffHeader.startOffsetDec | byte | leftpad:8 }}</span> to
+            <span class="mono-font">{{pe.coffHeader.endOffsetDec | byte | leftpad:8 }}</span>
+          </p>
+          <p>The
+            <span class="coff-header characteristics">characteristics</span> ({{peConstants.characteristicsSizeDec}} bytes)
+            are located at offset {{peConstants.characteristicsSubOffsetDec}} of the
+            <span class="coff-header">COFF header</span> and have a value of
+            <span class="mono-font coff-header characteristics">{{pe.characteristics.hexValue | hex}}</span>. The
+            <span class="coff-header characteristics">characteristics</span> are documented
+            <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx#characteristics'">here</app-link>
+            (leveraging <app-link [href]="'https://en.wikipedia.org/wiki/Mask_(computing)'">bitmask</app-link>):
+            {{pe.characteristics.type | characteristics }}
           </p>
         </div>
       </app-section-container>

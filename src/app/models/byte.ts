@@ -29,6 +29,10 @@ export class Byte {
     return this.part === PortableExecutablePart.CoffHeader;
   }
 
+  public isCharacteristics(): boolean {
+    return this.subPart === PortableExecutableSubPart.Characteristics;
+  }
+
   public isStandardFields(): boolean {
     return this.part === PortableExecutablePart.StandardFields;
   }
