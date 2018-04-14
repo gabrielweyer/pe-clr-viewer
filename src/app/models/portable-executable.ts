@@ -1,5 +1,5 @@
 import { SectionItem } from './section-item';
-import { HexSegment, Segment, RvaSegment, FileOffsetSegment } from './segment';
+import { HexSegment, Segment, RvaSegment, FileOffsetSegment, AsciiSegment } from './segment';
 import { DataDirectoryItem } from './data-directory-item';
 import { Byte } from './byte';
 import { CliFlags } from './cli-flags';
@@ -36,5 +36,9 @@ export class PortableExecutable {
   public cliHeaderSize: number;
   public cliHeader: Segment;
   public cliFlags: CliFlags;
+  public cliMetadataHeaderDirectory: DataDirectoryItem;
+  public cliMetadataHeader: Segment;
+  public clrVersionSize: HexSegment;
+  public clrVersion: AsciiSegment;
   public hexes: Byte[];
 }

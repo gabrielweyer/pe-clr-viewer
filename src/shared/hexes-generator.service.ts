@@ -25,7 +25,15 @@ export class HexesGenerator {
   }
 
   private static getEndOffsetDec(pe: PortableExecutable): number {
-    let endOffsetDec = pe.isManaged ? pe.cliHeader.endOffsetDec : pe.dataDirectories.endOffsetDec;
+    let endOffsetDec = pe.dataDirectories.endOffsetDec;
+
+    if (pe.isManaged) {
+      if (pe.cliMetadataHeader.sizeDec > 5000) {
+        endOffsetDec = pe.cliHeader.endOffsetDec;
+      } else {
+        endOffsetDec = pe.cliMetadataHeader.endOffsetDec;
+      }
+    }
 
     const remainder = (endOffsetDec + 1) % 16;
 
@@ -50,6 +58,7 @@ export class HexesGenerator {
     visitors.push(new PartVisitor(pe.rsrcSectionHeader, PortableExecutablePart.RsrcSectionHeader));
     visitors.push(new PartVisitor(pe.relocSectionHeader, PortableExecutablePart.RelocSectionHeader));
     visitors.push(new PartVisitor(pe.cliHeader, PortableExecutablePart.CliHeader));
+    visitors.push(new PartVisitor(pe.cliMetadataHeader, PortableExecutablePart.CliMetadataHeader));
 
     return visitors;
   }
@@ -89,9 +98,18 @@ export class HexesGenerator {
       new SubPartVisitor(pe.rsrcSectionItem.baseRva, PortableExecutableSubPart.RsrcBaseRva),
       new SubPartVisitor(pe.rsrcSectionItem.fileOffset, PortableExecutableSubPart.RsrcFileOffset),
       new SubPartVisitor(pe.relocSectionItem.baseRva, PortableExecutableSubPart.RelocBaseRva),
-      new SubPartVisitor(pe.relocSectionItem.fileOffset, PortableExecutableSubPart.RelocFileOffset),
-      new SubPartVisitor(pe.cliFlags, PortableExecutableSubPart.CliFlags)
+      new SubPartVisitor(pe.relocSectionItem.fileOffset, PortableExecutableSubPart.RelocFileOffset)
     );
+
+    if (pe.isManaged) {
+      visitors.push(
+        new SubPartVisitor(pe.cliMetadataHeaderDirectory.size, PortableExecutableSubPart.CliMetadataHeaderDirectorySize),
+        new SubPartVisitor(pe.cliMetadataHeaderDirectory.rva, PortableExecutableSubPart.CliMetadataHeaderDirectoryRva),
+        new SubPartVisitor(pe.cliFlags, PortableExecutableSubPart.CliFlags),
+        new SubPartVisitor(pe.clrVersionSize, PortableExecutableSubPart.ClrVersionSize),
+        new SubPartVisitor(pe.clrVersion, PortableExecutableSubPart.ClrVersion)
+      );
+    }
 
     return visitors;
   }

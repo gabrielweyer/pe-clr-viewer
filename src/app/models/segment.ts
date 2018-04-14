@@ -38,3 +38,14 @@ export class RvaSegment extends Segment {
     super(startOffsetDec, sizeDec, endOffsetDec);
   }
 }
+
+export class AsciiSegment extends Segment {
+  constructor(
+    public readonly startOffsetDec: number,
+    public readonly endOffsetDec: number,
+    public readonly sizeDec: number,
+    public readonly text: string
+  ) {
+    super(startOffsetDec, sizeDec, endOffsetDec);
+  }
+}

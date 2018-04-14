@@ -53,6 +53,11 @@ export class PortableExecutableConstants {
   public static readonly baseRvaSubOffsetDec: number = 12;
   public static readonly fileOffsetSubOffsetDec: number = 20;
 
+  public static readonly cliMetadataHeaderDirectorySubOffsetDec: number = 8;
+
   public static readonly cliFlagsSubOffsetDec: number = 16;
   public static readonly cliFlagsSizeDec: number = 4;
+
+  public static readonly clrVersionSizeSubOffsetDec: number = 12;
+  public static readonly clrVersionSizeSizeDec: number = 4;
 }

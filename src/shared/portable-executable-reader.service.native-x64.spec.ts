@@ -653,8 +653,22 @@ describe('PortableExecutableReader', () => {
           expect(pe.cliHeader).toBeUndefined();
         });
 
+        it('Then does not set property: "cliMetadataHeaderDirectory"', () => {
+          expect(pe.cliMetadataHeaderDirectory).toBeUndefined();
+        });
+
         it('Then does not set property: "cliFlags"', () => {
           expect(pe.cliFlags).toBeUndefined();
+        });
+      });
+
+      describe('CLI metadata header', () => {
+        it('Then does not set property: "cliMetadataHeader"', () => {
+          expect(pe.cliMetadataHeader).toBeUndefined();
+        });
+
+        it('Then does not set property: "clrVersionSize"', () => {
+          expect(pe.clrVersionSize).toBeUndefined();
         });
       });
     });

@@ -174,8 +174,29 @@ $mono-font-family: 'Consolas';
       color: #b684ff;
     }
 
+    &.cli-metadata-header-directory-size {
+      background-color: #354294;
+    }
+
+    &.cli-metadata-header-directory-rva {
+      background-color: #5b68ba;
+    }
+
     &.cli-flags {
       background-color: #ff9fab;
+    }
+
+    &.cli-metadata-header {
+      color: #fff;
+      background-color: #000;
+    }
+
+    &.clr-version-size {
+      background-color: #f31d12;
+    }
+
+    &.clr-version {
+      background-color: #0004ff;
     }
   }
 

@@ -10,5 +10,6 @@ export enum PortableExecutablePart {
   TextSectionHeader,
   RsrcSectionHeader,
   RelocSectionHeader,
-  CliHeader
+  CliHeader,
+  CliMetadataHeader
 }

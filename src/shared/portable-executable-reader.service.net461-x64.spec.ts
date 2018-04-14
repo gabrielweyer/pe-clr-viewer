@@ -1,7 +1,7 @@
 import { CliFlags } from './../app/models/cli-flags';
 import { SectionItem } from './../app/models/section-item';
 import { DataDirectoryItem } from './../app/models/data-directory-item';
-import { FileOffsetSegment, Segment, HexSegment, RvaSegment } from './../app/models/segment';
+import { FileOffsetSegment, Segment, HexSegment, RvaSegment, AsciiSegment } from './../app/models/segment';
 import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutableReader } from './portable-executable-reader.service';
 import { Net461_x64 } from '../../tests-data/net461-x64';
@@ -665,10 +665,111 @@ describe('PortableExecutableReader', () => {
           });
         });
 
+        describe('CLI Metadata header directory', () => {
+          const expectedRvaStartOffsetDec = 520;
+          const expectedRvaEndOffsetDec = 523;
+          const expectedHexStartOffsetDec = 524;
+          const expectedHexEndOffsetDec = 527;
+          const expectedSubSubSizeDec = 4;
+
+          it('Then set property: "cliMetadataHeaderDirectory"', () => {
+            const expectedRva = new RvaSegment(
+              expectedRvaStartOffsetDec,
+              expectedRvaEndOffsetDec,
+              expectedSubSubSizeDec,
+              '00002068'
+            );
+            const expectedHex = new HexSegment(
+              expectedHexStartOffsetDec,
+              expectedHexEndOffsetDec,
+              expectedSubSubSizeDec,
+              '00000590'
+            );
+            const expected = new DataDirectoryItem(expectedRva, expectedHex);
+
+            expect(pe.cliMetadataHeaderDirectory).toEqual(expected);
+          });
+
+          it('Then set CLI Metadata header directory RVA hexes', () => {
+            const rva = pe.hexes.slice(expectedRvaStartOffsetDec, expectedRvaEndOffsetDec);
+
+            rva.forEach((element, offset) => {
+              expect(element.isCliMetadataHeaderDirectoryRva()).toBeTruthy(offset);
+            });
+          });
+
+          it('Then set CLI Metadata header directory size hexes', () => {
+            const size = pe.hexes.slice(expectedHexStartOffsetDec, expectedHexEndOffsetDec);
+
+            size.forEach((element, offset) => {
+              expect(element.isCliMetadataHeaderDirectorySize()).toBeTruthy(offset);
+            });
+          });
+        });
+
         it('Then set property: "cliFlags"', () => {
           const expected = new CliFlags(528, 531, 4, '00000001');
 
           expect(pe.cliFlags).toEqual(expected);
+        });
+      });
+
+      describe('CLI metadata header', () => {
+        const expectedStartOffsetDec = 616;
+        const expectedEndOffsetDec = 2039;
+        const expectedSizeDec = 1424;
+
+        it('Then set property: "cliMetadataHeader"', () => {
+          const expected = new Segment(expectedStartOffsetDec, expectedEndOffsetDec, expectedSizeDec);
+
+          expect(pe.cliMetadataHeader).toEqual(expected);
+        });
+
+        it('Then set CLI header hexes', () => {
+          const cliMetadataHeader = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
+
+          cliMetadataHeader.forEach((element, offset) => {
+            expect(element.isCliMetadataHeader()).toBeTruthy(offset);
+          });
+        });
+
+        describe('CLR version size', () => {
+          const expectedSubStartOffsetDec = 628;
+          const expectedSubEndOffsetDec = 631;
+          const expectedSubSizeDec = 4;
+
+          it('Then set property: "clrVersionSize"', () => {
+            const expected = new HexSegment(expectedSubStartOffsetDec, expectedSubEndOffsetDec, expectedSubSizeDec, '0000000C');
+
+            expect(pe.clrVersionSize).toEqual(expected);
+          });
+
+          it('Then set CLR version size hexes', () => {
+            const clrVersionSize = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            clrVersionSize.forEach((element, offset) => {
+              expect(element.isClrVersionSize()).toBeTruthy(offset);
+            });
+          });
+        });
+
+        describe('CLR version', () => {
+          const expectedSubStartOffsetDec = 632;
+          const expectedSubEndOffsetDec = 643;
+          const expectedSubSizeDec = 12;
+
+          it('Then set property: "clrVersion"', () => {
+            const expected = new AsciiSegment(expectedSubStartOffsetDec, expectedSubEndOffsetDec, expectedSubSizeDec, 'v4.0.30319');
+            expect(pe.clrVersion).toEqual(expected);
+          });
+
+          it('Then set CLR version size hexes', () => {
+            const clrVersion = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            clrVersion.forEach((element, offset) => {
+              expect(element.isClrVersion()).toBeTruthy(offset);
+            });
+          });
         });
       });
     });

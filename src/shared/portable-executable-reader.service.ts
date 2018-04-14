@@ -40,6 +40,7 @@ export class PortableExecutableReader {
     this.setDataDirectories(pe);
     this.setSectionHeaders(pe);
     this.setCliHeader(pe);
+    this.setCliMetadataHeader(pe);
     this.setHexes(pe);
 
     return pe;
@@ -263,9 +264,45 @@ export class PortableExecutableReader {
 
     pe.cliHeader = this.file.getSegment(cliHeaderStartOffsetDec, pe.cliHeaderSize);
 
+    pe.cliMetadataHeaderDirectory = this.getDirectoryItem(
+      cliHeaderStartOffsetDec,
+      PortableExecutableConstants.cliMetadataHeaderDirectorySubOffsetDec
+    );
+
     const flagsStartOffsetDec = cliHeaderStartOffsetDec + PortableExecutableConstants.cliFlagsSubOffsetDec;
     const flags = this.file.getHexSegment(flagsStartOffsetDec, PortableExecutableConstants.cliFlagsSizeDec);
 
     pe.cliFlags = new CliFlags(flags.startOffsetDec, flags.endOffsetDec, flags.sizeDec, flags.hexValue);
+  }
+
+  private setCliMetadataHeader(pe: PortableExecutable): void {
+    if (!pe.isManaged) {
+      return;
+    }
+
+    const cliManagedHeaderStartOffsetDec =
+      HexHelper.getDecimal(pe.cliMetadataHeaderDirectory.rva.rva) -
+      HexHelper.getDecimal(pe.textSectionItem.baseRva.rva) +
+      HexHelper.getDecimal(pe.textSectionItem.fileOffset.fileOffset);
+
+    const cliManagedHeaderSizeDec = HexHelper.getDecimal(pe.cliMetadataHeaderDirectory.size.hexValue);
+
+    pe.cliMetadataHeader = this.file.getSegment(cliManagedHeaderStartOffsetDec, cliManagedHeaderSizeDec);
+
+    this.setClrVersionSize(pe);
+    this.setClrVersion(pe);
+  }
+
+  private setClrVersionSize(pe: PortableExecutable): void {
+    const clrVersionSizeStartOffsetDec = pe.cliMetadataHeader.startOffsetDec + PortableExecutableConstants.clrVersionSizeSubOffsetDec;
+
+    pe.clrVersionSize = this.file.getHexSegment(clrVersionSizeStartOffsetDec, PortableExecutableConstants.clrVersionSizeSizeDec);
+  }
+
+  private setClrVersion(pe: PortableExecutable): void {
+    const clrVersionStartOffsetDec = pe.clrVersionSize.endOffsetDec + 1;
+    const clrVersionSizeDec = HexHelper.getDecimal(pe.clrVersionSize.hexValue);
+
+    pe.clrVersion = this.file.getAsciiSegment(clrVersionStartOffsetDec, clrVersionSizeDec);
   }
 }

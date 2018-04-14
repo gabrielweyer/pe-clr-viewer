@@ -19,5 +19,9 @@ export enum PortableExecutableSubPart {
   RsrcFileOffset,
   RelocBaseRva,
   RelocFileOffset,
-  CliFlags
+  CliMetadataHeaderDirectorySize,
+  CliMetadataHeaderDirectoryRva,
+  CliFlags,
+  ClrVersionSize,
+  ClrVersion
 }

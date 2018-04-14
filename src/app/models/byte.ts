@@ -129,7 +129,27 @@ export class Byte {
     return this.part === PortableExecutablePart.CliHeader;
   }
 
+  public isCliMetadataHeaderDirectoryRva(): boolean {
+    return this.subPart === PortableExecutableSubPart.CliMetadataHeaderDirectoryRva;
+  }
+
+  public isCliMetadataHeaderDirectorySize(): boolean {
+    return this.subPart === PortableExecutableSubPart.CliMetadataHeaderDirectorySize;
+  }
+
   public isCliFlags(): boolean {
     return this.subPart === PortableExecutableSubPart.CliFlags;
+  }
+
+  public isCliMetadataHeader(): boolean {
+    return this.part === PortableExecutablePart.CliMetadataHeader;
+  }
+
+  public isClrVersionSize(): boolean {
+    return this.subPart === PortableExecutableSubPart.ClrVersionSize;
+  }
+
+  public isClrVersion(): boolean {
+    return this.subPart === PortableExecutableSubPart.ClrVersion;
   }
 }
