@@ -4,7 +4,7 @@ import { RvaSegment } from './../models/segment';
 import { HexHelper } from './../../shared/hex-helper';
 import { by } from 'protractor';
 import { PortableExecutable } from './../models/portable-executable';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { PortableExecutableConstants } from '../models/portable-executable-constants';
 import { Byte } from '../models/byte';
 import { StoreService } from '../../shared/store.service';
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './viewer.component.html',
   styleUrls: ['./viewer.component.scss']
 })
-export class ViewerComponent {
+export class ViewerComponent implements OnDestroy {
   public pe: PortableExecutable;
   public selectedTab: Tab = Tab.Headers;
 
@@ -38,6 +38,12 @@ export class ViewerComponent {
           this.initialise();
         }
       });
+    }
+
+    ngOnDestroy() {
+      if (this.navigationSubscription) {
+         this.navigationSubscription.unsubscribe();
+      }
     }
 
   private initialise(): void {
