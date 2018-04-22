@@ -35,7 +35,7 @@ Each push to `master` triggers a build in `VSTS` and a deployment to `Azure Blob
 
 [advanced-dotnet-debugging-book]: https://www.goodreads.com/book/show/7306509-advanced-net-debugging
 [pe-format]: https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx
-[pe-clr-viewer]: https://peclrviewer.blob.core.windows.net/index.html
+[pe-clr-viewer]: https://peclrviewer.azurewebsites.net/
 [trello-board]: https://trello.com/b/7b21MQqD/pe-clr-viewer
 [node-js]: https://nodejs.org/en/download/
 [yarn]: https://yarnpkg.com/lang/en/docs/install/
