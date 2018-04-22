@@ -1,3 +1,4 @@
+import { HexHelper } from './hex-helper';
 import { CliFlags } from './../app/models/cli-flags';
 import { PartVisitor } from './../app/models/part-visitor';
 import { PortableExecutable } from './../app/models/portable-executable';
@@ -25,23 +26,13 @@ export class HexesGenerator {
   }
 
   private static getEndOffsetDec(pe: PortableExecutable): number {
-    let endOffsetDec = pe.dataDirectories.endOffsetDec;
+    let endOffsetDec = HexHelper.getDecimal(pe.relocSectionItem.fileOffset.fileOffset);
 
-    if (pe.isManaged) {
-      if (pe.cliMetadataHeader.sizeDec > 5000) {
-        endOffsetDec = pe.cliHeader.endOffsetDec;
-      } else {
-        endOffsetDec = pe.cliMetadataHeader.endOffsetDec;
-      }
+    if (endOffsetDec === 0) {
+      endOffsetDec = HexHelper.getDecimal(pe.rsrcSectionItem.fileOffset.fileOffset);
     }
 
-    const remainder = (endOffsetDec + 1) % 16;
-
-    if (remainder !== 0) {
-      endOffsetDec += 16 - remainder;
-    }
-
-    return endOffsetDec;
+    return HexHelper.GetNiceEndOffsetDec(endOffsetDec - 1);
   }
 
   private static generatePartVisitors(pe: PortableExecutable): Array<PartVisitor> {

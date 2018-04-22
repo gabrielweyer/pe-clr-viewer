@@ -1,7 +1,9 @@
 <div class="container">
   <h1>PE CLR Viewer</h1>
   <app-guide-container></app-guide-container>
-  <app-upload-container class="upload-container" (fileRead)="fileRead($event)"></app-upload-container>
-  <app-viewer class="bytes-container" [pe]="pe"></app-viewer>
+  <app-upload-container (fileRead)="fileRead($event)"></app-upload-container>
+  <div class="router-container">
+    <router-outlet></router-outlet>
+  </div>
   <app-disclaimer-container class="disclaimer-container"></app-disclaimer-container>
 </div>

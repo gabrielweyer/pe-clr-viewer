@@ -1,5 +1,34 @@
 @import '~variables.scss';
 
+.bytes-container {
+  display: flex;
+  flex-direction: column;
+}
+
+nav {
+  a {
+    padding: 6px 12px;
+
+    &.active {
+      font-weight: bolder;
+    }
+  }
+
+  :first-child {
+    padding-left: 0;
+  }
+
+  :last-child {
+    padding-right: 0;
+  }
+
+  padding-bottom: 1em;
+}
+
+.container {
+  display: flex;
+}
+
 .bytes {
   font-family: $mono-font-family;
   display: flex;
@@ -9,34 +38,11 @@
   align-content: flex-start;
 }
 
-@import '~bytes.scss';
-
 .bytes-legend {
   display: flex;
   flex-direction: column;
   font-size: $mono-font-size-small + 1;
   line-height: 1.2em;
-
-  h2 {
-    font-size: $font-size-big - 1;
-    margin-top: 0;
-  }
-
-  .mono-font {
-    font-size: $mono-font-size-small + 1;
-  }
-
-  .part {
-    :last-child {
-      margin-bottom: 0;
-    }
-
-    &:first-child {
-      margin-top: 0;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
 }
+
+@import '~bytes.scss';
