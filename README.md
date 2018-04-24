@@ -8,6 +8,8 @@ At the moment it's fairly limited and only highlights:
 
 - The bitness (`x86` vs `x64`)
 - The entry point `Relative Virtual Address` (search for `RVA` in the [PE format][pe-format])
+- The [CLI flags][cli-flags]
+- The targeted `CLR` version
 
 If you feel adventurous you can try the [hosted version][pe-clr-viewer].
 
@@ -31,7 +33,9 @@ yarn start
 
 ## CI/CD
 
-Each push to `master` triggers a build in `VSTS` and a deployment to `Azure Blob storage`. `VSTS` does not support anonymous browsing but the build pipeline is available as [YAML](.vsts-ci.yml).
+Each push to `master` triggers a build in `VSTS` and a deployment to `Azure Blob storage`. I'm using `Azure Functions Proxies` to be able to support an extension-less URI and tab reload.
+
+`VSTS` does not support anonymous browsing but the build pipeline is available as [YAML](.vsts-ci.yml).
 
 [advanced-dotnet-debugging-book]: https://www.goodreads.com/book/show/7306509-advanced-net-debugging
 [pe-format]: https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx
@@ -39,3 +43,4 @@ Each push to `master` triggers a build in `VSTS` and a deployment to `Azure Blob
 [trello-board]: https://trello.com/b/7b21MQqD/pe-clr-viewer
 [node-js]: https://nodejs.org/en/download/
 [yarn]: https://yarnpkg.com/lang/en/docs/install/
+[cli-flags]: http://source.roslyn.codeplex.com/#System.Reflection.Metadata/System/Reflection/PortableExecutable/CorFlags.cs,1b8345c412a0a995
