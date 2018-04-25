@@ -125,6 +125,10 @@ export class Byte {
     return this.subPart === PortableExecutableSubPart.RelocFileOffset;
   }
 
+  public isImportAddressTable(): boolean {
+    return this.part === PortableExecutablePart.ImportAddressTable;
+  }
+
   public isCliHeader(): boolean {
     return this.part === PortableExecutablePart.CliHeader;
   }
@@ -151,5 +155,9 @@ export class Byte {
 
   public isClrVersion(): boolean {
     return this.subPart === PortableExecutableSubPart.ClrVersion;
+  }
+
+  public isImportTable(): boolean {
+    return this.part === PortableExecutablePart.ImportTable;
   }
 }

@@ -1,7 +1,26 @@
 <app-section-container>
+  <div *ngIf="pe.importAddressTable" class="part">
+    <h2>
+      <span class="import-address-table">Import address table ({{pe.importAddressTableSizeDec}} bytes)</span>
+    </h2>
+    <p>From
+      <span class="mono-font">{{pe.importAddressTable.startOffsetDec | byte | leftpad:8}}</span> to
+      <span class="mono-font">{{pe.importAddressTable.endOffsetDec | byte | leftpad:8}}</span>
+    </p>
+  </div>
+  <div *ngIf="!pe.importAddressTable" class="part">
+    <h2>
+      <span class="import-address-table">Import address table ({{pe.importAddressTableSizeDec}} bytes)</span>
+    </h2>
+    <p>
+      There is no import address table
+    </p>
+  </div>
+</app-section-container>
+<app-section-container>
   <div class="part">
     <h2>
-      <span class="cli-header">CLI header (always {{pe.cliHeaderSize}} bytes)</span>
+      <span class="cli-header">CLI header (always {{pe.cliHeaderSizeDec}} bytes)</span>
     </h2>
     <p>From
       <span class="mono-font">{{pe.cliHeader.startOffsetDec | byte | leftpad:8}}</span> to
@@ -72,4 +91,23 @@
       <span class="mono-font cli-metadata-header clr-version">{{pe.clrVersion.text}}</span>.
     </p>
   </div>
+</app-section-container>
+<app-section-container>
+  <div *ngIf="pe.importTable" class="part">
+    <h2>
+      <span class="import-table">Import table ({{pe.importTableSizeDec}} bytes)</span>
+    </h2>
+    <p>From
+      <span class="mono-font">{{pe.importTable.startOffsetDec | byte | leftpad:8}}</span> to
+      <span class="mono-font">{{pe.importTable.endOffsetDec | byte | leftpad:8}}</span>
+    </p>
+  </div>
+  <div *ngIf="!pe.importTable" class="part">
+      <h2>
+        <span class="import-table">Import table ({{pe.importTableSizeDec}} bytes)</span>
+      </h2>
+      <p>
+        There is no import table
+      </p>
+    </div>
 </app-section-container>

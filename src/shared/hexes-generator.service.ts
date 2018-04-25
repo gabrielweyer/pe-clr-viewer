@@ -48,8 +48,10 @@ export class HexesGenerator {
     visitors.push(new PartVisitor(pe.textSectionHeader, PortableExecutablePart.TextSectionHeader));
     visitors.push(new PartVisitor(pe.rsrcSectionHeader, PortableExecutablePart.RsrcSectionHeader));
     visitors.push(new PartVisitor(pe.relocSectionHeader, PortableExecutablePart.RelocSectionHeader));
+    visitors.push(new PartVisitor(pe.importAddressTable, PortableExecutablePart.ImportAddressTable));
     visitors.push(new PartVisitor(pe.cliHeader, PortableExecutablePart.CliHeader));
     visitors.push(new PartVisitor(pe.cliMetadataHeader, PortableExecutablePart.CliMetadataHeader));
+    visitors.push(new PartVisitor(pe.importTable, PortableExecutablePart.ImportTable));
 
     return visitors;
   }

@@ -115,6 +115,10 @@ span {
     background-color: #ff6e3d;
   }
 
+  &.import-address-table {
+    color: #0004ff;
+  }
+
   &.cli-header {
     color: #b684ff;
   }
@@ -142,5 +146,9 @@ span {
 
   &.clr-version {
     background-color: #0004ff;
+  }
+
+  &.import-table {
+    color: #f31d12;
   }
 }

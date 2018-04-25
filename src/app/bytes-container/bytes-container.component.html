@@ -47,12 +47,14 @@
     'rsrc-file-offset': hex.isRsrcFileOffset(),
     'reloc-base-rva': hex.isRelocBaseRva(),
     'reloc-file-offset': hex.isRelocFileOffset(),
+    'import-address-table': hex.isImportAddressTable(),
     'cli-header': hex.isCliHeader(),
     'cli-metadata-header-directory-size': hex.isCliMetadataHeaderDirectorySize(),
     'cli-metadata-header-directory-rva': hex.isCliMetadataHeaderDirectoryRva(),
     'cli-flags': hex.isCliFlags(),
     'cli-metadata-header': hex.isCliMetadataHeader(),
     'clr-version-size': hex.isClrVersionSize(),
-    'clr-version': hex.isClrVersion()
+    'clr-version': hex.isClrVersion(),
+    'import-table': hex.isImportTable()
   }">{{hex.value | byte | leftpad:2 }}</span>
 </ng-template>

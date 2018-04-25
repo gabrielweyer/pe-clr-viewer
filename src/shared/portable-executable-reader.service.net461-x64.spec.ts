@@ -646,6 +646,13 @@ describe('PortableExecutableReader', () => {
         });
       });
 
+      describe('Import address table', () => {
+        it('Then does not set property: "importAddressTable"', () => {
+          expect(pe.importAddressTableSizeDec).toBe(0);
+          expect(pe.importAddressTable).toBeUndefined();
+        });
+      });
+
       describe('CLI header', () => {
         const expectedStartOffsetDec = 512;
         const expectedEndOffsetDec = 583;
@@ -770,6 +777,13 @@ describe('PortableExecutableReader', () => {
               expect(element.isClrVersion()).toBeTruthy(offset);
             });
           });
+        });
+      });
+
+      describe('Import table', () => {
+        it('Then does not set property: "importTable"', () => {
+          expect(pe.importTableSizeDec).toBe(0);
+          expect(pe.importTable).toBeUndefined();
         });
       });
     });

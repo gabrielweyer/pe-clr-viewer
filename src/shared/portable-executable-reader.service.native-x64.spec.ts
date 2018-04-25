@@ -648,6 +648,13 @@ describe('PortableExecutableReader', () => {
         });
       });
 
+      describe('Import address table', () => {
+        it('Then does not set property: "importAddressTable"', () => {
+          expect(pe.importAddressTableSizeDec).toBeUndefined();
+          expect(pe.importAddressTable).toBeUndefined();
+        });
+      });
+
       describe('CLI header', () => {
         it('Then does not set property: "cliHeader"', () => {
           expect(pe.cliHeader).toBeUndefined();
@@ -669,6 +676,13 @@ describe('PortableExecutableReader', () => {
 
         it('Then does not set property: "clrVersionSize"', () => {
           expect(pe.clrVersionSize).toBeUndefined();
+        });
+      });
+
+      describe('Import table', () => {
+        it('Then does not set property: "importTable"', () => {
+          expect(pe.importTableSizeDec).toBeUndefined();
+          expect(pe.importTable).toBeUndefined();
         });
       });
     });

@@ -647,6 +647,27 @@ describe('PortableExecutableReader', () => {
         });
       });
 
+      describe('Import address table', () => {
+        const expectedStartOffsetDec = 512;
+        const expectedEndOffsetDec = 519;
+        const expectedSizeDec = 8;
+
+        it('Then set property: "importAddressTable"', () => {
+          const expected = new Segment(expectedStartOffsetDec, expectedEndOffsetDec, expectedSizeDec);
+
+          expect(pe.importAddressTableSizeDec).toEqual(expectedSizeDec);
+          expect(pe.importAddressTable).toEqual(expected);
+        });
+
+        it('Then set import address table hexes', () => {
+          const importAddressTable = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
+
+          importAddressTable.forEach((element, offset) => {
+            expect(element.isImportAddressTable()).toBeTruthy(offset);
+          });
+        });
+      });
+
       describe('CLI header', () => {
         const expectedStartOffsetDec = 520;
         const expectedEndOffsetDec = 591;
@@ -770,6 +791,27 @@ describe('PortableExecutableReader', () => {
             clrVersion.forEach((element, offset) => {
               expect(element.isClrVersion()).toBeTruthy(offset);
             });
+          });
+        });
+      });
+
+      describe('Import table', () => {
+        const expectedStartOffsetDec = 2244;
+        const expectedEndOffsetDec = 2322;
+        const expectedSizeDec = 79;
+
+        it('Then set property: "importTable"', () => {
+          const expected = new Segment(expectedStartOffsetDec, expectedEndOffsetDec, expectedSizeDec);
+
+          expect(pe.importTableSizeDec).toEqual(expectedSizeDec);
+          expect(pe.importTable).toEqual(expected);
+        });
+
+        it('Then set import table hexes', () => {
+          const importTable = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
+
+          importTable.forEach((element, offset) => {
+            expect(element.isImportTable()).toBeTruthy(offset);
           });
         });
       });

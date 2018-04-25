@@ -39,8 +39,11 @@ export class PortableExecutableReader {
     this.setNtSpecificFields(pe);
     this.setDataDirectories(pe);
     this.setSectionHeaders(pe);
+    this.setImportAddressTable(pe);
     this.setCliHeader(pe);
     this.setCliMetadataHeader(pe);
+    this.setImportTable(pe);
+
     this.setHexes(pe);
 
     return pe;
@@ -251,6 +254,19 @@ export class PortableExecutableReader {
     return new SectionItem(baseRva, fileOffset);
   }
 
+  private setImportAddressTable(pe: PortableExecutable): void {
+    if (!pe.isManaged) { return; }
+
+    pe.importAddressTableSizeDec = HexHelper.getDecimal(pe.importAddressTableDirectory.size.hexValue);
+
+    if (pe.importAddressTableSizeDec === 0) { return; }
+
+    const importAddressTableStartOffsetDec =
+      this.getFileOffsetInTextSectionDec(pe.importAddressTableDirectory.rva.rva, pe);
+
+    pe.importAddressTable = this.file.getSegment(importAddressTableStartOffsetDec, pe.importAddressTableSizeDec);
+  }
+
   private setCliHeader(pe: PortableExecutable) {
     if (!pe.isManaged) {
       return;
@@ -260,9 +276,9 @@ export class PortableExecutableReader {
       HexHelper.getDecimal(pe.textSectionItem.fileOffset.fileOffset) +
       HexHelper.getDecimal(pe.importAddressTableDirectory.size.hexValue);
 
-    pe.cliHeaderSize = HexHelper.getDecimal(pe.cliHeaderDirectory.size.hexValue);
+    pe.cliHeaderSizeDec = HexHelper.getDecimal(pe.cliHeaderDirectory.size.hexValue);
 
-    pe.cliHeader = this.file.getSegment(cliHeaderStartOffsetDec, pe.cliHeaderSize);
+    pe.cliHeader = this.file.getSegment(cliHeaderStartOffsetDec, pe.cliHeaderSizeDec);
 
     pe.cliMetadataHeaderDirectory = this.getDirectoryItem(
       cliHeaderStartOffsetDec,
@@ -304,5 +320,24 @@ export class PortableExecutableReader {
     const clrVersionSizeDec = HexHelper.getDecimal(pe.clrVersionSize.hexValue);
 
     pe.clrVersion = this.file.getAsciiSegment(clrVersionStartOffsetDec, clrVersionSizeDec);
+  }
+
+  private setImportTable(pe: PortableExecutable): void {
+    if (!pe.isManaged) { return; }
+
+    pe.importTableSizeDec = HexHelper.getDecimal(pe.importTableDirectory.size.hexValue);
+
+    if (pe.importTableSizeDec === 0) { return; }
+
+    const importTableStartOffsetDec =
+      this.getFileOffsetInTextSectionDec(pe.importTableDirectory.rva.rva, pe);
+
+    pe.importTable = this.file.getSegment(importTableStartOffsetDec, pe.importTableSizeDec);
+  }
+
+  private getFileOffsetInTextSectionDec(rva: string, pe: PortableExecutable): number {
+    return HexHelper.getDecimal(rva) -
+      HexHelper.getDecimal(pe.textSectionItem.baseRva.rva) +
+      HexHelper.getDecimal(pe.textSectionItem.fileOffset.fileOffset);
   }
 }

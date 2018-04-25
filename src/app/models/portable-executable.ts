@@ -33,12 +33,16 @@ export class PortableExecutable {
   public rsrcSectionItem: SectionItem;
   public relocSectionHeader: Segment;
   public relocSectionItem: SectionItem;
-  public cliHeaderSize: number;
+  public importAddressTableSizeDec: number;
+  public importAddressTable: Segment;
+  public cliHeaderSizeDec: number;
   public cliHeader: Segment;
   public cliFlags: CliFlags;
   public cliMetadataHeaderDirectory: DataDirectoryItem;
   public cliMetadataHeader: Segment;
   public clrVersionSize: HexSegment;
   public clrVersion: AsciiSegment;
+  public importTableSizeDec: number;
+  public importTable: Segment;
   public hexes: Byte[];
 }
