@@ -786,6 +786,32 @@ describe('PortableExecutableReader', () => {
           expect(pe.importTable).toBeUndefined();
         });
       });
+
+      describe('Entry point', () => {
+        it('Then does not set property: "entryPoint"', () => {
+          expect(pe.entryPoint).toBeUndefined();
+        });
+
+        it('Then does not set property: "entryPointOpCode"', () => {
+          expect(pe.entryPointOpCode).toBeUndefined();
+        });
+
+        it('Then does not set property: "entryPointRva"', () => {
+          expect(pe.entryPointVa).toBeUndefined();
+        });
+      });
+
+      describe('Import Address Table Entry point', () => {
+        it('Then does not set property: "iatEntryPoint"', () => {
+          expect(pe.iatEntryPointRva).toBeUndefined();
+        });
+      });
+
+      describe('Managed Entry point', () => {
+        it('Then does not set property: "managedEntryPoint"', () => {
+          expect(pe.managedEntryPoint).toBeUndefined();
+        });
+      });
     });
   });
 });

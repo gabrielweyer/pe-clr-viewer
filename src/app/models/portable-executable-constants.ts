@@ -60,4 +60,7 @@ export class PortableExecutableConstants {
 
   public static readonly clrVersionSizeSubOffsetDec: number = 12;
   public static readonly clrVersionSizeSizeDec: number = 4;
+
+  public static readonly entryPointSizeDec: number = 6;
+  public static readonly entryPointOpCodeSizeDec: number = 2;
 }

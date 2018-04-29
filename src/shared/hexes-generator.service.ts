@@ -52,6 +52,7 @@ export class HexesGenerator {
     visitors.push(new PartVisitor(pe.cliHeader, PortableExecutablePart.CliHeader));
     visitors.push(new PartVisitor(pe.cliMetadataHeader, PortableExecutablePart.CliMetadataHeader));
     visitors.push(new PartVisitor(pe.importTable, PortableExecutablePart.ImportTable));
+    visitors.push(new PartVisitor(pe.entryPoint, PortableExecutablePart.EntryPoint));
 
     return visitors;
   }
@@ -100,8 +101,18 @@ export class HexesGenerator {
         new SubPartVisitor(pe.cliMetadataHeaderDirectory.rva, PortableExecutableSubPart.CliMetadataHeaderDirectoryRva),
         new SubPartVisitor(pe.cliFlags, PortableExecutableSubPart.CliFlags),
         new SubPartVisitor(pe.clrVersionSize, PortableExecutableSubPart.ClrVersionSize),
-        new SubPartVisitor(pe.clrVersion, PortableExecutableSubPart.ClrVersion)
+        new SubPartVisitor(pe.clrVersion, PortableExecutableSubPart.ClrVersion),
+        new SubPartVisitor(pe.entryPointOpCode, PortableExecutableSubPart.EntryPointOpCode),
+        new SubPartVisitor(pe.entryPointVa, PortableExecutableSubPart.EntryPointVa),
+        new SubPartVisitor(pe.iatEntryPointRva, PortableExecutableSubPart.IatEntryPointRva)
       );
+
+      if (!pe.is64Bit) {
+        visitors.push(
+          new SubPartVisitor(pe.managedEntryPoint.method, PortableExecutableSubPart.EntryPointMethod),
+          new SubPartVisitor(pe.managedEntryPoint.executable, PortableExecutableSubPart.EntryPointExecutable)
+        );
+      }
     }
 
     return visitors;

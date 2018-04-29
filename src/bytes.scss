@@ -116,7 +116,7 @@ span {
   }
 
   &.import-address-table {
-    color: #0004ff;
+    color: #f31d12;
   }
 
   &.cli-header {
@@ -149,6 +149,30 @@ span {
   }
 
   &.import-table {
-    color: #f31d12;
+    color: #0004ff;
+  }
+
+  &.entry-point {
+    color: #29b000;
+  }
+
+  &.entry-point-op-code {
+    background-color: #ffdb29;
+  }
+
+  &.entry-point-va {
+    background-color: #fffe27;
+  }
+
+  &.iat-entry-point-rva {
+    background-color: #4dc1ff;
+  }
+
+  &.entry-point-method {
+    background-color: #f31d12;
+  }
+
+  &.entry-point-executable {
+    background-color: #ff6e3d;
   }
 }

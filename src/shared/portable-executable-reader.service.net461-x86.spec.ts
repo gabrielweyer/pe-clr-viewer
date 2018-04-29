@@ -1,6 +1,7 @@
+import { EntryPoint } from './../app/models/entry-point';
 import { SectionItem } from './../app/models/section-item';
 import { DataDirectoryItem } from './../app/models/data-directory-item';
-import { FileOffsetSegment, Segment, HexSegment, RvaSegment, AsciiSegment } from './../app/models/segment';
+import { FileOffsetSegment, Segment, HexSegment, RvaSegment, AsciiSegment, VaSegment } from './../app/models/segment';
 import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutableReader } from './portable-executable-reader.service';
 import { Net461_x86 } from '../../tests-data/net461-x86';
@@ -812,6 +813,113 @@ describe('PortableExecutableReader', () => {
 
           importTable.forEach((element, offset) => {
             expect(element.isImportTable()).toBeTruthy(offset);
+          });
+        });
+      });
+
+      describe('Entry point', () => {
+        const expectedStartOffsetDec = 2326;
+        const expectedEndOffsetDec = 2331;
+        const expectedSizeDec = 6;
+
+        it('Then set property: "entryPoint"', () => {
+          const expected = new Segment(expectedStartOffsetDec, expectedEndOffsetDec, expectedSizeDec);
+
+          expect(pe.entryPoint).toEqual(expected);
+        });
+
+        it('Then set entry point hexes', () => {
+          const entrypoint = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
+
+          entrypoint.forEach((element, offset) => {
+            expect(element.isEntryPoint()).toBeTruthy(offset);
+          });
+        });
+
+        describe('Entry point OpCode', () => {
+          const expectedSubStartOffsetDec = 2326;
+          const expectedSubEndOffsetDec = 2327;
+          const expectedSubSizeDec = 2;
+
+          it('Then set property: "entryPointOpCode"', () => {
+            const expected = new HexSegment(expectedSubStartOffsetDec, expectedSubEndOffsetDec, expectedSubSizeDec, 'FF25');
+
+            expect(pe.entryPointOpCode).toEqual(expected);
+          });
+
+          it('Then set entry point OpCode hexes', () => {
+            const entryPointOpCode = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            entryPointOpCode.forEach((element, offset) => {
+              expect(element.isEntryPointOpCode()).toBeTruthy(offset);
+            });
+          });
+        });
+
+        describe('Entry point OpCode', () => {
+          const expectedSubStartOffsetDec = 2328;
+          const expectedSubEndOffsetDec = 2331;
+          const expectedSubSizeDec = 4;
+
+          it('Then set property: "entryPointRva"', () => {
+            const expected = new VaSegment(expectedSubStartOffsetDec, expectedSubEndOffsetDec, expectedSubSizeDec, '00402000');
+
+            expect(pe.entryPointVa).toEqual(expected);
+          });
+
+          it('Then set entry point RVA hexes', () => {
+            const entryPointRva = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
+
+            entryPointRva.forEach((element, offset) => {
+              expect(element.isEntryPointVa()).toBeTruthy(offset);
+            });
+          });
+        });
+      });
+
+      describe('Import Address Table Entry point RVA', () => {
+        const expectedStartOffsetDec = 512;
+        const expectedEndOffsetDec = 515;
+        const expectedSizeDec = 4;
+
+        it('Then set property: "iatEntryPointRva"', () => {
+          const expected = new RvaSegment(expectedStartOffsetDec, expectedEndOffsetDec, expectedSizeDec, '000026F8');
+
+          expect(pe.iatEntryPointRva).toEqual(expected);
+        });
+
+        it('Then set import address table entry point RVA hexes', () => {
+          const iatEntryPointRva = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
+
+          iatEntryPointRva.forEach((element, offset) => {
+            expect(element.isIatEntryPointRva()).toBeTruthy(offset);
+          });
+        });
+      });
+
+      describe('Managed Entry point', () => {
+        const expectedMethod = new AsciiSegment(2296, 2308, 11, '_CorExeMain');
+        const expectedExecutable = new AsciiSegment(2310, 2320, 11, 'mscoree.dll');
+
+        it('Then set property: "managedEntryPoint"', () => {
+          const expected = new EntryPoint(expectedMethod, expectedExecutable);
+
+          expect(pe.managedEntryPoint).toEqual(expected);
+        });
+
+        it('Then set managed entry point method hexes', () => {
+          const entryPointMethod = pe.hexes.slice(expectedMethod.startOffsetDec, expectedMethod.endOffsetDec);
+
+          entryPointMethod.forEach((element, offset) => {
+            expect(element.isEntryPointMethod()).toBeTruthy(offset);
+          });
+        });
+
+        it('Then set managed entry point executable hexes', () => {
+          const entryPointExecutable = pe.hexes.slice(expectedExecutable.startOffsetDec, expectedExecutable.endOffsetDec);
+
+          entryPointExecutable.forEach((element, offset) => {
+            expect(element.isEntryPointExecutable()).toBeTruthy(offset);
           });
         });
       });

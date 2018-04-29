@@ -55,6 +55,12 @@
     'cli-metadata-header': hex.isCliMetadataHeader(),
     'clr-version-size': hex.isClrVersionSize(),
     'clr-version': hex.isClrVersion(),
-    'import-table': hex.isImportTable()
+    'import-table': hex.isImportTable(),
+    'entry-point': hex.isEntryPoint(),
+    'entry-point-op-code': hex.isEntryPointOpCode(),
+    'entry-point-va': hex.isEntryPointVa(),
+    'iat-entry-point-rva': hex.isIatEntryPointRva(),
+    'entry-point-method': hex.isEntryPointMethod(),
+    'entry-point-executable': hex.isEntryPointExecutable()
   }">{{hex.value | byte | leftpad:2 }}</span>
 </ng-template>

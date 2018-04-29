@@ -1,6 +1,6 @@
 import { HexesGenerator } from './hexes-generator.service';
 import { PortableExecutableConstants } from './../app/models/portable-executable-constants';
-import { HexSegment, Segment, FileOffsetSegment, RvaSegment } from './../app/models/segment';
+import { HexSegment, Segment, FileOffsetSegment, RvaSegment, AsciiSegment } from './../app/models/segment';
 import { File } from './../app/models/file';
 import { BytePipe } from './../shared/byte.pipe';
 import { LeftPadPipe } from './../shared/leftpad.pipe';
@@ -16,12 +16,30 @@ import { CliFlags } from '../app/models/cli-flags';
 import { Subsystem } from '../app/models/subsystem';
 import { Characteristics } from '../app/models/characteristics';
 import { DllCharacteristics } from '../app/models/dll-characteristics';
+import { StringHelper } from './string-helper';
+import { EntryPoint } from '../app/models/entry-point';
 
 export class PortableExecutableReader {
   private readonly file: File;
 
   constructor(bytes: Uint8Array) {
     this.file = new File(bytes);
+  }
+
+  public static getFileOffsetInTextSectionFromRva(rva: string, pe: PortableExecutable): number {
+    const rvaDec = HexHelper.getDecimal(rva);
+    return PortableExecutableReader.getFileOffsetInTextSectionFromDecRva(rvaDec, pe);
+  }
+
+  public static getFileOffsetInTextSectionFromVa(va: string, pe: PortableExecutable): number {
+    const rva = HexHelper.getDecimal(va) - HexHelper.getDecimal(pe.imageBase.hexValue);
+    return PortableExecutableReader.getFileOffsetInTextSectionFromDecRva(rva, pe);
+  }
+
+  private static getFileOffsetInTextSectionFromDecRva(rva: number, pe: PortableExecutable): number {
+    return rva -
+      HexHelper.getDecimal(pe.textSectionItem.baseRva.rva) +
+      HexHelper.getDecimal(pe.textSectionItem.fileOffset.fileOffset);
   }
 
   read(): PortableExecutable {
@@ -43,6 +61,7 @@ export class PortableExecutableReader {
     this.setCliHeader(pe);
     this.setCliMetadataHeader(pe);
     this.setImportTable(pe);
+    this.setEntryPoint(pe);
 
     this.setHexes(pe);
 
@@ -262,7 +281,7 @@ export class PortableExecutableReader {
     if (pe.importAddressTableSizeDec === 0) { return; }
 
     const importAddressTableStartOffsetDec =
-      this.getFileOffsetInTextSectionDec(pe.importAddressTableDirectory.rva.rva, pe);
+      PortableExecutableReader.getFileOffsetInTextSectionFromRva(pe.importAddressTableDirectory.rva.rva, pe);
 
     pe.importAddressTable = this.file.getSegment(importAddressTableStartOffsetDec, pe.importAddressTableSizeDec);
   }
@@ -319,7 +338,14 @@ export class PortableExecutableReader {
     const clrVersionStartOffsetDec = pe.clrVersionSize.endOffsetDec + 1;
     const clrVersionSizeDec = HexHelper.getDecimal(pe.clrVersionSize.hexValue);
 
-    pe.clrVersion = this.file.getAsciiSegment(clrVersionStartOffsetDec, clrVersionSizeDec);
+    const asciiSegment = this.file.getAsciiSegment(clrVersionStartOffsetDec, clrVersionSizeDec);
+    const trimmed = StringHelper.trimStartEndNullChars(asciiSegment.text);
+
+    pe.clrVersion = new AsciiSegment(
+      asciiSegment.startOffsetDec,
+      asciiSegment.endOffsetDec,
+      asciiSegment.text.length,
+      trimmed.value);
   }
 
   private setImportTable(pe: PortableExecutable): void {
@@ -330,14 +356,67 @@ export class PortableExecutableReader {
     if (pe.importTableSizeDec === 0) { return; }
 
     const importTableStartOffsetDec =
-      this.getFileOffsetInTextSectionDec(pe.importTableDirectory.rva.rva, pe);
+      PortableExecutableReader.getFileOffsetInTextSectionFromRva(pe.importTableDirectory.rva.rva, pe);
 
     pe.importTable = this.file.getSegment(importTableStartOffsetDec, pe.importTableSizeDec);
   }
 
-  private getFileOffsetInTextSectionDec(rva: string, pe: PortableExecutable): number {
-    return HexHelper.getDecimal(rva) -
-      HexHelper.getDecimal(pe.textSectionItem.baseRva.rva) +
-      HexHelper.getDecimal(pe.textSectionItem.fileOffset.fileOffset);
+  private setEntryPoint(pe: PortableExecutable): void {
+    if (!pe.isManaged) { return; }
+
+    const entryPointRva = HexHelper.getDecimal(pe.addressOfEntryPoint.rva);
+
+    if (entryPointRva === 0) { return; }
+
+    const entryPointStartOffsetDec =
+      PortableExecutableReader.getFileOffsetInTextSectionFromRva(pe.addressOfEntryPoint.rva, pe);
+
+    pe.entryPoint = this.file.getSegment(entryPointStartOffsetDec, PortableExecutableConstants.entryPointSizeDec);
+
+    this.setEntryPointOpCode(pe);
+    this.setEntryPointRva(pe);
+    this.setIatEntryPoint(pe);
+    this.setManagedEntryPoint(pe);
+  }
+
+  private setEntryPointOpCode(pe: PortableExecutable): void {
+    pe.entryPointOpCode = this.file.getOpCodeSegment(pe.entryPoint.startOffsetDec, PortableExecutableConstants.entryPointOpCodeSizeDec);
+  }
+
+  private setEntryPointRva(pe: PortableExecutable): void {
+    pe.entryPointVa = this.file.getVaSegment(pe.entryPointOpCode.endOffsetDec + 1, PortableExecutableConstants.rvaSize);
+  }
+
+  private setIatEntryPoint(pe: PortableExecutable): void {
+    const startOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromVa(pe.entryPointVa.va, pe);
+
+    pe.iatEntryPointRva = this.file.getRvaSegment(startOffsetDec, PortableExecutableConstants.rvaSize);
+  }
+
+  private setManagedEntryPoint(pe: PortableExecutable): void {
+    const startOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromRva(pe.iatEntryPointRva.rva, pe);
+
+    const asciiSegment = this.file.getAsciiSegment(startOffsetDec, 25);
+    const trimmed = StringHelper.trimStartEndNullChars(asciiSegment.text);
+
+    const splitted = trimmed.value.split('\0');
+
+    const methodStartOffsetDec = asciiSegment.startOffsetDec;
+    const methodEndOffsetDec = File.getEndOffsetDec(methodStartOffsetDec, splitted[0].length + trimmed.removedFromStart);
+    const method = new AsciiSegment(
+      methodStartOffsetDec,
+      methodEndOffsetDec,
+      splitted[0].length,
+      splitted[0]);
+
+    const executableStartOffsetDec = method.endOffsetDec + 2;
+    const executableEndOffsetDec = File.getEndOffsetDec(executableStartOffsetDec, splitted[1].length + trimmed.removedFromEnd);
+    const executable = new AsciiSegment(
+      executableStartOffsetDec,
+      executableEndOffsetDec,
+      splitted[1].length,
+      splitted[1]);
+
+    pe.managedEntryPoint = new EntryPoint(method, executable);
   }
 }

@@ -24,7 +24,6 @@ import { ViewerComponent } from './viewer/viewer.component';
 import { GuideContainerComponent } from './guide-container/guide-container.component';
 import { DisclaimerContainerComponent } from './disclaimer-container/disclaimer-container.component';
 import { UploadContainerComponent } from './upload-container/upload-container.component';
-import { TextLegendComponent } from './text-legend/text-legend.component';
 import { StoreService } from '../shared/store.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
@@ -48,7 +47,6 @@ import { LegendHeadersComponent } from './legend-headers/legend-headers.componen
     GuideContainerComponent,
     DisclaimerContainerComponent,
     UploadContainerComponent,
-    TextLegendComponent,
     PageNotFoundComponent,
     HomeComponent,
     LegendTextComponent,

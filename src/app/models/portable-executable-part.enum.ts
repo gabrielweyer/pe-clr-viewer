@@ -13,5 +13,6 @@ export enum PortableExecutablePart {
   ImportAddressTable,
   CliHeader,
   CliMetadataHeader,
-  ImportTable
+  ImportTable,
+  EntryPoint
 }

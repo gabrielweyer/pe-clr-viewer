@@ -23,5 +23,10 @@ export enum PortableExecutableSubPart {
   CliMetadataHeaderDirectoryRva,
   CliFlags,
   ClrVersionSize,
-  ClrVersion
+  ClrVersion,
+  EntryPointOpCode,
+  EntryPointVa,
+  IatEntryPointRva,
+  EntryPointMethod,
+  EntryPointExecutable
 }

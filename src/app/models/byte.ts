@@ -160,4 +160,28 @@ export class Byte {
   public isImportTable(): boolean {
     return this.part === PortableExecutablePart.ImportTable;
   }
+
+  public isEntryPoint(): boolean {
+    return this.part === PortableExecutablePart.EntryPoint;
+  }
+
+  public isEntryPointOpCode(): boolean {
+    return this.subPart === PortableExecutableSubPart.EntryPointOpCode;
+  }
+
+  public isEntryPointVa(): boolean {
+    return this.subPart === PortableExecutableSubPart.EntryPointVa;
+  }
+
+  public isIatEntryPointRva(): boolean {
+    return this.subPart === PortableExecutableSubPart.IatEntryPointRva;
+  }
+
+  public isEntryPointMethod(): boolean {
+    return this.subPart === PortableExecutableSubPart.EntryPointMethod;
+  }
+
+  public isEntryPointExecutable(): boolean {
+    return this.subPart === PortableExecutableSubPart.EntryPointExecutable;
+  }
 }

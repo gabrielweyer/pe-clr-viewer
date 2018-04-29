@@ -1,3 +1,52 @@
+<app-section-container [isExpanded]="false">
+  <div class="part">
+    <h2>
+      <span>Convert RVA and VA to a file offset</span>
+    </h2>
+    <p>
+      Convert a <em>RVA</em> to a file offset:
+    </p>
+    <ul>
+      <li>
+        <span class="mono-font">0x</span><input type="text" (input)="onRva($event.target.value)" />
+      </li>
+      <li>
+        <span class="mono-font">-</span>&nbsp;<span class="data-directories cli-header-directory-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>
+        (.text section base RVA)
+      </li>
+      <li>
+        <span class="mono-font">+</span>&nbsp;<span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
+        (.text section file offset)
+      </li>
+      <li>
+        <span class="mono-font">=</span>&nbsp;<span class="mono-font">{{fileOffsetFromRvaDec | byte | leftpad:8}}</span>
+      </li>
+    </ul>
+    <p>
+      Convert a <em>VA</em> to a file offset:
+    </p>
+    <ul>
+      <li>
+        <span class="mono-font">0x</span><input type="text" (input)="onVa($event.target.value)" />
+      </li>
+      <li>
+        <span class="mono-font">-</span>&nbsp;<span class="mono-font nt-specific-fields image-base">{{pe.imageBase.hexValue | hex}}</span>
+        (image base VA)
+      </li>
+      <li>
+        <span class="mono-font">-</span>&nbsp;<span class="data-directories cli-header-directory-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>
+        (.text section base RVA)
+      </li>
+      <li>
+        <span class="mono-font">+</span>&nbsp;<span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
+        (.text section file offset)
+      </li>
+      <li>
+        <span class="mono-font">=</span>&nbsp;<span class="mono-font">{{fileOffsetFromVaDec | byte | leftpad:8}}</span>
+      </li>
+    </ul>
+  </div>
+</app-section-container>
 <app-section-container>
   <div *ngIf="pe.importAddressTable" class="part">
     <h2>
@@ -6,6 +55,19 @@
     <p>From
       <span class="mono-font">{{pe.importAddressTable.startOffsetDec | byte | leftpad:8}}</span> to
       <span class="mono-font">{{pe.importAddressTable.endOffsetDec | byte | leftpad:8}}</span>
+    </p>
+    <p>
+      The start offset is converted from base RVA
+      <span class="data-directories import-address-table-directory-rva mono-font">{{pe.importAddressTableDirectory.rva.rva | hex}}</span>
+      from the import address table of the <span class="data-directories">data directories</span>.
+    </p>
+    <p>
+      The <span class="import-address-table iat-entry-point-rva">import address table entry point RVA</span> is located at file offset
+      <span class="mono-font">{{pe.iatEntryPointRva.startOffsetDec | byte | leftpad:8}}</span> which was converted from base RVA
+      <span class="entry-point entry-point-va mono-font">{{pe.entryPointVa.va | hex}}</span>
+      from the <span class="entry-point">entry point</span>. The
+      <span class="import-address-table iat-entry-point-rva">import address table entry point RVA</span> has for value
+      <span class="import-address-table iat-entry-point-rva mono-font">{{pe.iatEntryPointRva.rva | hex}}</span>.
     </p>
   </div>
   <div *ngIf="!pe.importAddressTable" class="part">
@@ -27,30 +89,19 @@
       <span class="mono-font">{{pe.cliHeader.endOffsetDec | byte | leftpad:8}}</span>
     </p>
     <p>
+      The start offset is converted from base RVA
+      <span class="data-directories cli-header-directory-rva mono-font">{{pe.cliHeaderDirectory.rva.rva | hex}}</span>
+      from the import address table of the <span class="data-directories">data directories</span>.
+    </p>
+    <p>
         The CLI metadata header (8 bytes) is located at offset {{peConstants.cliMetadataHeaderDirectorySubOffsetDec}} of the
         <span class="cli-header">CLI header</span>. It points to a header of
         <span class="cli-header cli-metadata-header-directory-size mono-font">{{pe.cliMetadataHeaderDirectory.size.hexValue | hex}}</span>
-        bytes located at base RVA
+        bytes.
+        Using the convertor above we get the file offset <span class="mono-font">{{pe.cliMetadataHeader.startOffsetDec | byte | leftpad:8}}</span>
+        based on the base RVA
         <span class="cli-header cli-metadata-header-directory-rva mono-font">{{pe.cliMetadataHeaderDirectory.rva.rva | hex}}</span>.
-        We can compute the file offset using this formula:
     </p>
-    <ul>
-      <li>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cli-header cli-metadata-header-directory-rva mono-font">{{pe.cliMetadataHeaderDirectory.rva.rva | hex}}</span>
-        (CLI metadata header base RVA)
-      </li>
-      <li>
-        <span class="mono-font">-</span>&nbsp;<span class="data-directories cli-header-directory-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>
-        (.text section base RVA)
-      </li>
-      <li>
-        <span class="mono-font">+</span>&nbsp;<span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
-        (.text section file offset)
-      </li>
-      <li>
-        <span class="mono-font">=</span>&nbsp;<span class="mono-font">{{pe.cliMetadataHeader.startOffsetDec | byte | leftpad:8}}</span>
-      </li>
-    </ul>
     <p>The <span class="cli-header cli-flags">CLI flags</span> ({{peConstants.cliFlagsSizeDec}} bytes) are located at offset
       {{peConstants.cliFlagsSubOffsetDec}} of the <span class="cli-header">CLI header</span> and have a value of
       <span class="mono-font cli-header cli-flags">{{pe.cliFlags.hexValue | hex}}</span>. The <span class="cli-header cli-flags">CLI flags</span>
@@ -101,13 +152,61 @@
       <span class="mono-font">{{pe.importTable.startOffsetDec | byte | leftpad:8}}</span> to
       <span class="mono-font">{{pe.importTable.endOffsetDec | byte | leftpad:8}}</span>
     </p>
+    <p>
+      The start offset is converted from base RVA
+      <span class="data-directories import-table-directory-rva mono-font">{{pe.importTableDirectory.rva.rva | hex}}</span>
+      from the import address table of the <span class="data-directories">data directories</span>.
+    </p>
+    <p>
+      The <em>managed entry point</em> starts a file offset <span class="mono-font">{{pe.managedEntryPoint.method.startOffsetDec | byte | leftpad:8}}</span>
+      This was converted from the <span class="import-address-table iat-entry-point-rva">import address table entry point RVA</span>
+      (<span class="import-address-table iat-entry-point-rva mono-font">{{pe.iatEntryPointRva.rva | hex}}</span>)
+    </p>
+    <ul>
+      <li>
+        Function: <span class="import-table entry-point-method mono-font">{{pe.managedEntryPoint.method.text}}</span>
+      </li>
+      <li>
+        Executable: <span class="import-table entry-point-executable mono-font">{{pe.managedEntryPoint.executable.text}}</span>
+      </li>
+    </ul>
   </div>
   <div *ngIf="!pe.importTable" class="part">
-      <h2>
-        <span class="import-table">Import table ({{pe.importTableSizeDec}} bytes)</span>
-      </h2>
-      <p>
-        There is no import table
-      </p>
-    </div>
+    <h2>
+      <span class="import-table">Import table (0 bytes)</span>
+    </h2>
+    <p>
+      There is no import table
+    </p>
+  </div>
+</app-section-container>
+<app-section-container>
+  <div *ngIf="pe.entryPoint" class="part">
+    <h2>
+      <span class="entry-point">Entry point ({{peConstants.entryPointSizeDec}} bytes)</span>
+    </h2>
+    <p>From
+      <span class="mono-font">{{pe.entryPoint.startOffsetDec | byte | leftpad:8}}</span> to
+      <span class="mono-font">{{pe.entryPoint.endOffsetDec | byte | leftpad:8}}</span>
+    </p>
+    <p>
+      The start offset is converted from the RVA
+      <span class="standard-fields address-entry-point">address of entry point</span>:
+      <span class="mono-font standard-fields address-entry-point">{{pe.addressOfEntryPoint.rva | hex}}</span>.
+    </p>
+    <p>
+      Apparently <span class="mono-font entry-point entry-point-op-code">{{pe.entryPointOpCode.hexValue}}</span> is the
+      <app-link [href]="'https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/x86-instructions#control_flow'">x86 instruction</app-link>
+      for <span class="mono-font">JMP</span> which instruct the computer to jump to file offset <span class="mono-font">{{pe.iatEntryPointRva.startOffsetDec | byte | leftpad:8}}</span>
+      (converted from VA <span class="mono-font entry-point entry-point-va">{{pe.entryPointVa.va | hex}}</span>)
+    </p>
+  </div>
+  <div *ngIf="!pe.entryPoint" class="part">
+    <h2>
+      <span class="entry-point">Entry point (0 bytes)</span>
+    </h2>
+    <p>
+      There is no entry point
+    </p>
+  </div>
 </app-section-container>

@@ -39,6 +39,17 @@ export class RvaSegment extends Segment {
   }
 }
 
+export class VaSegment extends Segment {
+  constructor(
+    public readonly startOffsetDec: number,
+    public readonly endOffsetDec: number,
+    public readonly sizeDec: number,
+    public readonly va: string
+  ) {
+    super(startOffsetDec, sizeDec, endOffsetDec);
+  }
+}
+
 export class AsciiSegment extends Segment {
   constructor(
     public readonly startOffsetDec: number,

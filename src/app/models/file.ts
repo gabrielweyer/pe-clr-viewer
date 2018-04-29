@@ -1,4 +1,4 @@
-import { HexSegment, Segment, FileOffsetSegment, RvaSegment, AsciiSegment } from './segment';
+import { HexSegment, Segment, FileOffsetSegment, RvaSegment, AsciiSegment, VaSegment } from './segment';
 import { LeftPadPipe } from '../../shared/leftpad.pipe';
 import { BytePipe } from '../../shared/byte.pipe';
 
@@ -33,6 +33,13 @@ export class File {
     return new RvaSegment(startOffsetDec, endOffsetDec, sizeDec, hexValue);
   }
 
+  public getVaSegment(startOffsetDec: number, sizeDec: number): VaSegment {
+    const endOffsetDec = File.getEndOffsetDec(startOffsetDec, sizeDec);
+    const hexValue = this.getHexValue(startOffsetDec, endOffsetDec);
+
+    return new VaSegment(startOffsetDec, endOffsetDec, sizeDec, hexValue);
+  }
+
   public getAsciiSegment(startOffsetDec: number, sizeDec: number): AsciiSegment {
     const endOffsetDec = File.getEndOffsetDec(startOffsetDec, sizeDec);
     const asciiValue = this.getAsciiValue(startOffsetDec, endOffsetDec);
@@ -45,6 +52,13 @@ export class File {
     return new Segment(startOffsetDec, endOffsetDec, sizeDec);
   }
 
+  public getOpCodeSegment(startOffsetDec: number, sizeDec: number): HexSegment {
+    const endOffsetDec = File.getEndOffsetDec(startOffsetDec, sizeDec);
+    const opCodeValue = this.getOpCode(startOffsetDec, endOffsetDec);
+
+    return new HexSegment(startOffsetDec, endOffsetDec, sizeDec, opCodeValue);
+  }
+
   private getHexValue(startOffsetDec: number, endOffsetDec: number): string {
     return this.bytes
       .filter((v, i) => i >= startOffsetDec && i <= endOffsetDec)
@@ -53,6 +67,12 @@ export class File {
 
   private getAsciiValue(startOffsetDec: number, endOffsetDec: number): string {
     return String.fromCharCode
-      .apply(null, this.bytes.filter((v, i) => i >= startOffsetDec && i <= endOffsetDec && v !== 0));
+      .apply(null, this.bytes.filter((v, i) => i >= startOffsetDec && i <= endOffsetDec));
+  }
+
+  private getOpCode(startOffsetDec: number, endOffsetDec: number): string {
+    return this.bytes
+      .filter((v, i) => i >= startOffsetDec && i <= endOffsetDec && v !== 0)
+      .reduce((previous, current) => previous + File.leftPadPipe.transform(File.bytePipe.transform(current), 2), '');
   }
 }

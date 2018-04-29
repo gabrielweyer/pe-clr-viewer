@@ -1,11 +1,12 @@
 import { SectionItem } from './section-item';
-import { HexSegment, Segment, RvaSegment, FileOffsetSegment, AsciiSegment } from './segment';
+import { HexSegment, Segment, RvaSegment, FileOffsetSegment, AsciiSegment, VaSegment } from './segment';
 import { DataDirectoryItem } from './data-directory-item';
 import { Byte } from './byte';
 import { CliFlags } from './cli-flags';
 import { Subsystem } from './subsystem';
 import { Characteristics } from './characteristics';
 import { DllCharacteristics } from './dll-characteristics';
+import { EntryPoint } from './entry-point';
 
 export class PortableExecutable {
   public dosHeader: Segment;
@@ -44,5 +45,10 @@ export class PortableExecutable {
   public clrVersion: AsciiSegment;
   public importTableSizeDec: number;
   public importTable: Segment;
+  public entryPoint: Segment;
+  public entryPointOpCode: HexSegment;
+  public entryPointVa: VaSegment;
+  public iatEntryPointRva: RvaSegment;
+  public managedEntryPoint: EntryPoint;
   public hexes: Byte[];
 }
