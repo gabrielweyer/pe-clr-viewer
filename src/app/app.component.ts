@@ -1,4 +1,3 @@
-import { Tab } from './models/tab.enum';
 import { Component } from '@angular/core';
 import { PortableExecutable } from './models/portable-executable';
 import { StoreService } from '../shared/store.service';
@@ -15,7 +14,7 @@ export class AppComponent {
   fileRead(pe: PortableExecutable): void {
     if (pe) {
       this.store.setPortableExecutable(pe);
-      this.router.navigate(['/see', Tab.Headers]);
+      this.router.navigate(['/see']);
     }
   }
 }

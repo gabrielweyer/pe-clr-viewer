@@ -1,13 +1,13 @@
 <div class="bytes-container">
-  <nav>
-    <a [routerLink]="['/see', Tab.Headers]" routerLinkActive="active">Headers</a>
-    <a *ngIf="pe.isManaged" [routerLink]="['/see', Tab.Text]" routerLinkActive="active">.text</a>
-  </nav>
   <div class="container">
-    <app-bytes-container class="bytes" [bytes]="bytes" [startOffsetDec]="startOffsetDec"></app-bytes-container>
+    <div class="bytes">
+      <app-bytes-container class="bytes" [bytes]="bytes" [startOffsetDec]="startOffsetDec"></app-bytes-container>
+      <app-bytes-container *ngIf="pe.isManaged" class="bytes" [bytes]="cliMetadataHeaderBytes" [startOffsetDec]="cliMetadataHeaderStartOffsetDec"></app-bytes-container>
+      <app-bytes-container *ngIf="pe.isManaged && !pe.is64Bit" class="bytes" [bytes]="importTableEntryPointBytes" [startOffsetDec]="importTableEntryPointStartOffsetDec"></app-bytes-container>
+    </div>
     <div class="bytes-legend">
-      <app-legend-headers *ngIf="selectedTab === Tab.Headers" [pe]="pe"></app-legend-headers>
-      <app-legend-text *ngIf="selectedTab === Tab.Text" [pe]="pe"></app-legend-text>
+      <app-legend-headers [pe]="pe"></app-legend-headers>
     </div>
   </div>
 </div>
+<app-va-convertor [pe]="pe"></app-va-convertor>

@@ -1,4 +1,3 @@
-import { Tab } from './../models/tab.enum';
 import { Router, ActivatedRoute, ParamMap, NavigationEnd } from '@angular/router';
 import { RvaSegment } from './../models/segment';
 import { HexHelper } from './../../shared/hex-helper';
@@ -18,36 +17,40 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ViewerComponent implements OnDestroy {
   public pe: PortableExecutable;
-  public selectedTab: Tab = Tab.Headers;
 
   public bytes: Byte[];
   public startOffsetDec = 0;
   public endOffsetDec: number;
 
+  public cliMetadataHeaderBytes: Byte[];
+  public cliMetadataHeaderStartOffsetDec: number;
+
+  public importTableEntryPointBytes: Byte[];
+  public importTableEntryPointStartOffsetDec: number;
+
   public peConstants = PortableExecutableConstants;
-  public Tab = Tab;
 
   private readonly navigationSubscription: Subscription;
 
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly store: StoreService) {
-      this.navigationSubscription = this.router.events.subscribe((e: any) => {
-        if (e instanceof NavigationEnd) {
-          this.initialise();
-        }
-      });
-    }
-
-    ngOnDestroy() {
-      if (this.navigationSubscription) {
-         this.navigationSubscription.unsubscribe();
+    private readonly store: StoreService
+  ) {
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      if (e instanceof NavigationEnd) {
+        this.initialise();
       }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
     }
+  }
 
   private initialise(): void {
-    this.selectedTab = this.route.snapshot.paramMap.get('tab') as Tab;
     this.pe = this.store.getPortableExecutable();
     this.setBytes();
   }
@@ -55,17 +58,35 @@ export class ViewerComponent implements OnDestroy {
   private setBytes(): void {
     this.bytes = undefined;
 
-    if (this.selectedTab === Tab.Text) {
-      this.startOffsetDec = HexHelper.getDecimal(this.pe.textSectionItem.fileOffset.fileOffset);
+    this.startOffsetDec = 0;
 
-      const endOffsetDec = HexHelper.getDecimal(this.pe.rsrcSectionItem.fileOffset.fileOffset) - 1;
-      this.endOffsetDec = HexHelper.GetNiceEndOffsetDec(endOffsetDec);
-    } else {
-      this.startOffsetDec = 0;
+    let endOffsetDec = this.pe.relocSectionHeader.endOffsetDec + 48 - 1;
 
-      const endOffsetDec = HexHelper.getDecimal(this.pe.textSectionItem.fileOffset.fileOffset) - 1;
-      this.endOffsetDec = HexHelper.GetNiceEndOffsetDec(endOffsetDec);
+    if (this.pe.isManaged) {
+      endOffsetDec = this.pe.cliHeader.endOffsetDec + 48;
+
+      this.cliMetadataHeaderStartOffsetDec = HexHelper.getNiceEndOffsetDec(
+        this.pe.cliMetadataHeader.startOffsetDec - 48
+      );
+      const cliMetadataHeaderEndOffsetDec = HexHelper.getNiceEndOffsetDec(this.pe.clrVersion.endOffsetDec + 48);
+      this.cliMetadataHeaderBytes = this.pe.hexes.slice(
+        this.cliMetadataHeaderStartOffsetDec,
+        cliMetadataHeaderEndOffsetDec
+      );
+
+      if (!this.pe.is64Bit) {
+        this.importTableEntryPointStartOffsetDec = HexHelper.getNiceEndOffsetDec(
+          this.pe.importTable.startOffsetDec - 48
+        );
+        const importTableEntryPointEndOffsetDec = HexHelper.getNiceEndOffsetDec(this.pe.entryPoint.endOffsetDec + 48);
+        this.importTableEntryPointBytes = this.pe.hexes.slice(
+          this.importTableEntryPointStartOffsetDec,
+          importTableEntryPointEndOffsetDec
+        );
+      }
     }
+
+    this.endOffsetDec = HexHelper.getNiceEndOffsetDec(endOffsetDec);
 
     this.bytes = this.pe.hexes.slice(this.startOffsetDec, this.endOffsetDec);
   }

@@ -7,7 +7,7 @@ export class HexHelper {
    * This will compute the start of the next line so that
    * The last line always has 16 bytes
    */
-  public static GetNiceEndOffsetDec(endOffsetDec: number): number {
+  public static getNiceEndOffsetDec(endOffsetDec: number): number {
     const remainder = (endOffsetDec + 1) % 16;
 
     if (remainder !== 0) {

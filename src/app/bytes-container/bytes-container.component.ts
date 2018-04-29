@@ -10,4 +10,8 @@ export class BytesContainerComponent {
   @Input() bytes: Byte[];
 
   @Input() startOffsetDec = 0;
+
+  shouldBlurTop(): boolean {
+    return this.startOffsetDec !== 0;
+  }
 }

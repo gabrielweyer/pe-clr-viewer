@@ -32,7 +32,7 @@ export class HexesGenerator {
       endOffsetDec = HexHelper.getDecimal(pe.rsrcSectionItem.fileOffset.fileOffset);
     }
 
-    return HexHelper.GetNiceEndOffsetDec(endOffsetDec - 1);
+    return HexHelper.getNiceEndOffsetDec(endOffsetDec - 1);
   }
 
   private static generatePartVisitors(pe: PortableExecutable): Array<PartVisitor> {

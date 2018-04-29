@@ -1,9 +1,20 @@
 @import '~variables.scss';
 
+$line-height: 1.5em;
+$blur-height: 3*$line-height;
+
+@mixin blur {
+  height: $blur-height;
+  z-index: $bytes-container-blue-z-index;
+  width: 100%;
+  position: relative;
+  left: 0;
+}
+
 span {
   flex: 1 0 5.5%;
   font-size: $mono-font-size-normal;
-  line-height: 1.5em;
+  line-height: $line-height;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -15,6 +26,22 @@ span {
 
   &.unit {
     font-weight: bolder;
+  }
+}
+
+.byte-container {
+  &__blur {
+    &--top {
+      @include blur;
+      background-image: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%);
+      bottom: -$blur-height;
+    }
+
+    &--bottom {
+      @include blur;
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%);
+      top: -$blur-height;
+    }
   }
 }
 

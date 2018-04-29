@@ -28,8 +28,8 @@ import { StoreService } from '../shared/store.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
-import { LegendTextComponent } from './legend-text/legend-text.component';
 import { LegendHeadersComponent } from './legend-headers/legend-headers.component';
+import { VaConvertorComponent } from './va-convertor/va-convertor.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +49,8 @@ import { LegendHeadersComponent } from './legend-headers/legend-headers.componen
     UploadContainerComponent,
     PageNotFoundComponent,
     HomeComponent,
-    LegendTextComponent,
-    LegendHeadersComponent
+    LegendHeadersComponent,
+    VaConvertorComponent
   ],
   imports: [
     BrowserModule,

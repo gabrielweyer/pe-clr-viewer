@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { PortableExecutableGuard } from '../shared/portable-executable-guard.service';
 
 const appRoutes: Routes = [
-  { path: 'see/:tab', canActivate: [PortableExecutableGuard], component: ViewerComponent, runGuardsAndResolvers: 'always' },
+  { path: 'see', canActivate: [PortableExecutableGuard], component: ViewerComponent, runGuardsAndResolvers: 'always' },
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
