@@ -7,7 +7,7 @@ $blur-height: 3*$line-height;
   height: $blur-height;
   z-index: $bytes-container-blue-z-index;
   width: 100%;
-  position: relative;
+  position: absolute;
   left: 0;
 }
 
@@ -34,13 +34,13 @@ span {
     &--top {
       @include blur;
       background-image: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%);
-      bottom: -$blur-height;
+      top: 1.5em;
     }
 
     &--bottom {
       @include blur;
       background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%);
-      top: -$blur-height;
+      bottom: 0;
     }
   }
 }

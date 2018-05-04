@@ -1,28 +1,17 @@
 @import '~variables.scss';
 
+@mixin bytes {
+  font-family: $mono-font-family;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 0 36%;
+  min-width: 630px;
+  align-content: flex-start;
+}
+
 .bytes-container {
   display: flex;
   flex-direction: column;
-}
-
-nav {
-  a {
-    padding: 6px 12px;
-
-    &.active {
-      font-weight: bolder;
-    }
-  }
-
-  :first-child {
-    padding-left: 0;
-  }
-
-  :last-child {
-    padding-right: 0;
-  }
-
-  padding-bottom: 1em;
 }
 
 .container {
@@ -30,12 +19,18 @@ nav {
 }
 
 .bytes {
-  font-family: $mono-font-family;
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1 0 36%;
-  min-width: 630px;
-  align-content: flex-start;
+  @include bytes;
+}
+
+.bytes-section {
+  @include bytes;
+
+  position: relative;
+  padding-top: 1.5em;
+
+  &:first-of-type {
+    padding-top: 0;
+  }
 }
 
 .bytes-legend {
