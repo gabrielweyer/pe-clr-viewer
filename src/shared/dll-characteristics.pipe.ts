@@ -25,7 +25,7 @@ export class DllCharacteristicsPipe implements PipeTransform {
     this.displayNames.set(DllCharacteristicsType.TerminalServerAware, 'IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE');
   }
 
-  transform(value: number): string {
-    return FlagEnumParser.getNames<DllCharacteristicsType>(value, this.displayNames).join(', ');
+  transform(value: number): string[] {
+    return FlagEnumParser.getNames<DllCharacteristicsType>(value, this.displayNames);
   }
 }

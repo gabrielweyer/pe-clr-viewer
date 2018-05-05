@@ -47,7 +47,7 @@
       <span class="coff-header characteristics">characteristics</span> are documented
       <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx#characteristics'">here</app-link>
       (leveraging <app-link [href]="'https://en.wikipedia.org/wiki/Mask_(computing)'">bitmask</app-link>):
-      {{pe.characteristics.type | characteristics }}
+      <app-flags-formatter [flags]="pe.characteristics.type | characteristics"></app-flags-formatter>
     </p>
   </div>
 </app-section-container>
@@ -110,7 +110,7 @@
       <span class="nt-specific-fields dll-characteristics">characteristics</span> are documented
       <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx#dll_characteristics'">here</app-link>
       (leveraging <app-link [href]="'https://en.wikipedia.org/wiki/Mask_(computing)'">bitmask</app-link>):
-      {{pe.dllCharacteristics.type | dllCharacteristics }}
+      <app-flags-formatter [flags]="pe.dllCharacteristics.type | dllCharacteristics"></app-flags-formatter>
     </p>
     <p>For PE32, the size of the <span class="nt-specific-fields">NT specific fields header</span> is {{peConstants.ntSpecificFieldsPE32SizeDec}} bytes;
       for PE32+ it is {{peConstants.ntSpecificFieldsPE32PlusSizeDec}} bytes.</p>

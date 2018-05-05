@@ -30,6 +30,7 @@ import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LegendHeadersComponent } from './legend-headers/legend-headers.component';
 import { VaConvertorComponent } from './va-convertor/va-convertor.component';
+import { FlagsFormatterComponent } from './flags-formatter/flags-formatter.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { VaConvertorComponent } from './va-convertor/va-convertor.component';
     PageNotFoundComponent,
     HomeComponent,
     LegendHeadersComponent,
-    VaConvertorComponent
+    VaConvertorComponent,
+    FlagsFormatterComponent
   ],
   imports: [
     BrowserModule,

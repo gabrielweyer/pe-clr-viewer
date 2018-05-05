@@ -26,7 +26,7 @@ export class CharacteristicsPipe implements PipeTransform {
     this.displayNames.set(CharacteristicsType.BytesReversedHi, 'IMAGE_FILE_BYTES_REVERSED_HI');
   }
 
-  transform(value: number): string {
-    return FlagEnumParser.getNames<CharacteristicsType>(value, this.displayNames).join(', ');
+  transform(value: number): string[] {
+    return FlagEnumParser.getNames<CharacteristicsType>(value, this.displayNames);
   }
 }
