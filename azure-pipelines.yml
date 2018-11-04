@@ -1,16 +1,73 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-pool:
-  vmImage: 'Ubuntu 16.04'
+resources:
+- repo: self
+queue:
+  name: Hosted Linux Preview
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@2
+  displayName: Install Yarn 1.5.1
+  inputs:
+    versionSpec: 1.5.1
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+  displayName: yarn install
+  inputs:
+    Arguments: install
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    sudo apt-get -qq update > /dev/null
+    sudo apt-get -y -qq install libxss1 > /dev/null
+    sudo apt-get -y -qq install libgtk-3-0 > /dev/null
+    sudo apt-get -y -qq install libgdk3.0-cil > /dev/null
+  displayName: Install modules required to run headless Chrome
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+  displayName: yarn test-ci
+  inputs:
+    Arguments: test-ci
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+  displayName: yarn build
+  inputs:
+    Arguments: build-prod
+
+- task: geeklearningio.gl-vsts-tasks-file-patch.json-patch-task.JsonPatch@2
+  displayName: Version web Artifact
+  inputs:
+    JsonWorkingDir: 'dist/'
+    JsonTargetFilters: environment.json
+    JsonPatchContent: |
+     = /build => "$(BUILD_BUILDNUMBER)"
+     = /commit=> "$(BUILD_SOURCEVERSION)"
+    OutputPatchFile: true
+    FailIfNoPatchApplied: true
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact - web
+  inputs:
+    PathtoPublish: 'dist/'
+    ArtifactName: web
+    publishLocation: Container
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact - ARM
+  inputs:
+    PathtoPublish: 'template/template.json'
+    ArtifactName: arm
+    publishLocation: Container
+
+- task: PublishTestResults@2
+  displayName: Publish tests results
+  inputs:
+    testResultsFiles: 'tests-results/tests-results.xml'
+  condition: succeededOrFailed()
+
+- task: PublishCodeCoverageResults@1
+  displayName: Publish coverage
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/tests-results/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/tests-results/coverage/'
+    failIfCoverageEmpty: true
+  condition: succeededOrFailed()
