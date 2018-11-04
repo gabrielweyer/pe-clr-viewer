@@ -7,8 +7,8 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { PortableExecutableConstants } from '../models/portable-executable-constants';
 import { Byte } from '../models/byte';
 import { StoreService } from '../../shared/store.service';
-import 'rxjs/add/operator/map';
-import { Subscription } from 'rxjs/Subscription';
+
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-viewer',

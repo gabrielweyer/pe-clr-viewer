@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppConfig } from '../../shared/app.config';
+import { AppConfigService } from '../../shared/app.config';
 
 @Component({
   selector: 'app-disclaimer-container',
@@ -10,7 +10,7 @@ export class DisclaimerContainerComponent {
   public build: string;
   public commit: string;
 
-  constructor(private appConfig: AppConfig) {
+  constructor(appConfig: AppConfigService) {
     this.build = appConfig.build;
     this.commit = appConfig.commit;
   }

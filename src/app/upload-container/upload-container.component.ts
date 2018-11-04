@@ -1,7 +1,6 @@
-import { Component, Output } from '@angular/core';
-import { PortableExecutable } from '../models/portable-executable';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
-import { EventEmitter } from '@angular/core';
+import { PortableExecutable } from '../models/portable-executable';
 
 @Component({
   selector: 'app-upload-container',
@@ -18,7 +17,7 @@ export class UploadContainerComponent {
 
   constructor() {
     this.fileReader.onload = e => {
-      this.onRead(this.fileReader.result);
+      this.onRead(<ArrayBuffer> this.fileReader.result);
     };
   }
 

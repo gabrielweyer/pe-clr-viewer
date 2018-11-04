@@ -45,3 +45,6 @@ yarn-error.log
 
 # Tests
 /tests-results
+
+# Coverage
+/coverage

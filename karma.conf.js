@@ -11,7 +11,7 @@ module.exports = function (config) {
     frameworks: [
       'jasmine',
       'jasmine-matchers',
-      '@angular/cli'
+      '@angular-devkit/build-angular'
     ],
     plugins: [
       require('karma-jasmine'),
@@ -19,7 +19,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular/cli/plugins/karma'),
+      require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-junit-reporter')
     ],
     client:{
@@ -27,7 +27,7 @@ module.exports = function (config) {
     },
     coverageIstanbulReporter: {
       dir: path.join(__dirname, 'tests-results/coverage'),
-      reports: [ 'html', 'cobertura' ],
+      dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'cobertura' ],
       fixWebpackSourcePaths: true
     },
     junitReporter: {
@@ -35,9 +35,7 @@ module.exports = function (config) {
       outputFile: 'tests-results.xml',
       useBrowserName: false
     },
-    angularCli: {
-      environment: 'dev'
-    },
+    
     reporters: ['progress', 'kjhtml', 'junit'],
     port: 9876,
     colors: true,

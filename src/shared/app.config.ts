@@ -1,8 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 interface Config {
   build: string;
@@ -10,38 +7,21 @@ interface Config {
 }
 
 @Injectable()
-export class AppConfig {
-  public build: string;
-  public commit: string;
+export class AppConfigService {
+  build: string;
+  commit: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
-  public load() {
-    return new Promise((resolve, reject) => {
+  public load(): Promise<{}> {
+    return new Promise((resolve) => {
       this.http
         .get<Config>('./environment.json')
-        .pipe(catchError(this.handleError))
         .subscribe(config => {
           this.build = config.build;
           this.commit = config.commit;
           resolve(true);
         });
     });
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Error when reading the configuration file: ';
-
-    if (error.error.error instanceof SyntaxError) {
-      errorMessage += 'malformed JSON';
-    } else if (error.status === 404) {
-      errorMessage += 'file not found';
-    } else {
-      errorMessage += 'other error';
-    }
-
-    errorMessage += ' - ' + JSON.stringify(error);
-
-    return new ErrorObservable(errorMessage);
   }
 }
