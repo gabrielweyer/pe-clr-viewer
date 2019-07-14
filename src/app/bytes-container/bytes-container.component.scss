@@ -1,4 +1,4 @@
-@import '~variables.scss';
+@import '../../variables.scss';
 
 $line-height: 1.5em;
 $blur-height: 3*$line-height;
@@ -45,4 +45,4 @@ span {
   }
 }
 
-@import '~bytes.scss';
+@import '../../bytes.scss';

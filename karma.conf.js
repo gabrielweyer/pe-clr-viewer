@@ -35,7 +35,7 @@ module.exports = function (config) {
       outputFile: 'tests-results.xml',
       useBrowserName: false
     },
-    
+
     reporters: ['progress', 'kjhtml', 'junit'],
     port: 9876,
     colors: true,
@@ -48,6 +48,7 @@ module.exports = function (config) {
         flags: ['--no-sandbox']
       }
     },
-    singleRun: false
+    singleRun: false,
+    restartOnFileChange: true
   });
 };
