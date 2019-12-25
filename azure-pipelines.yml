@@ -1,7 +1,7 @@
 resources:
 - repo: self
 pool:
-  name: Hosted Linux Preview
+  vmImage: 'ubuntu-18.04'
 
 steps:
 
