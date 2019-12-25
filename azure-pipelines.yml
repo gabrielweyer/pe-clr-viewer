@@ -15,7 +15,6 @@ steps:
   inputs:
     targetType: inline
     script: yarn install
-    failOnStderr: true
 
 - task: Bash@3
   displayName: yarn lint
