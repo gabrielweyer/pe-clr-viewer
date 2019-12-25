@@ -17,7 +17,7 @@ export class UploadContainerComponent {
 
   constructor() {
     this.fileReader.onload = e => {
-      this.onRead(<ArrayBuffer> this.fileReader.result);
+      this.onRead(this.fileReader.result as ArrayBuffer);
     };
   }
 
@@ -29,8 +29,8 @@ export class UploadContainerComponent {
     this.isReading = true;
     this.pe = undefined;
 
-    const eventObj: MSInputMethodContext = <MSInputMethodContext>event;
-    const target: HTMLInputElement = <HTMLInputElement>eventObj.target;
+    const eventObj: MSInputMethodContext = event as MSInputMethodContext;
+    const target: HTMLInputElement = eventObj.target as HTMLInputElement;
     const files: FileList = target.files;
     const file = files[0];
 

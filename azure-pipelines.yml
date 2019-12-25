@@ -10,10 +10,19 @@ steps:
   inputs:
     versionSpec: 1.17.3
 
-- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+- task: Bash@3
   displayName: yarn install
   inputs:
-    Arguments: install
+    targetType: inline
+    script: yarn install
+    failOnStderr: true
+
+- task: Bash@3
+  displayName: yarn lint
+  inputs:
+    targetType: inline
+    script: yarn lint
+    failOnStderr: true
 
 - script: |
     sudo apt-get -qq update > /dev/null
@@ -22,15 +31,19 @@ steps:
     sudo apt-get -y -qq install libgdk3.0-cil > /dev/null
   displayName: Install modules required to run headless Chrome
 
-- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+- task: Bash@3
   displayName: yarn test-ci
   inputs:
-    Arguments: test-ci
+    targetType: inline
+    script: yarn test-ci
+    failOnStderr: true
 
-- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
-  displayName: yarn build
+- task: Bash@3
+  displayName: yarn build-prod
   inputs:
-    Arguments: build-prod
+    targetType: inline
+    script: yarn build-prod
+    failOnStderr: true
 
 - task: geeklearningio.gl-vsts-tasks-file-patch.json-patch-task.JsonPatch@2
   displayName: Version web Artifact

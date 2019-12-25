@@ -4,10 +4,10 @@ describe('BytePipe', () => {
   const pipe = new BytePipe();
 
   describe('Given decimal number "12"', () => {
-    const number = 12;
+    const numberLiteral = 12;
 
     describe('When transform', () => {
-      const actualHex = pipe.transform(number);
+      const actualHex = pipe.transform(numberLiteral);
 
       it('Then uppercase hexadecimal "C"', () => {
         expect(actualHex).toBe('C');

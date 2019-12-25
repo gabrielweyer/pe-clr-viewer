@@ -3,7 +3,7 @@ import { DataDirectoryItem } from './../app/models/data-directory-item';
 import { FileOffsetSegment, Segment, HexSegment, RvaSegment } from './../app/models/segment';
 import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutableReader } from './portable-executable-reader.service';
-import { Native_x64 } from '../../tests-data/native-x64';
+import { NATIVE_X64 } from '../../tests-data/native-x64';
 import { Subsystem } from '../app/models/subsystem';
 import { SubsystemType } from '../app/models/subsystem-type.enum';
 import { Characteristics } from '../app/models/characteristics';
@@ -11,7 +11,7 @@ import { DllCharacteristics } from '../app/models/dll-characteristics';
 
 describe('PortableExecutableReader', () => {
   describe('Given native x64', () => {
-    const bytes = new Uint8Array(Native_x64);
+    const bytes = new Uint8Array(NATIVE_X64);
     const target = new PortableExecutableReader(bytes);
 
     const expectedSignatureStartOffsetHex = '000000E8';

@@ -1,4 +1,4 @@
-export const Native_x86: number[] = [
+export const NATIVE_X86: number[] = [
   77,
   90,
   144,

@@ -1,4 +1,4 @@
-export const Net461_x86: number[] = [
+export const NET461_X86: number[] = [
   77,
   90,
   144,

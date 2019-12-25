@@ -4,7 +4,7 @@ import { DataDirectoryItem } from './../app/models/data-directory-item';
 import { FileOffsetSegment, Segment, HexSegment, RvaSegment, AsciiSegment } from './../app/models/segment';
 import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutableReader } from './portable-executable-reader.service';
-import { Net461_x64 } from '../../tests-data/net461-x64';
+import { NET461_X64 } from '../../tests-data/net461-x64';
 import { Subsystem } from '../app/models/subsystem';
 import { SubsystemType } from '../app/models/subsystem-type.enum';
 import { Characteristics } from '../app/models/characteristics';
@@ -12,7 +12,7 @@ import { DllCharacteristics } from '../app/models/dll-characteristics';
 
 describe('PortableExecutableReader', () => {
   describe('Given net461 x64', () => {
-    const bytes = new Uint8Array(Net461_x64);
+    const bytes = new Uint8Array(NET461_X64);
     const target = new PortableExecutableReader(bytes);
 
     const expectedSignatureStartOffsetHex = '00000080';
