@@ -10,7 +10,7 @@
     <p>
       We don't really care about this one except for the
       <span class="dos-header signature-offset">signature offset</span> ({{peConstants.signatureOffsetSizeDec}} bytes) which value is
-      <span class="mono-font dos-header signature-offset">{{pe.signatureOffset.fileOffset | byte | leftpad:8}}</span>. We ignore the
+      <span class="mono-font dos-header signature-offset">{{pe.signatureOffset.fileOffset | leftpad:8}}</span>. We ignore the
       <span class="dos-stub">DOS stub</span> and go to the signature.
     </p>
   </div>
