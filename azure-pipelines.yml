@@ -6,9 +6,9 @@ pool:
 steps:
 
 - task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@3
-  displayName: Install Yarn 1.21.1
+  displayName: Install Yarn 1.22.4
   inputs:
-    versionSpec: 1.21.1
+    versionSpec: 1.22.4
 
 - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@3
   displayName: yarn install
@@ -26,6 +26,11 @@ steps:
     sudo apt-get -y -qq install libgtk-3-0 > /dev/null
     sudo apt-get -y -qq install libgdk3.0-cil > /dev/null
   displayName: Install modules required to run headless Chrome
+
+- bash: |
+    sudo apt-get update
+    sudo apt-get install -y libgbm1
+  displayName: Install libgbm1 (required by Puppeteer 3)
 
 - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@3
   displayName: yarn test-ci
