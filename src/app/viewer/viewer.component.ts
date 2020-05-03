@@ -1,9 +1,7 @@
 import { Router, ActivatedRoute, ParamMap, NavigationEnd } from '@angular/router';
-import { RvaSegment } from './../models/segment';
 import { HexHelper } from './../../shared/hex-helper';
-import { by } from 'protractor';
 import { PortableExecutable } from './../models/portable-executable';
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { PortableExecutableConstants } from '../models/portable-executable-constants';
 import { Byte } from '../models/byte';
 import { StoreService } from '../../shared/store.service';
