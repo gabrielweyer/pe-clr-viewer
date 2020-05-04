@@ -20,13 +20,6 @@ steps:
   inputs:
     arguments: lint
 
-- script: |
-    sudo apt-get -qq update > /dev/null
-    sudo apt-get -y -qq install libxss1 > /dev/null
-    sudo apt-get -y -qq install libgtk-3-0 > /dev/null
-    sudo apt-get -y -qq install libgdk3.0-cil > /dev/null
-  displayName: Install modules required to run headless Chrome
-
 - bash: |
     sudo apt-get update
     sudo apt-get install -y libgbm1
