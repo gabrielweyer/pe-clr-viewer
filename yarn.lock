@@ -1056,23 +1056,6 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/jasmine-expect@^3.8.1":
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/@types/jasmine-expect/-/jasmine-expect-3.8.1.tgz#80e3b345831ca2217873030e920f599e45881ca1"
-  dependencies:
-    jasmine-expect "*"
-
-"@types/jasmine-matchers@0.2.32":
-  version "0.2.32"
-  resolved "https://registry.yarnpkg.com/@types/jasmine-matchers/-/jasmine-matchers-0.2.32.tgz#ca0f5a90525cbc741f1293e17af4367b0b4012de"
-  integrity sha512-ZA8rih01+nKh0q3fD3QPehEEta07ZCaiIrGthARhL8nRSK2PgZQXJEgS2sxGcXceUAr7gGI+Ndg7pBNB21auLQ==
-  dependencies:
-    "@types/jasmine" "*"
-
-"@types/jasmine@*":
-  version "2.8.6"
-  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.8.6.tgz#14445b6a1613cf4e05dd61c3c3256d0e95c0421e"
-
 "@types/jasmine@~3.3.8":
   version "3.3.13"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.13.tgz#d5daabb0af47bcddee40597acf6e804433bab439"
@@ -1300,15 +1283,6 @@ acorn@^6.2.1:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.4.1.tgz#531e58ba3f51b9dacb9a6646ca4debf5b14ca474"
   integrity sha512-ZVA9k326Nwrj3Cj9jlh3wGFutC2ZornPNARZwsNYqQYgN0EsV2d53w5RN/co65Ohn4sUAUtb1rSUAOD6XN9idA==
-
-add-matchers@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/add-matchers/-/add-matchers-0.5.0.tgz#502190e4750cd5721618393268b61a157366e765"
-
-add-matchers@0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/add-matchers/-/add-matchers-0.6.2.tgz#faeb2fa9380228c1b0da5f21a655c69304dd2011"
-  integrity sha512-hVO2wodMei9RF00qe+506MoeJ/NEOdCMEkSJ12+fC3hx/5Z4zmhNiP92nJEF6XhmXokeB0hOtuQrjHCx2vmXrQ==
 
 after@0.8.2:
   version "0.8.2"
@@ -4808,26 +4782,6 @@ jasmine-core@~3.5.0:
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-3.5.0.tgz#132c23e645af96d85c8bca13c8758b18429fc1e4"
   integrity sha512-nCeAiw37MIMA9w9IXso7bRaLl+c/ef3wnxsoSAlYrzS+Ot0zTG6nU8G/cIfGkqpkjX2wNaIW9RFG0TwIFnG6bA==
 
-jasmine-expect@*:
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.8.3.tgz#ab82323fd16353b26f0a9cbeacf744752e7eb601"
-  dependencies:
-    add-matchers "0.5.0"
-
-jasmine-expect@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-4.0.2.tgz#a35bc1dd9e03504cfd73a5b0282ce73d103fc5c5"
-  integrity sha512-VpHLwpBE1chVIhiJ7kJHBbdsm2GVvBli5bem4pGqkbiuvIW2mxghPNhYrKyoHBQKVmlq+xLUTGlrWMC/Ovn+2g==
-  dependencies:
-    add-matchers "0.6.2"
-
-jasmine-expect@4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-4.0.3.tgz#7cd2f35f909c2bb270d1f4d1042cdff72d47cc66"
-  integrity sha512-ucHOO6qpY6/vwgxoRVzyYywIRuvGEmI1uk69INjdZ84h2dUHIXHf8A5jUkM1kQHy9lHP1jqq9/S5VAkYUsFYCg==
-  dependencies:
-    add-matchers "0.6.2"
-
 jasmine-spec-reporter@~4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/jasmine-spec-reporter/-/jasmine-spec-reporter-4.2.1.tgz#1d632aec0341670ad324f92ba84b4b32b35e9e22"
@@ -4958,13 +4912,6 @@ karma-jasmine-html-reporter@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/karma-jasmine-html-reporter/-/karma-jasmine-html-reporter-1.5.1.tgz#0fad2d2ac416bc04724318aad29b89bd86f7bfbc"
   integrity sha512-LlLqsoGyxT1981z46BRaC1SaY4pTo4EHCA/qZvJEMQXzTtGMyIlmwtxny6FiLO/N/OmZh69eaoNzvBkbHVVFQA==
-
-karma-jasmine-matchers@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/karma-jasmine-matchers/-/karma-jasmine-matchers-4.0.2.tgz#0d7a6fddf75507790d87227bf822ca16fbf6372c"
-  integrity sha512-NJjJ0UI7TH2Nw1kEnc3uFv//TkELlq6Z+O/Z9KScl49MCItFs8xaRthZxzDEKlwKtMAclhzbFAP9f0RHtI9g1A==
-  dependencies:
-    jasmine-expect "4.0.2"
 
 karma-jasmine@~2.0.1:
   version "2.0.1"

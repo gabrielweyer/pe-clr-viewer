@@ -11,12 +11,12 @@ describe('HexPipe', () => {
 
       it('Then truncate leading zeros', () => {
         // Assert
-        expect(actualFormattedHex).toEndWith('xAE');
+        expect(actualFormattedHex).toMatch(/xAE$/);
       });
 
       it('Then prefix with "0x"', () => {
         // Assert
-        expect(actualFormattedHex).toStartWith('0x');
+        expect(actualFormattedHex).toMatch(/^0x/);
       });
     });
   });
@@ -29,7 +29,7 @@ describe('HexPipe', () => {
 
       it('Then return "0x0"', () => {
         // Assert
-        expect(actualFormattedHex).toStartWith('0x0');
+        expect(actualFormattedHex).toBe('0x0');
       });
     });
   });

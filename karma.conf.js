@@ -10,12 +10,10 @@ module.exports = function (config) {
     basePath: '',
     frameworks: [
       'jasmine',
-      'jasmine-matchers',
       '@angular-devkit/build-angular'
     ],
     plugins: [
       require('karma-jasmine'),
-      require('karma-jasmine-matchers'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
