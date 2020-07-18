@@ -92,7 +92,7 @@ stages:
           - task: AzureResourceGroupDeployment@3
             displayName: 'Deploy ARM template'
             inputs:
-              ConnectedServiceName: 'Visual Studio Professional with MSDN (251b1820-1cf0-476b-a9e5-5208d0fa93e7)'
+              ConnectedServiceName: 'Azure Resource Manager automatic Service Principal'
               action: 'Create Or Update Resource Group'
               resourceGroupName: '$(ResourceGroupName)'
               location: '$(ResourceGroupLocation)'
@@ -103,7 +103,7 @@ stages:
           - task: AzureCLI@2
             displayName: 'Create public $root container if not exist'
             inputs:
-              azureSubscription: 'Visual Studio Professional with MSDN (251b1820-1cf0-476b-a9e5-5208d0fa93e7)'
+              azureSubscription: 'Azure Resource Manager automatic Service Principal'
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: 'az storage container create -n ''$root'' --public-access "blob" --account-name "$1"'
@@ -111,7 +111,7 @@ stages:
           - task: AzureCLI@2
             displayName: Deploy
             inputs:
-              azureSubscription: 'Visual Studio Professional with MSDN (251b1820-1cf0-476b-a9e5-5208d0fa93e7)'
+              azureSubscription: 'Azure Resource Manager automatic Service Principal'
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: 'az storage blob upload-batch -d ''$root'' -s "$1/web/" --account-name "$2"'
