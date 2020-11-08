@@ -1,4 +1,3 @@
 * eol=crlf
 package.json eol=lf
-tsconfig.json eol=lf
 tslint.json eol=lf
