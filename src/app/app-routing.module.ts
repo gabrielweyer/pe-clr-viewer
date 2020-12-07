@@ -16,7 +16,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      {onSameUrlNavigation: 'reload'})
+      { onSameUrlNavigation: 'reload', relativeLinkResolution: 'legacy' })
   ],
   exports: [
     RouterModule
