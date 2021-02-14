@@ -35,7 +35,7 @@ yarn start
 
 ## CI/CD
 
-Each push to `master` triggers a build in `Azure DevOps` and a deployment to `Azure Blob storage`. I'm using `Azure Functions Proxies` to be able to support an extension-less URI and reload.
+Each push to `main` triggers a build in `Azure DevOps` and a deployment to `Azure Blob storage`. I'm using `Azure Functions Proxies` to be able to support an extension-less URI and reload.
 
 [advanced-dotnet-debugging-book]: https://www.goodreads.com/book/show/7306509-advanced-net-debugging
 [pe-format]: https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx
