@@ -1,5 +1,4 @@
 import { HexHelper } from './hex-helper';
-import { CliFlags } from './../app/models/cli-flags';
 import { PartVisitor } from './../app/models/part-visitor';
 import { PortableExecutable } from './../app/models/portable-executable';
 import { Byte } from '../app/models/byte';
@@ -18,7 +17,7 @@ export class HexesGenerator {
 
     for (let o = 0; o <= endOffsetDec; o++) {
       hexes.push(
-        new Byte(file.bytes[o].toString(16), this.getPart(pe, o, partVisitors), this.getSubPart(pe, o, subPartVisitors))
+        new Byte(file.bytes[o].toString(16), this.getPart(pe, o, partVisitors), this.getSubPart(o, subPartVisitors))
       );
     }
 
@@ -97,8 +96,8 @@ export class HexesGenerator {
 
     if (pe.isManaged) {
       visitors.push(
-        new SubPartVisitor(pe.cliMetadataHeaderDirectory.size, PortableExecutableSubPart.CliMetadataHeaderDirectorySize),
-        new SubPartVisitor(pe.cliMetadataHeaderDirectory.rva, PortableExecutableSubPart.CliMetadataHeaderDirectoryRva),
+        new SubPartVisitor(pe.cliMetadataHeaderDirectory?.size, PortableExecutableSubPart.CliMetadataHeaderDirectorySize),
+        new SubPartVisitor(pe.cliMetadataHeaderDirectory?.rva, PortableExecutableSubPart.CliMetadataHeaderDirectoryRva),
         new SubPartVisitor(pe.cliFlags, PortableExecutableSubPart.CliFlags),
         new SubPartVisitor(pe.clrVersionSize, PortableExecutableSubPart.ClrVersionSize),
         new SubPartVisitor(pe.clrVersion, PortableExecutableSubPart.ClrVersion),
@@ -109,8 +108,8 @@ export class HexesGenerator {
 
       if (!pe.is64Bit) {
         visitors.push(
-          new SubPartVisitor(pe.managedEntryPoint.method, PortableExecutableSubPart.EntryPointMethod),
-          new SubPartVisitor(pe.managedEntryPoint.executable, PortableExecutableSubPart.EntryPointExecutable)
+          new SubPartVisitor(pe.managedEntryPoint?.method, PortableExecutableSubPart.EntryPointMethod),
+          new SubPartVisitor(pe.managedEntryPoint?.executable, PortableExecutableSubPart.EntryPointExecutable)
         );
       }
     }
@@ -119,7 +118,6 @@ export class HexesGenerator {
   }
 
   private static getSubPart(
-    pe: PortableExecutable,
     offset: number,
     visitors: Array<SubPartVisitor>
   ): PortableExecutableSubPart {

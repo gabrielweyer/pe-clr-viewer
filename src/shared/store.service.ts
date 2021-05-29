@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class StoreService {
-  private pe: PortableExecutable;
+  private pe: PortableExecutable | undefined;
 
-  public setPortableExecutable(pe: PortableExecutable): void {
+  public setPortableExecutable(pe: PortableExecutable | undefined): void {
     this.pe = pe;
   }
 
-  public getPortableExecutable(): PortableExecutable {
+  public getPortableExecutable(): PortableExecutable | undefined {
     return this.pe;
   }
 }

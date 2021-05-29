@@ -1,4 +1,4 @@
-import { Router, ActivatedRoute, ParamMap, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { HexHelper } from './../../shared/hex-helper';
 import { PortableExecutable } from './../models/portable-executable';
 import { Component, OnDestroy } from '@angular/core';
@@ -14,17 +14,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./viewer.component.scss']
 })
 export class ViewerComponent implements OnDestroy {
-  public pe: PortableExecutable;
+  public pe!: PortableExecutable;
 
-  public bytes: Byte[];
+  public bytes: Byte[] = [];
   public startOffsetDec = 0;
-  public endOffsetDec: number;
+  public endOffsetDec = 0;
 
-  public cliMetadataHeaderBytes: Byte[];
-  public cliMetadataHeaderStartOffsetDec: number;
+  public cliMetadataHeaderBytes: Byte[] = [];
+  public cliMetadataHeaderStartOffsetDec = 0;
 
-  public importTableEntryPointBytes: Byte[];
-  public importTableEntryPointStartOffsetDec: number;
+  public importTableEntryPointBytes: Byte[] = [];
+  public importTableEntryPointStartOffsetDec = 0;
 
   public peConstants = PortableExecutableConstants;
 
@@ -32,7 +32,6 @@ export class ViewerComponent implements OnDestroy {
 
   constructor(
     private readonly router: Router,
-    private readonly route: ActivatedRoute,
     private readonly store: StoreService
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
@@ -49,18 +48,27 @@ export class ViewerComponent implements OnDestroy {
   }
 
   private initialise(): void {
-    this.pe = this.store.getPortableExecutable();
-    this.setBytes();
+    const pe = this.store.getPortableExecutable();
+    this.setBytes(pe);
   }
 
-  private setBytes(): void {
-    this.bytes = undefined;
-
+  private setBytes(pe: PortableExecutable | undefined): void {
+    this.bytes = [];
     this.startOffsetDec = 0;
+    this.cliMetadataHeaderBytes = [];
+    this.cliMetadataHeaderStartOffsetDec = 0;
+    this.importTableEntryPointBytes = [];
+    this.importTableEntryPointStartOffsetDec = 0;
+
+    if (pe === undefined) {
+      return;
+    }
+
+    this.pe = pe;
 
     let endOffsetDec = this.pe.relocSectionHeader.endOffsetDec + 48 - 1;
 
-    if (this.pe.isManaged) {
+    if (this.pe.isManaged && this.pe.cliHeader && this.pe.cliMetadataHeader && this.pe.clrVersion) {
       endOffsetDec = this.pe.cliHeader.endOffsetDec + 48;
 
       this.cliMetadataHeaderStartOffsetDec = HexHelper.getNiceEndOffsetDec(
@@ -72,7 +80,7 @@ export class ViewerComponent implements OnDestroy {
         cliMetadataHeaderEndOffsetDec
       );
 
-      if (!this.pe.is64Bit) {
+      if (!this.pe.is64Bit && this.pe.importTable && this.pe.entryPoint) {
         this.importTableEntryPointStartOffsetDec = HexHelper.getNiceEndOffsetDec(
           this.pe.importTable.startOffsetDec - 48
         );

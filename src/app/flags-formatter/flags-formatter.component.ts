@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./flags-formatter.component.scss']
 })
 export class FlagsFormatterComponent {
-  @Input() flags: string[];
+  @Input() flags: string[] = [];
 }

@@ -7,5 +7,5 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LinkComponent {
   @Input()
-  href: string;
+  href!: string;
 }

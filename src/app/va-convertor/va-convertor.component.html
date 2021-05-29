@@ -7,7 +7,7 @@
   </p>
   <ul>
     <li>
-      <span class="mono-font">0x</span><input type="text" (input)="onRva($event.target.value)" />
+      <span class="mono-font">0x</span><input type="text" (input)="onRva($event)" />
     </li>
     <li>
       <span class="mono-font">-</span>&nbsp;<span class="data-directories cli-header-directory-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>
@@ -26,7 +26,7 @@
   </p>
   <ul>
     <li>
-      <span class="mono-font">0x</span><input type="text" (input)="onVa($event.target.value)" />
+      <span class="mono-font">0x</span><input type="text" (input)="onVa($event)" />
     </li>
     <li>
       <span class="mono-font">-</span>&nbsp;<span class="mono-font nt-specific-fields image-base">{{pe.imageBase.hexValue | hex}}</span>

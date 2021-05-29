@@ -11,7 +11,8 @@ export class UploadContainerComponent {
   @Output() fileRead: EventEmitter<PortableExecutable> = new EventEmitter();
 
   public isReading = false;
-  public pe: PortableExecutable;
+  public hasError = false;
+  public pe: PortableExecutable | undefined;
 
   private readonly fileReader = new FileReader();
 
@@ -21,32 +22,38 @@ export class UploadContainerComponent {
     };
   }
 
-  public fileChanged(event: EventTarget): void {
+  public fileChanged(event: Event): void {
     if (this.isReading) {
       return;
     }
 
     this.isReading = true;
+    this.hasError = false;
     this.pe = undefined;
 
-    const eventObj: MSInputMethodContext = event as MSInputMethodContext;
-    const target: HTMLInputElement = eventObj.target as HTMLInputElement;
-    const files: FileList = target.files;
-    const file = files[0];
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
 
-    this.fileReader.readAsArrayBuffer(file);
+    if (files) {
+      const file = files[0];
+
+      this.fileReader.readAsArrayBuffer(file);
+    }
   }
 
   private onRead(buffer: ArrayBuffer): void {
-    const dataview = new DataView(buffer);
     const bytes = new Uint8Array(buffer);
 
     const peReader = new PortableExecutableReader(bytes);
-    this.pe = peReader.read();
 
-    if (this.pe) {
-      this.fileRead.emit(this.pe);
+    try {
+      this.pe = peReader.read();
+    } catch (error) {
+      this.hasError = true;
+      this.pe = undefined;
     }
+
+    this.fileRead.emit(this.pe);
 
     this.isReading = false;
   }
