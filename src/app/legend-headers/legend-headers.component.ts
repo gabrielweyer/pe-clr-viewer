@@ -10,5 +10,5 @@ import { PortableExecutable } from '../models/portable-executable';
 export class LegendHeadersComponent {
   peConstants = PortableExecutableConstants;
 
-  @Input() pe: PortableExecutable;
+  @Input() pe!: PortableExecutable;
 }

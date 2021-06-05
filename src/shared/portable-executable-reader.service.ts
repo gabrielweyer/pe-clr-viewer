@@ -1,23 +1,102 @@
 import { HexesGenerator } from './hexes-generator.service';
 import { PortableExecutableConstants } from './../app/models/portable-executable-constants';
-import { HexSegment, Segment, FileOffsetSegment, RvaSegment, AsciiSegment } from './../app/models/segment';
+import { Segment, FileOffsetSegment, AsciiSegment, HexSegment, RvaSegment } from './../app/models/segment';
 import { File } from './../app/models/file';
-import { BytePipe } from './../shared/byte.pipe';
-import { LeftPadPipe } from './../shared/leftpad.pipe';
-import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutable } from './../app/models/portable-executable';
 import { HexHelper } from '../shared/hex-helper';
 import { DataDirectoryItem } from './../app/models/data-directory-item';
 import { SectionItem } from './../app/models/section-item';
-import { PortableExecutableSubPart } from './../app/models/portable-executable-sub-part.enum';
-import { PartVisitor } from '../app/models/part-visitor';
-import { SubPartVisitor } from '../app/models/sub-part-visitor';
 import { CliFlags } from '../app/models/cli-flags';
 import { Subsystem } from '../app/models/subsystem';
 import { Characteristics } from '../app/models/characteristics';
 import { DllCharacteristics } from '../app/models/dll-characteristics';
 import { StringHelper } from './string-helper';
 import { EntryPoint } from '../app/models/entry-point';
+
+class CoffHeader {
+  public coffHeader: Segment;
+  public characteristics: Characteristics;
+
+  constructor(coffHeader: Segment, characteristics: Characteristics) {
+    this.coffHeader = coffHeader;
+    this.characteristics = characteristics;
+  }
+}
+
+class StandardFields {
+  public magicNumber: HexSegment;
+  public is64Bit: boolean;
+  public standardFields: Segment;
+  public addressOfEntryPoint: RvaSegment;
+
+  constructor(magicNumber: HexSegment, is64Bit: boolean, standardFields: Segment, addressOfEntryPoint: RvaSegment) {
+    this.magicNumber = magicNumber;
+    this.is64Bit = is64Bit;
+    this.standardFields = standardFields;
+    this.addressOfEntryPoint = addressOfEntryPoint;
+  }
+}
+
+class NtSpecificFields {
+  public ntSpecificFields: Segment;
+  public imageBase: HexSegment;
+  public subsystem: Subsystem;
+  public dllCharacteristics: DllCharacteristics;
+
+  constructor(ntSpecificFields: Segment, imageBase: HexSegment, subsystem: Subsystem, dllCharacteristics: DllCharacteristics) {
+    this.ntSpecificFields = ntSpecificFields;
+    this.imageBase = imageBase;
+    this.subsystem = subsystem;
+    this.dllCharacteristics = dllCharacteristics;
+  }
+}
+
+class DataDirectories {
+  public dataDirectories: Segment;
+  public importTableDirectory: DataDirectoryItem;
+  public importAddressTableDirectory: DataDirectoryItem;
+  public cliHeaderDirectory: DataDirectoryItem;
+  public isManaged: boolean;
+
+  constructor(
+    dataDirectories: Segment,
+    importTableDirectory: DataDirectoryItem,
+    importAddressTableDirectory: DataDirectoryItem,
+    cliHeaderDirectory: DataDirectoryItem,
+    isManaged: boolean
+  ) {
+    this.dataDirectories = dataDirectories;
+    this.importTableDirectory = importTableDirectory;
+    this.importAddressTableDirectory = importAddressTableDirectory;
+    this.cliHeaderDirectory = cliHeaderDirectory;
+    this.isManaged = isManaged;
+  }
+}
+
+class SectionHeaders {
+  public textSectionHeader: Segment;
+  public textSectionItem: SectionItem;
+  public rsrcSectionHeader: Segment;
+  public rsrcSectionItem: SectionItem;
+  public relocSectionHeader: Segment;
+  public relocSectionItem: SectionItem;
+
+  constructor(
+    textSectionHeader: Segment,
+    textSectionItem: SectionItem,
+    rsrcSectionHeader: Segment,
+    rsrcSectionItem: SectionItem,
+    relocSectionHeader: Segment,
+    relocSectionItem: SectionItem
+  ) {
+    this.textSectionHeader = textSectionHeader;
+    this.textSectionItem = textSectionItem;
+    this.rsrcSectionHeader = rsrcSectionHeader;
+    this.rsrcSectionItem = rsrcSectionItem;
+    this.relocSectionHeader = relocSectionHeader;
+    this.relocSectionItem = relocSectionItem;
+  }
+}
 
 export class PortableExecutableReader {
   private readonly file: File;
@@ -44,19 +123,47 @@ export class PortableExecutableReader {
 
   read(): PortableExecutable {
     if (this.file.bytes[0] !== 77 || this.file.bytes[1] !== 90) {
-      return null;
+      throw new Error('This file is not a portable executable.');
     }
 
-    const pe = new PortableExecutable();
+    const dosHeader = this.getDosHeader();
+    const signatureOffset = this.getSignatureOffset();
+    const dosStub = this.getDosStub(signatureOffset);
+    const signature = this.getSignature(signatureOffset);
+    const coffHeader = this.getCoffHeader(signature);
+    const standardFields = this.getStandardFields(coffHeader.coffHeader);
+    const ntSpecificFields = this.getNtSpecificFields(standardFields);
+    const dataDirectories = this.getDataDirectories(ntSpecificFields.ntSpecificFields);
+    const sectionHeaders = this.getSectionHeaders(dataDirectories.dataDirectories);
 
-    this.setDosHeader(pe);
-    this.setDosStub(pe);
-    this.setSignature(pe);
-    this.setCoffHeader(pe);
-    this.setStandardFields(pe);
-    this.setNtSpecificFields(pe);
-    this.setDataDirectories(pe);
-    this.setSectionHeaders(pe);
+    const pe = new PortableExecutable(
+      dosHeader,
+      signatureOffset,
+      dosStub,
+      signature,
+      coffHeader.coffHeader,
+      coffHeader.characteristics,
+      standardFields.standardFields,
+      standardFields.magicNumber,
+      standardFields.is64Bit,
+      standardFields.addressOfEntryPoint,
+      ntSpecificFields.ntSpecificFields,
+      ntSpecificFields.imageBase,
+      ntSpecificFields.subsystem,
+      ntSpecificFields.dllCharacteristics,
+      dataDirectories.dataDirectories,
+      dataDirectories.importTableDirectory,
+      dataDirectories.importAddressTableDirectory,
+      dataDirectories.cliHeaderDirectory,
+      dataDirectories.isManaged,
+      sectionHeaders.textSectionHeader,
+      sectionHeaders.textSectionItem,
+      sectionHeaders.rsrcSectionHeader,
+      sectionHeaders.rsrcSectionItem,
+      sectionHeaders.relocSectionHeader,
+      sectionHeaders.relocSectionItem
+    );
+
     this.setImportAddressTable(pe);
     this.setCliHeader(pe);
     this.setCliMetadataHeader(pe);
@@ -72,116 +179,115 @@ export class PortableExecutableReader {
     HexesGenerator.generate(this.file, pe);
   }
 
-  private setDosHeader(pe: PortableExecutable) {
-    pe.dosHeader = this.file.getSegment(
+  private getDosHeader(): Segment {
+    return this.file.getSegment(
       PortableExecutableConstants.dosHeaderStartOffsetDec,
       PortableExecutableConstants.dosHeaderSizeDec
     );
+  }
 
-    pe.signatureOffset = this.file.getFileOffsetSegment(
+  private getSignatureOffset(): FileOffsetSegment {
+    return this.file.getFileOffsetSegment(
       PortableExecutableConstants.signatureOffsetStartOffsetDec,
       PortableExecutableConstants.signatureOffsetSizeDec
     );
   }
 
-  private setDosStub(pe: PortableExecutable) {
-    const endOffsetDec = HexHelper.getDecimal(pe.signatureOffset.fileOffset) - 1;
+  private getDosStub(signatureOffset: FileOffsetSegment): Segment {
+    const endOffsetDec = HexHelper.getDecimal(signatureOffset.fileOffset) - 1;
     const sizeDec = endOffsetDec - PortableExecutableConstants.dosStubStartOffsetDec;
 
-    pe.dosStub = new Segment(PortableExecutableConstants.dosStubStartOffsetDec, endOffsetDec, sizeDec);
+    return new Segment(PortableExecutableConstants.dosStubStartOffsetDec, endOffsetDec, sizeDec);
   }
 
-  private setSignature(pe: PortableExecutable) {
-    const startOffsetDec = HexHelper.getDecimal(pe.signatureOffset.fileOffset);
+  private getSignature(signatureOffset: FileOffsetSegment): Segment {
+    const startOffsetDec = HexHelper.getDecimal(signatureOffset.fileOffset);
 
-    pe.signature = this.file.getSegment(startOffsetDec, PortableExecutableConstants.signatureSizeDec);
+    return this.file.getSegment(startOffsetDec, PortableExecutableConstants.signatureSizeDec);
   }
 
-  private setCoffHeader(pe: PortableExecutable) {
-    const coffHeaderStartOffsetDec = pe.signature.endOffsetDec + 1;
+  private getCoffHeader(signature: Segment): CoffHeader {
+    const coffHeaderStartOffsetDec = signature.endOffsetDec + 1;
 
-    pe.coffHeader = this.file.getSegment(coffHeaderStartOffsetDec, PortableExecutableConstants.coffHeaderSizeDec);
+    const coffHeader = this.file.getSegment(coffHeaderStartOffsetDec, PortableExecutableConstants.coffHeaderSizeDec);
 
     const characteristicsStartOffsetDec =
-      coffHeaderStartOffsetDec + PortableExecutableConstants.characteristicsSubOffsetDec;
-    this.setCharacteristics(pe, characteristicsStartOffsetDec);
-  }
-
-  private setCharacteristics(pe: PortableExecutable, startOffsetDec: number) {
-    const characteristics = this.file.getHexSegment(startOffsetDec, PortableExecutableConstants.characteristicsSizeDec);
-    pe.characteristics = new Characteristics(
-      characteristics.startOffsetDec,
-      characteristics.endOffsetDec,
-      characteristics.sizeDec,
-      characteristics.hexValue
+      coffHeader.startOffsetDec + PortableExecutableConstants.characteristicsSubOffsetDec;
+    const characteristicsSegment = this.file.getHexSegment(
+      characteristicsStartOffsetDec,
+      PortableExecutableConstants.characteristicsSizeDec
     );
+    const characteristics = new Characteristics(
+      characteristicsSegment.startOffsetDec,
+      characteristicsSegment.endOffsetDec,
+      characteristicsSegment.sizeDec,
+      characteristicsSegment.hexValue
+    );
+
+    return new CoffHeader(coffHeader, characteristics);
   }
 
-  private setStandardFields(pe: PortableExecutable) {
-    const standardFieldsStartOffsetDec = pe.coffHeader.endOffsetDec + 1;
+  private getStandardFields(coffHeader: Segment): StandardFields {
+    const standardFieldsStartOffsetDec = coffHeader.endOffsetDec + 1;
 
     const magicNumberStartOffsetDec = standardFieldsStartOffsetDec;
-    this.setMagicNumber(pe, magicNumberStartOffsetDec);
+    const magicNumber = this.file.getHexSegment(magicNumberStartOffsetDec, PortableExecutableConstants.magicNumberSizeDec);
 
-    pe.is64Bit = pe.magicNumber.hexValue === '020B';
+    const is64Bit = magicNumber.hexValue === '020B';
 
-    const standardFieldsSize = pe.is64Bit
+    const standardFieldsSize = is64Bit
       ? PortableExecutableConstants.standardFieldsPE32PlusSizeDec
       : PortableExecutableConstants.standardFieldsPE32SizeDec;
 
-    pe.standardFields = this.file.getSegment(standardFieldsStartOffsetDec, standardFieldsSize);
+    const standardFields = this.file.getSegment(standardFieldsStartOffsetDec, standardFieldsSize);
 
     const addressOfEntryPointStartOffsetDec =
       standardFieldsStartOffsetDec + PortableExecutableConstants.addressOfEntryPointSubOffsetDec;
-    this.setAddressOfEntryPoint(pe, addressOfEntryPointStartOffsetDec);
-  }
-
-  private setMagicNumber(pe: PortableExecutable, startOffsetDec: number) {
-    pe.magicNumber = this.file.getHexSegment(startOffsetDec, PortableExecutableConstants.magicNumberSizeDec);
-  }
-
-  private setAddressOfEntryPoint(pe: PortableExecutable, startOffsetDec: number) {
-    pe.addressOfEntryPoint = this.file.getRvaSegment(
-      startOffsetDec,
+    const addressOfEntryPoint = this.file.getRvaSegment(
+      addressOfEntryPointStartOffsetDec,
       PortableExecutableConstants.addressOfEntryPointSizeDec
     );
+
+    return new StandardFields(magicNumber, is64Bit, standardFields, addressOfEntryPoint);
   }
 
-  private setNtSpecificFields(pe: PortableExecutable) {
-    const startOffsetDec = pe.standardFields.endOffsetDec + 1;
-    const sizeDec = pe.is64Bit
+  private getNtSpecificFields(standardFields: StandardFields): NtSpecificFields {
+    const startOffsetDec = standardFields.standardFields.endOffsetDec + 1;
+    const sizeDec = standardFields.is64Bit
       ? PortableExecutableConstants.ntSpecificFieldsPE32PlusSizeDec
       : PortableExecutableConstants.ntSpecificFieldsPE32SizeDec;
 
-    pe.ntSpecificFields = this.file.getSegment(startOffsetDec, sizeDec);
-    this.setImageBase(pe, startOffsetDec);
+    const ntSpecificFields = this.file.getSegment(startOffsetDec, sizeDec);
+    const imageBase = this.getImageBase(standardFields.is64Bit, startOffsetDec);
 
-    const subsystemSubOffsetDec = pe.is64Bit
+    const subsystemSubOffsetDec = standardFields.is64Bit
       ? PortableExecutableConstants.subsystemPE32PlusSubOffsetDec
       : PortableExecutableConstants.subsystemPE32SubOffsetDec;
     const subsystemStartOffsetDec = startOffsetDec + subsystemSubOffsetDec;
-    this.setSubsystem(pe, subsystemStartOffsetDec);
+    const subsystem = this.setSubsystem(subsystemStartOffsetDec);
 
-    const dllCharacteristicsSubOffsetDec = pe.is64Bit
+    const dllCharacteristicsSubOffsetDec = standardFields.is64Bit
       ? PortableExecutableConstants.dllCharacteristicsPE32PlusSubOffsetDec
       : PortableExecutableConstants.dllCharacteristicsPE32SubOffsetDec;
     const dllCharacteristicsStartOffsetDec = startOffsetDec + dllCharacteristicsSubOffsetDec;
-    this.setDllCharacteristics(pe, dllCharacteristicsStartOffsetDec);
+    const dllCharacteristics = this.getDllCharacteristics(dllCharacteristicsStartOffsetDec);
+
+    return new NtSpecificFields(ntSpecificFields, imageBase, subsystem, dllCharacteristics);
   }
 
-  private setImageBase(pe: PortableExecutable, startOffsetDec: number) {
-    const sizeDec = pe.is64Bit
+  private getImageBase(is64Bit: boolean, startOffsetDec: number) {
+    const sizeDec = is64Bit
       ? PortableExecutableConstants.imageBasePE32PlusSizeDec
       : PortableExecutableConstants.imageBasePE32SizeDec;
 
-    pe.imageBase = this.file.getHexSegment(startOffsetDec, sizeDec);
+    return this.file.getHexSegment(startOffsetDec, sizeDec);
   }
 
-  private setSubsystem(pe: PortableExecutable, startOffsetDec: number) {
+  private setSubsystem(startOffsetDec: number): Subsystem {
     const sizeDec = PortableExecutableConstants.subsystemSizeDec;
 
     const subsystem = this.file.getHexSegment(startOffsetDec, sizeDec);
-    pe.subsystem = new Subsystem(
+    return new Subsystem(
       subsystem.startOffsetDec,
       subsystem.endOffsetDec,
       subsystem.sizeDec,
@@ -189,11 +295,11 @@ export class PortableExecutableReader {
     );
   }
 
-  private setDllCharacteristics(pe: PortableExecutable, startOffsetDec: number) {
+  private getDllCharacteristics(startOffsetDec: number): DllCharacteristics {
     const sizeDec = PortableExecutableConstants.dllCharacteristicsSizeDec;
 
     const dllCharacteristics = this.file.getHexSegment(startOffsetDec, sizeDec);
-    pe.dllCharacteristics = new DllCharacteristics(
+    return new DllCharacteristics(
       dllCharacteristics.startOffsetDec,
       dllCharacteristics.endOffsetDec,
       dllCharacteristics.sizeDec,
@@ -201,29 +307,31 @@ export class PortableExecutableReader {
     );
   }
 
-  private setDataDirectories(pe: PortableExecutable) {
-    const dataDirectoriesStartOffsetDec = pe.ntSpecificFields.endOffsetDec + 1;
-    pe.dataDirectories = this.file.getSegment(
+  private getDataDirectories(ntSpecificFields: Segment): DataDirectories {
+    const dataDirectoriesStartOffsetDec = ntSpecificFields.endOffsetDec + 1;
+    const dataDirectories = this.file.getSegment(
       dataDirectoriesStartOffsetDec,
       PortableExecutableConstants.dataDirectoriesSizeDec
     );
 
-    pe.importTableDirectory = this.getDirectoryItem(
+    const importTableDirectory = this.getDirectoryItem(
       dataDirectoriesStartOffsetDec,
       PortableExecutableConstants.importTableDirectorySubOffsetDec
     );
 
-    pe.importAddressTableDirectory = this.getDirectoryItem(
+    const importAddressTableDirectory = this.getDirectoryItem(
       dataDirectoriesStartOffsetDec,
       PortableExecutableConstants.importAddressTableDirectorySubOffsetDec
     );
 
-    pe.cliHeaderDirectory = this.getDirectoryItem(
+    const cliHeaderDirectory = this.getDirectoryItem(
       dataDirectoriesStartOffsetDec,
       PortableExecutableConstants.cliHeaderDirectorySubOffsetDec
     );
 
-    pe.isManaged = pe.cliHeaderDirectory.size.hexValue !== '00000000';
+    const isManaged = cliHeaderDirectory.size.hexValue !== '00000000';
+
+    return new DataDirectories(dataDirectories, importTableDirectory, importAddressTableDirectory, cliHeaderDirectory, isManaged);
   }
 
   private getDirectoryItem(dataDirectoriesStartOffsetDec: number, subOffsetDec: number): DataDirectoryItem {
@@ -236,27 +344,29 @@ export class PortableExecutableReader {
     return new DataDirectoryItem(rva, size);
   }
 
-  private setSectionHeaders(pe: PortableExecutable) {
-    const textSectionHeaderStartOffsetDec = pe.dataDirectories.endOffsetDec + 1;
-    pe.textSectionHeader = this.file.getSegment(
+  private getSectionHeaders(dataDirectories: Segment): SectionHeaders {
+    const textSectionHeaderStartOffsetDec = dataDirectories.endOffsetDec + 1;
+    const textSectionHeader = this.file.getSegment(
       textSectionHeaderStartOffsetDec,
       PortableExecutableConstants.sectionHeaderSize
     );
-    pe.textSectionItem = this.getSectionItem(textSectionHeaderStartOffsetDec);
+    const textSectionItem = this.getSectionItem(textSectionHeaderStartOffsetDec);
 
-    const rsrcSectionHeaderStartOffsetDec = pe.textSectionHeader.endOffsetDec + 1;
-    pe.rsrcSectionHeader = this.file.getSegment(
+    const rsrcSectionHeaderStartOffsetDec = textSectionHeader.endOffsetDec + 1;
+    const rsrcSectionHeader = this.file.getSegment(
       rsrcSectionHeaderStartOffsetDec,
       PortableExecutableConstants.sectionHeaderSize
     );
-    pe.rsrcSectionItem = this.getSectionItem(rsrcSectionHeaderStartOffsetDec);
+    const rsrcSectionItem = this.getSectionItem(rsrcSectionHeaderStartOffsetDec);
 
-    const relocSectionHeaderStartOffsetDec = pe.rsrcSectionHeader.endOffsetDec + 1;
-    pe.relocSectionHeader = this.file.getSegment(
+    const relocSectionHeaderStartOffsetDec = rsrcSectionHeader.endOffsetDec + 1;
+    const relocSectionHeader = this.file.getSegment(
       relocSectionHeaderStartOffsetDec,
       PortableExecutableConstants.sectionHeaderSize
     );
-    pe.relocSectionItem = this.getSectionItem(relocSectionHeaderStartOffsetDec);
+    const relocSectionItem = this.getSectionItem(relocSectionHeaderStartOffsetDec);
+
+    return new SectionHeaders(textSectionHeader, textSectionItem, rsrcSectionHeader, rsrcSectionItem, relocSectionHeader, relocSectionItem);
   }
 
   private getSectionItem(startOffsetDec: number): SectionItem {
@@ -316,11 +426,11 @@ export class PortableExecutableReader {
     }
 
     const cliManagedHeaderStartOffsetDec =
-      HexHelper.getDecimal(pe.cliMetadataHeaderDirectory.rva.rva) -
+      HexHelper.getDecimal(pe.cliMetadataHeaderDirectory!.rva.rva) -
       HexHelper.getDecimal(pe.textSectionItem.baseRva.rva) +
       HexHelper.getDecimal(pe.textSectionItem.fileOffset.fileOffset);
 
-    const cliManagedHeaderSizeDec = HexHelper.getDecimal(pe.cliMetadataHeaderDirectory.size.hexValue);
+    const cliManagedHeaderSizeDec = HexHelper.getDecimal(pe.cliMetadataHeaderDirectory!.size.hexValue);
 
     pe.cliMetadataHeader = this.file.getSegment(cliManagedHeaderStartOffsetDec, cliManagedHeaderSizeDec);
 
@@ -329,14 +439,14 @@ export class PortableExecutableReader {
   }
 
   private setClrVersionSize(pe: PortableExecutable): void {
-    const clrVersionSizeStartOffsetDec = pe.cliMetadataHeader.startOffsetDec + PortableExecutableConstants.clrVersionSizeSubOffsetDec;
+    const clrVersionSizeStartOffsetDec = pe.cliMetadataHeader!.startOffsetDec + PortableExecutableConstants.clrVersionSizeSubOffsetDec;
 
     pe.clrVersionSize = this.file.getHexSegment(clrVersionSizeStartOffsetDec, PortableExecutableConstants.clrVersionSizeSizeDec);
   }
 
   private setClrVersion(pe: PortableExecutable): void {
-    const clrVersionStartOffsetDec = pe.clrVersionSize.endOffsetDec + 1;
-    const clrVersionSizeDec = HexHelper.getDecimal(pe.clrVersionSize.hexValue);
+    const clrVersionStartOffsetDec = pe.clrVersionSize!.endOffsetDec + 1;
+    const clrVersionSizeDec = HexHelper.getDecimal(pe.clrVersionSize!.hexValue);
 
     const asciiSegment = this.file.getAsciiSegment(clrVersionStartOffsetDec, clrVersionSizeDec);
     const trimmed = StringHelper.trimStartEndNullChars(asciiSegment.text);
@@ -380,21 +490,21 @@ export class PortableExecutableReader {
   }
 
   private setEntryPointOpCode(pe: PortableExecutable): void {
-    pe.entryPointOpCode = this.file.getOpCodeSegment(pe.entryPoint.startOffsetDec, PortableExecutableConstants.entryPointOpCodeSizeDec);
+    pe.entryPointOpCode = this.file.getOpCodeSegment(pe.entryPoint!.startOffsetDec, PortableExecutableConstants.entryPointOpCodeSizeDec);
   }
 
   private setEntryPointRva(pe: PortableExecutable): void {
-    pe.entryPointVa = this.file.getVaSegment(pe.entryPointOpCode.endOffsetDec + 1, PortableExecutableConstants.rvaSize);
+    pe.entryPointVa = this.file.getVaSegment(pe.entryPointOpCode!.endOffsetDec + 1, PortableExecutableConstants.rvaSize);
   }
 
   private setIatEntryPoint(pe: PortableExecutable): void {
-    const startOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromVa(pe.entryPointVa.va, pe);
+    const startOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromVa(pe.entryPointVa!.va, pe);
 
     pe.iatEntryPointRva = this.file.getRvaSegment(startOffsetDec, PortableExecutableConstants.rvaSize);
   }
 
   private setManagedEntryPoint(pe: PortableExecutable): void {
-    const startOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromRva(pe.iatEntryPointRva.rva, pe);
+    const startOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromRva(pe.iatEntryPointRva!.rva, pe);
 
     const asciiSegment = this.file.getAsciiSegment(startOffsetDec, 25);
     const trimmed = StringHelper.trimStartEndNullChars(asciiSegment.text);

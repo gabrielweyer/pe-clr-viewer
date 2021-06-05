@@ -8,13 +8,13 @@ import { PortableExecutable } from '../models/portable-executable';
   styleUrls: ['./va-convertor.component.scss']
 })
 export class VaConvertorComponent {
-  @Input() pe: PortableExecutable;
+  @Input() pe!: PortableExecutable;
 
   public fileOffsetFromRvaDec = 0;
   public fileOffsetFromVaDec = 0;
 
-  public onRva(inputRva: string): void {
-    const fileOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromRva(inputRva, this.pe);
+  public onRva(inputRva: Event): void {
+    const fileOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromRva((inputRva.target as HTMLInputElement).value, this.pe);
 
     if (fileOffsetDec > 0) {
       this.fileOffsetFromRvaDec = fileOffsetDec;
@@ -23,8 +23,8 @@ export class VaConvertorComponent {
     }
   }
 
-  public onVa(inputVa: string): void {
-    const fileOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromVa(inputVa, this.pe);
+  public onVa(inputVa: Event): void {
+    const fileOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromVa((inputVa.target as HTMLInputElement).value, this.pe);
 
     if (fileOffsetDec > 0) {
       this.fileOffsetFromVaDec = fileOffsetDec;

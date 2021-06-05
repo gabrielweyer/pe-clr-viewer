@@ -67,7 +67,7 @@ export class File {
 
   private getAsciiValue(startOffsetDec: number, endOffsetDec: number): string {
     return String.fromCharCode
-      .apply(null, this.bytes.filter((v, i) => i >= startOffsetDec && i <= endOffsetDec));
+      .apply(null, [...this.bytes.filter((v, i) => i >= startOffsetDec && i <= endOffsetDec)]);
   }
 
   private getOpCode(startOffsetDec: number, endOffsetDec: number): string {

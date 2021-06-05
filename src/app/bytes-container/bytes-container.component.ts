@@ -7,8 +7,7 @@ import { Byte } from '../models/byte';
   styleUrls: ['./bytes-container.component.scss']
 })
 export class BytesContainerComponent {
-  @Input() bytes: Byte[];
-
+  @Input() bytes: Byte[] = [];
   @Input() startOffsetDec = 0;
 
   shouldBlurTop(): boolean {

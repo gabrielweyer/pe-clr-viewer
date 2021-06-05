@@ -14,4 +14,16 @@ describe('BytePipe', () => {
       });
     });
   });
+
+  describe('Given lowercase string "4d"', () => {
+    const stringLiteral = '4d';
+
+    describe('When transform', () => {
+      const actualHex = pipe.transform(stringLiteral);
+
+      it('Then uppercase "4D"', () => {
+        expect(actualHex).toBe('4D');
+      });
+    });
+  });
 });

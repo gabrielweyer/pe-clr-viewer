@@ -11,10 +11,8 @@ import { Router } from '@angular/router';
 export class AppComponent {
   constructor(private readonly store: StoreService, private readonly router: Router) {}
 
-  fileRead(pe: PortableExecutable): void {
-    if (pe) {
-      this.store.setPortableExecutable(pe);
-      this.router.navigate(['/see']);
-    }
+  fileRead(pe: PortableExecutable | undefined): void {
+    this.store.setPortableExecutable(pe);
+    this.router.navigate(['/see']);
   }
 }

@@ -1,5 +1,5 @@
 <label for="file-upload" class="custom-file-upload" [ngClass]="{'disabled': isReading}">
     View DLL / EXE
-  </label>
-  <input id="file-upload" type="file" (change)="fileChanged($event)" [disabled]="isReading">
-  <span class="error" *ngIf="pe === null">This file is not a Portable Executable.</span>
+</label>
+<input id="file-upload" type="file" (change)="fileChanged($event)" [disabled]="isReading">
+<span class="error" *ngIf="hasError">This file is not a Portable Executable.</span>
