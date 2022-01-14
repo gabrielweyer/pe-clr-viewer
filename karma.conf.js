@@ -33,7 +33,6 @@ module.exports = function (config) {
       outputFile: 'tests-results.xml',
       useBrowserName: false
     },
-
     reporters: ['progress', 'kjhtml', 'junit'],
     port: 9876,
     colors: true,

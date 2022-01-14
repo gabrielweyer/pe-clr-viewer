@@ -7,7 +7,7 @@ describe('PortableExecutableReader', () => {
     const target = new PortableExecutableReader(bytes);
 
     describe('When read', () => {
-      let actualError: Error;
+      let actualError: unknown;
 
       try {
         target.read();
