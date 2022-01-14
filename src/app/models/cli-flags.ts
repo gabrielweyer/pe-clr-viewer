@@ -34,7 +34,7 @@ export class CliFlags extends HexSegment {
 
     const flags = HexHelper.getDecimal(hexValue);
 
-    /* tslint:disable:no-bitwise */
+    /* eslint-disable no-bitwise */
     this.ILOnly = (flags & CorFlags.ILOnly) === CorFlags.ILOnly;
     this.Requires32Bit = (flags & CorFlags.Requires32Bit) === CorFlags.Requires32Bit;
     this.ILLibrary = (flags & CorFlags.ILLibrary) === CorFlags.ILLibrary;
@@ -42,6 +42,6 @@ export class CliFlags extends HexSegment {
     this.NativeEntryPoint = (flags & CorFlags.NativeEntryPoint) === CorFlags.NativeEntryPoint;
     this.TrackDebugData = (flags & CorFlags.TrackDebugData) === CorFlags.TrackDebugData;
     this.Prefers32Bit = (flags & CorFlags.Prefers32Bit) === CorFlags.Prefers32Bit;
-    /* tslint:enable:no-bitwise */
+    /* eslint-enable no-bitwise */
   }
 }

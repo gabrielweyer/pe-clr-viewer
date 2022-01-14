@@ -1,4 +1,7 @@
 import { CliFlags } from './cli-flags';
+
+const getCliFlags = (flags: string) => new CliFlags(0, 3, 4, flags);
+
 describe('CliFlags', () => {
   describe('Given bit mask does not contain any flag', () => {
     const hexFlags = '00000000';
@@ -129,9 +132,3 @@ describe('CliFlags', () => {
     });
   });
 });
-
-function getCliFlags(flags: string): CliFlags {
-  return new CliFlags(0, 3, 4, flags);
-}
-
-

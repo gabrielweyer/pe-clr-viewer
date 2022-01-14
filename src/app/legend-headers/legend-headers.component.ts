@@ -8,7 +8,7 @@ import { PortableExecutable } from '../models/portable-executable';
   styleUrls: ['./legend-headers.component.scss']
 })
 export class LegendHeadersComponent {
-  peConstants = PortableExecutableConstants;
-
   @Input() pe!: PortableExecutable;
+
+  peConstants = PortableExecutableConstants;
 }

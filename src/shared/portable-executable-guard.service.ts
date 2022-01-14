@@ -9,7 +9,7 @@ export class PortableExecutableGuard implements CanActivate {
     private readonly router: Router) {}
 
   canActivate() {
-    const canActivate: boolean = !!this.store.getPortableExecutable();
+    const canActivate = !!this.store.getPortableExecutable();
 
     if (!canActivate) {
       this.router.navigate(['home']);
