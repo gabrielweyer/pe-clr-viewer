@@ -1,6 +1,6 @@
 # Portable Executable CLR Viewer
 
-[![Build Status](https://dev.azure.com/gabrielweyer/PeClrViewer/_apis/build/status/gabrielweyer.pe-clr-viewer)](https://dev.azure.com/gabrielweyer/PeClrViewer/_build/latest?definitionId=8)
+[![Build Status](https://dev.azure.com/gabrielweyer/PeClrViewer/_apis/build/status/PeClrViewer?branchName=main)](https://dev.azure.com/gabrielweyer/PeClrViewer/_build/latest?definitionId=8&branchName=main)
 
 I was reading through the second chapter of [Advanced .NET Debugging][advanced-dotnet-debugging-book] and didn't manage to find the entry point of an executable. I wrote this web application so that `a)` I could understand more about the [PE format][pe-format] and `b)` I wouldn't have to repeat the same basic math each time I wanted to inspect a `.NET` `DLL`.
 
