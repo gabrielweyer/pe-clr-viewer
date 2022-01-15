@@ -1,3 +1,4 @@
 angular.json eol=lf
 package.json eol=lf
 tslint.json eol=lf
+/.yarn/releases/** binary
