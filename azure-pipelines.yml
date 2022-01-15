@@ -24,35 +24,30 @@ stages:
     displayName: Build and publish artifacts
     steps:
 
-    - task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@3
-      displayName: Install Yarn 1.22.5
-      inputs:
-        versionSpec: 1.22.5
+    - bash: |
+        yarn set version berry
+      displayName: 'Use Yarn Modern'
 
-    - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@3
-      displayName: yarn install
-      inputs:
-        arguments: install
+    - bash: |
+        yarn install
+      displayName: 'yarn install'
 
-    - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@3
-      displayName: yarn lint
-      inputs:
-        arguments: lint
+    - bash: |
+        yarn lint
+      displayName: 'yarn lint'
 
     - bash: |
         sudo apt-get update
         sudo apt-get install -y libgbm1
       displayName: Install libgbm1 (required by Puppeteer 3)
 
-    - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@3
-      displayName: yarn test-ci
-      inputs:
-        arguments: test-ci
+    - bash: |
+        yarn test-ci
+      displayName: 'yarn test-ci'
 
-    - task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@3
-      displayName: yarn build-prod
-      inputs:
-        arguments: build-prod
+    - bash: |
+        yarn build-prod
+      displayName: 'yarn build-prod'
 
     - task: geeklearningio.gl-vsts-tasks-file-patch.json-patch-task.JsonPatch@3
       displayName: Version web Artifact
