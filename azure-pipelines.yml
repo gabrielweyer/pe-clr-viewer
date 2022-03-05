@@ -25,10 +25,6 @@ stages:
     steps:
 
     - bash: |
-        yarn set version berry
-      displayName: 'Use Yarn Modern'
-
-    - bash: |
         yarn install
       displayName: 'yarn install'
 
