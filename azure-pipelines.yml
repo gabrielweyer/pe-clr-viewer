@@ -104,7 +104,7 @@ stages:
               location: '$(ResourceGroupLocation)'
               templateLocation: 'Linked artifact'
               csmFile: '$(Pipeline.Workspace)/bicep/main.bicep'
-              overrideParameters: -name $(StorageAccountName)
+              overrideParameters: -storageAccountName $(StorageAccountName)
               deploymentMode: 'Incremental'
           - task: AzureCLI@2
             displayName: 'Create public $root container if not exist'
