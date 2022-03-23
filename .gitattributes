@@ -1,4 +1,9 @@
+# Angular
 angular.json eol=lf
+
+# Yarn
 package.json eol=lf
-tslint.json eol=lf
 /.yarn/releases/** binary
+
+# Bicep
+*.bicep eol=lf
