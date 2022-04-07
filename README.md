@@ -1,6 +1,6 @@
 # Portable Executable CLR Viewer
 
-[![Build Status](https://dev.azure.com/gabrielweyer/PeClrViewer/_apis/build/status/PeClrViewer?branchName=main)](https://dev.azure.com/gabrielweyer/PeClrViewer/_build/latest?definitionId=8&branchName=main)
+[![Build Status][github-actions-shield]][github-actions]
 
 I was reading through the second chapter of [Advanced .NET Debugging][advanced-dotnet-debugging-book] and didn't manage to find the entry point of an executable. I wrote this web application so that `a)` I could understand more about the [PE format][pe-format] and `b)` I wouldn't have to repeat the same basic math each time I wanted to inspect a `.NET` `DLL`.
 
@@ -35,7 +35,7 @@ yarn start
 
 ## CI/CD
 
-Each push to `main` triggers a build in `Azure DevOps` and a deployment to `Azure Blob storage`. I'm using `Azure Functions Proxies` to be able to support an extension-less URI and reload.
+Each push to `main` triggers a `GitHub Actions` workflow and a deployment to `Azure Blob storage`. I'm using `Azure Functions Proxies` to be able to support an extension-less URI and reload.
 
 [advanced-dotnet-debugging-book]: https://www.goodreads.com/book/show/7306509-advanced-net-debugging
 [pe-format]: https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx
@@ -44,3 +44,5 @@ Each push to `main` triggers a build in `Azure DevOps` and a deployment to `Azur
 [node-js]: https://nodejs.org/en/download/
 [yarn]: https://yarnpkg.com/lang/en/docs/install/
 [cli-flags]: http://source.roslyn.codeplex.com/#System.Reflection.Metadata/System/Reflection/PortableExecutable/CorFlags.cs,1b8345c412a0a995
+[github-actions-shield]: https://github.com/gabrielweyer/pe-clr-viewer/actions/workflows/workflow.yml/badge.svg
+[github-actions]: https://github.com/gabrielweyer/pe-clr-viewer/actions/workflows/workflow.yml
