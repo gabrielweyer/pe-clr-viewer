@@ -54,12 +54,12 @@ jobs:
           name: test-results
           path: tests-results/tests-results.xml
           if-no-files-found: error
-      - name: Upload code coverage
+      - name: Upload coverage
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: code-coverage
-          path: coverage/cobertura-coverage.xml
+          name: coverage
+          path: coverage
           if-no-files-found: error
   release:
     name: Release
