@@ -52,7 +52,7 @@ jobs:
         if: always()
         with:
           name: test-results
-          path: tests-results/tests-results.xml
+          path: test-results/test-results.html
           if-no-files-found: error
       - name: Upload coverage
         uses: actions/upload-artifact@v3
