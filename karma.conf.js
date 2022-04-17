@@ -25,8 +25,7 @@ module.exports = function (config) {
       dir: 'coverage/',
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'cobertura' }
+        { type: 'html' }
       ]
     },
     junitReporter: {
