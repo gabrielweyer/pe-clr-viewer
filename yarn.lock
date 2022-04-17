@@ -6583,6 +6583,17 @@ eslint-plugin-prefer-arrow@latest:
   languageName: node
   linkType: hard
 
+"karma-htmlfile-reporter@npm:^0.3.8":
+  version: 0.3.8
+  resolution: "karma-htmlfile-reporter@npm:0.3.8"
+  dependencies:
+    xmlbuilder: ^10.0.0
+  peerDependencies:
+    karma: ">=0.10"
+  checksum: 6c54beb965420528270730fe1a39962a63cb7ca0a1188fb8f589605efbb87d29c23df55ccd8605a593ee4b97bf7982b75e3202e3f408ebc8c6a89d0b58e49f63
+  languageName: node
+  linkType: hard
+
 "karma-jasmine-html-reporter@npm:^1.5.0":
   version: 1.5.4
   resolution: "karma-jasmine-html-reporter@npm:1.5.4"
@@ -6602,18 +6613,6 @@ eslint-plugin-prefer-arrow@latest:
   peerDependencies:
     karma: "*"
   checksum: 28337c82941ed6c68e0c47ef432c2c91511214e84a336e78d9068daebd61a3c1cee6209207ddc5fe3ad78124597f58054b93aa0f973ff6dcc8a8fcd1951c9851
-  languageName: node
-  linkType: hard
-
-"karma-junit-reporter@npm:2.0.1":
-  version: 2.0.1
-  resolution: "karma-junit-reporter@npm:2.0.1"
-  dependencies:
-    path-is-absolute: ^1.0.0
-    xmlbuilder: 12.0.0
-  peerDependencies:
-    karma: ">=0.9"
-  checksum: f4c92725f68c19740e34ccf71b9acb9bdc4127b8f5a7c2417167d045bb3b8ba682f7ef5b9f1c7c1c5482b1c53b0d69533cf93748368bd0c0fb9c2967ba23c02d
   languageName: node
   linkType: hard
 
@@ -7993,9 +7992,9 @@ eslint-plugin-prefer-arrow@latest:
     karma: ^6.3.16
     karma-chrome-launcher: ~3.1.0
     karma-coverage: ^2.1.0
+    karma-htmlfile-reporter: ^0.3.8
     karma-jasmine: ~4.0.0
     karma-jasmine-html-reporter: ^1.5.0
-    karma-junit-reporter: 2.0.1
     puppeteer: 3.0.2
     rxjs: 6.6.3
     ts-node: ~8.10.0
@@ -10547,10 +10546,10 @@ eslint-plugin-prefer-arrow@latest:
   languageName: node
   linkType: hard
 
-"xmlbuilder@npm:12.0.0":
-  version: 12.0.0
-  resolution: "xmlbuilder@npm:12.0.0"
-  checksum: b384b2ae80f42fc8f4671078dc7b4266849ead31c7be8393cf95906103cacf48c98eac10cf3686c87baeb4a4e44f2639ef49a67a60acd105e87526b4d98d4ef8
+"xmlbuilder@npm:^10.0.0":
+  version: 10.1.1
+  resolution: "xmlbuilder@npm:10.1.1"
+  checksum: 1543fdf1489ccaf168d8f39978ea5c59ee438bc869f90365cd455f1729759fbfb92bb8e976b990a2c07ce4d4b2c7530ece4a7235b6d6705bdfc8d1f41ec4aa11
   languageName: node
   linkType: hard
 
