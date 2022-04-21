@@ -40,9 +40,9 @@ Each push to `main` triggers a `GitHub Actions` workflow and a deployment to `Az
 [advanced-dotnet-debugging-book]: https://www.goodreads.com/book/show/7306509-advanced-net-debugging
 [pe-format]: https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx
 [pe-clr-viewer]: https://peclrviewer.azurewebsites.net/
-[trello-board]: https://trello.com/b/7b21MQqD/pe-clr-viewer
+[trello-board]: https://trello.com/b/7b21MQqD/open-source?filter=label:pe-clr-viewer
 [node-js]: https://nodejs.org/en/download/
-[yarn]: https://yarnpkg.com/lang/en/docs/install/
+[yarn]: https://yarnpkg.com/getting-started/install
 [cli-flags]: http://source.roslyn.codeplex.com/#System.Reflection.Metadata/System/Reflection/PortableExecutable/CorFlags.cs,1b8345c412a0a995
 [github-actions-shield]: https://github.com/gabrielweyer/pe-clr-viewer/actions/workflows/workflow.yml/badge.svg
 [github-actions]: https://github.com/gabrielweyer/pe-clr-viewer/actions/workflows/workflow.yml
