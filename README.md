@@ -23,8 +23,8 @@ This is very much a **work in progress**. If I manage to motivate myself I'll wo
 
 If you would like to inspect a proprietary binary I advise you to run locally (the app is self-contained). You'll need:
 
-- [Node.js][node-js]
-- [Yarn][yarn]
+- [Latest Node.js LTS][node-js]
+- [Yarn modern][yarn-modern]
 
 Then run the following commands one by one:
 
@@ -42,7 +42,7 @@ Each push to `main` triggers a `GitHub Actions` workflow and a deployment to `Az
 [pe-clr-viewer]: https://peclrviewer.azurewebsites.net/
 [trello-board]: https://trello.com/b/7b21MQqD/open-source?filter=label:pe-clr-viewer
 [node-js]: https://nodejs.org/en/download/
-[yarn]: https://yarnpkg.com/getting-started/install
+[yarn-modern]: https://yarnpkg.com/getting-started/install
 [cli-flags]: http://source.roslyn.codeplex.com/#System.Reflection.Metadata/System/Reflection/PortableExecutable/CorFlags.cs,1b8345c412a0a995
 [github-actions-shield]: https://github.com/gabrielweyer/pe-clr-viewer/actions/workflows/workflow.yml/badge.svg
 [github-actions]: https://github.com/gabrielweyer/pe-clr-viewer/actions/workflows/workflow.yml
