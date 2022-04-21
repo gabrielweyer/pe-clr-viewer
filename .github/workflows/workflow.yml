@@ -5,6 +5,9 @@ on:
     branches:
       - main
     paths-ignore:
+      - .github/workflows/security-scanning.yml
+      - .github/workflows/skipped-security-scanning.yml
+      - .github/workflows/skipped-workflow.yml
       - '.vscode/**'
       - LICENSE
       - README.md
@@ -12,6 +15,9 @@ on:
     branches:
       - main
     paths-ignore:
+      - .github/workflows/security-scanning.yml
+      - .github/workflows/skipped-security-scanning.yml
+      - .github/workflows/skipped-workflow.yml
       - '.vscode/**'
       - LICENSE
       - README.md
