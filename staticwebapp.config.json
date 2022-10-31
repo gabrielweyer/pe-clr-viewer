@@ -1,12 +1,26 @@
 {
   "trailingSlash": "never",
   "navigationFallback": {
-    "rewrite": "index.html",
+    "rewrite": "/index.html",
     "exclude": ["*.{js,css}"]
   },
   "routes": [
     {
       "route": "/index.html",
+      "methods": ["GET"],
+      "headers": {
+        "cache-control": "no-store"
+      }
+    },
+    {
+      "route": "/home",
+      "methods": ["GET"],
+      "headers": {
+        "cache-control": "no-store"
+      }
+    },
+    {
+      "route": "/see",
       "methods": ["GET"],
       "headers": {
         "cache-control": "no-store"
@@ -23,7 +37,7 @@
       "route": "/*.{js,css}",
       "methods": ["GET"],
       "headers": {
-        "Cache-Control": "public, max-age=604800, immutable"
+        "cache-control": "public, max-age=604800, immutable"
       }
     }
   ]
