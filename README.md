@@ -35,11 +35,11 @@ yarn start
 
 ## CI/CD
 
-Each push to `main` triggers a `GitHub Actions` workflow and a deployment to `Azure Blob storage`. I'm using `Azure Functions Proxies` to be able to support an extension-less URI and reload.
+Each push to `main` triggers a `GitHub Actions` workflow and a deployment to `Azure Static Web Apps`.
 
 [advanced-dotnet-debugging-book]: https://www.goodreads.com/book/show/7306509-advanced-net-debugging
 [pe-format]: https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx
-[pe-clr-viewer]: https://peclrviewer.azurewebsites.net/
+[pe-clr-viewer]: https://agreeable-beach-082a48000.2.azurestaticapps.net/
 [trello-board]: https://trello.com/b/7b21MQqD/open-source?filter=label:pe-clr-viewer
 [node-js]: https://nodejs.org/en/download/
 [yarn-modern]: https://yarnpkg.com/getting-started/install
