@@ -22,10 +22,17 @@ on:
       - LICENSE
       - README.md
 
+env:
+  RESOURCE_GROUP_NAME: peclr
+  STATIC_WEB_APP_NAME: peclr
+  AZURE_LOCATION: eastasia
+
 jobs:
   build:
     name: Build
     runs-on: ubuntu-20.04
+    outputs:
+      deployPullRequest: ${{ steps.should_deploy_pr.outputs.deployPullRequest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -67,15 +74,21 @@ jobs:
           name: coverage
           path: coverage
           if-no-files-found: error
+      - name: Determine if we're deploying on Pull Request
+        id: should_deploy_pr
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          headCommitMessage=$(git log ${{ github.event.pull_request.head.sha }} -n 1 --format=%B)
+          echo "HEAD commit message is: $headCommitMessage"
+          if [[ $headCommitMessage == *"[deploy-pr]"* ]]; then
+            echo "::notice ::Deploying Pull Request to preview environment"
+            echo "deployPullRequest=true" >> $GITHUB_OUTPUT
+          fi
   release:
     name: Release
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' || needs.build.outputs.deployPullRequest == 'true' }}
     runs-on: ubuntu-20.04
-    needs: Build
-    env:
-      RESOURCE_GROUP_NAME: peclr
-      STATIC_WEB_APP_NAME: peclr
-      AZURE_LOCATION: eastasia
+    needs: build
     steps:
       - name: Download bicep artifact
         uses: actions/download-artifact@v3
@@ -118,3 +131,20 @@ jobs:
           output_location: ''
           skip_app_build: true
           skip_api_build: true
+
+  delete_preview_environment:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-20.04
+    name: Delete Static Web App Pull Request preview environment
+    steps:
+      - name: Set Static Web App deployment token
+        run: |
+          jsonDeploymentToken=$(az staticwebapp secrets list --name ${{ env.STATIC_WEB_APP_NAME }} --resource-group ${{ env.RESOURCE_GROUP_NAME }} --query 'properties.apiKey')
+          deploymentToken="${jsonDeploymentToken:1:-1}"
+          echo "::add-mask::$deploymentToken"
+          echo "DEPLOYMENT_TOKEN=$deploymentToken" >> $GITHUB_ENV
+      - name: Delete preview environment
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ env.DEPLOYMENT_TOKEN }}
+          action: 'close'
