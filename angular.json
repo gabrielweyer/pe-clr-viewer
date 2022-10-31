@@ -33,7 +33,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/environment.json"
+              "src/environment.json",
+              "src/staticwebapp.config.json"
             ],
             "styles": [
               "src/styles.scss"

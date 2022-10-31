@@ -39,8 +39,6 @@ jobs:
         run: yarn test-ci
       - name: yarn build-prod
         run: yarn build-prod
-      - name: Include Static Web App config in web artifact
-        run: cp staticwebapp.config.json dist/
       - name: Version web artifact
         run: jq --arg formattedDate $(date +%Y%m%d) '.build = $formattedDate + "." + $ENV.GITHUB_RUN_NUMBER | .commit = $ENV.GITHUB_SHA' dist/environment.json > tmp.$$.json && mv tmp.$$.json dist/environment.json
       - name: Upload web artifact
