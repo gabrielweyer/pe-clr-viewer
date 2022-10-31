@@ -1,0 +1,30 @@
+{
+  "trailingSlash": "never",
+  "navigationFallback": {
+    "rewrite": "index.html",
+    "exclude": ["*.{js,css}"]
+  },
+  "routes": [
+    {
+      "route": "/index.html",
+      "methods": ["GET"],
+      "headers": {
+        "cache-control": "no-store"
+      }
+    },
+    {
+      "route": "/environment.json",
+      "methods": ["GET"],
+      "headers": {
+        "cache-control": "no-store"
+      }
+    },
+    {
+      "route": "/*.{js,css}",
+      "methods": ["GET"],
+      "headers": {
+        "Cache-Control": "public, max-age=604800, immutable"
+      }
+    }
+  ]
+}
