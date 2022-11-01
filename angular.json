@@ -1,11 +1,5 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "12164011-16e1-48ab-92ef-47284e34f6fe",
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -14,9 +8,6 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -129,5 +120,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "12164011-16e1-48ab-92ef-47284e34f6fe",
   }
 }
