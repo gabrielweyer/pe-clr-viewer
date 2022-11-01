@@ -12,6 +12,11 @@ on:
       - LICENSE
       - README.md
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
     branches:
       - main
     paths-ignore:
