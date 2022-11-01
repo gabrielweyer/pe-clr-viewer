@@ -6,10 +6,10 @@ export class Subsystem extends HexSegment {
   public readonly type: SubsystemType;
 
   constructor(
-    public readonly startOffsetDec: number,
-    public readonly endOffsetDec: number,
-    public readonly sizeDec: number,
-    public readonly hexValue: string
+    startOffsetDec: number,
+    endOffsetDec: number,
+    sizeDec: number,
+    hexValue: string
   ) {
     super(startOffsetDec, endOffsetDec, sizeDec, hexValue);
 

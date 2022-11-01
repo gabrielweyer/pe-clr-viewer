@@ -8,55 +8,55 @@ export class Segment {
 
 export class HexSegment extends Segment {
   constructor(
-    public readonly startOffsetDec: number,
-    public readonly endOffsetDec: number,
-    public readonly sizeDec: number,
+    startOffsetDec: number,
+    endOffsetDec: number,
+    sizeDec: number,
     public readonly hexValue: string
   ) {
-    super(startOffsetDec, sizeDec, endOffsetDec);
+    super(startOffsetDec, endOffsetDec, sizeDec);
   }
 }
 
 export class FileOffsetSegment extends Segment {
   constructor(
-    public readonly startOffsetDec: number,
-    public readonly endOffsetDec: number,
-    public readonly sizeDec: number,
+    startOffsetDec: number,
+    endOffsetDec: number,
+    sizeDec: number,
     public readonly fileOffset: string
   ) {
-    super(startOffsetDec, sizeDec, endOffsetDec);
+    super(startOffsetDec, endOffsetDec, sizeDec);
   }
 }
 
 export class RvaSegment extends Segment {
   constructor(
-    public readonly startOffsetDec: number,
-    public readonly endOffsetDec: number,
-    public readonly sizeDec: number,
+    startOffsetDec: number,
+    endOffsetDec: number,
+    sizeDec: number,
     public readonly rva: string
   ) {
-    super(startOffsetDec, sizeDec, endOffsetDec);
+    super(startOffsetDec, endOffsetDec, sizeDec);
   }
 }
 
 export class VaSegment extends Segment {
   constructor(
-    public readonly startOffsetDec: number,
-    public readonly endOffsetDec: number,
-    public readonly sizeDec: number,
+    startOffsetDec: number,
+    endOffsetDec: number,
+    sizeDec: number,
     public readonly va: string
   ) {
-    super(startOffsetDec, sizeDec, endOffsetDec);
+    super(startOffsetDec, endOffsetDec, sizeDec);
   }
 }
 
 export class AsciiSegment extends Segment {
   constructor(
-    public readonly startOffsetDec: number,
-    public readonly endOffsetDec: number,
-    public readonly sizeDec: number,
+    startOffsetDec: number,
+    endOffsetDec: number,
+    sizeDec: number,
     public readonly text: string
   ) {
-    super(startOffsetDec, sizeDec, endOffsetDec);
+    super(startOffsetDec, endOffsetDec, sizeDec);
   }
 }
