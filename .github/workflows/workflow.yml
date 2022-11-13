@@ -28,8 +28,8 @@ on:
       - README.md
 
 env:
-  RESOURCE_GROUP_NAME: peclr
-  STATIC_WEB_APP_NAME: peclr
+  RESOURCE_GROUP_NAME: peclr-rg
+  STATIC_WEB_APP_NAME: peclr-stapp
   AZURE_LOCATION: eastasia
 
 jobs:
@@ -129,7 +129,7 @@ jobs:
           echo "::add-mask::$deploymentToken"
           echo "DEPLOYMENT_TOKEN=$deploymentToken" >> $GITHUB_ENV
       - name: Deploy to Static Web App
-        uses: Azure/static-web-apps-deploy@v1
+        uses: azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ env.DEPLOYMENT_TOKEN }}
           action: 'upload'
@@ -154,7 +154,7 @@ jobs:
           echo "::add-mask::$deploymentToken"
           echo "DEPLOYMENT_TOKEN=$deploymentToken" >> $GITHUB_ENV
       - name: Delete preview environment
-        uses: Azure/static-web-apps-deploy@v1
+        uses: azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ env.DEPLOYMENT_TOKEN }}
           action: 'close'
