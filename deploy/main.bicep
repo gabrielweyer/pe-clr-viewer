@@ -3,7 +3,7 @@
 param staticWebAppLocation string
 
 resource staticWebApp 'Microsoft.Web/staticSites@2022-03-01' = {
-  name: 'peclr'
+  name: 'peclr-stapp'
   location: staticWebAppLocation
   sku: {
     name: 'Free'
