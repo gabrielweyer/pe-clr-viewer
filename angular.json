@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "pe-clr-viewer:build:production"
+              "buildTarget": "pe-clr-viewer:build:production"
             },
             "development": {
-              "browserTarget": "pe-clr-viewer:build:development"
+              "buildTarget": "pe-clr-viewer:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pe-clr-viewer:build"
+            "buildTarget": "pe-clr-viewer:build"
           }
         },
         "test": {
