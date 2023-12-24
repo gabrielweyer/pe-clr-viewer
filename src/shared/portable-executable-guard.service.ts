@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { StoreService } from './store.service';
 
 @Injectable()
-export class PortableExecutableGuard implements CanActivate {
+export class PortableExecutableGuard  {
   constructor(
     private readonly store: StoreService,
     private readonly router: Router) {}
