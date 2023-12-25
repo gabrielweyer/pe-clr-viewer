@@ -98,6 +98,9 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' || needs.build.outputs.deployPullRequest == 'true' }}
     runs-on: ubuntu-22.04
     environment: PROD
+    env:
+      DEPLOYMENT_NAME:
+      DEPLOYMENT_TOKEN:
     needs: build
     steps:
       - name: Download bicep artifact
@@ -150,6 +153,8 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-22.04
     environment: PROD
+    env:
+      DEPLOYMENT_TOKEN:
     steps:
       - name: Sign in to Azure
         uses: azure/login@v1
