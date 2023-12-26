@@ -1,7 +1,10 @@
 import { PipeTransform, Pipe } from '@angular/core';
 import { SubsystemType } from '../app/models/subsystem-type.enum';
 
-@Pipe({ name: 'subsystem' })
+@Pipe({
+  name: 'subsystem',
+  standalone: true
+})
 export class SubsystemPipe implements PipeTransform {
   transform(value: SubsystemType): string {
     switch (value) {

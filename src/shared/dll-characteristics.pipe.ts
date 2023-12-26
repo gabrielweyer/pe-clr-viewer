@@ -2,7 +2,10 @@ import { PipeTransform, Pipe } from '@angular/core';
 import { DllCharacteristicsType } from '../app/models/dll-characteristics-type.enum';
 import { FlagEnumParser } from './flag-enum-parser';
 
-@Pipe({ name: 'dllCharacteristics' })
+@Pipe({
+  name: 'dllCharacteristics',
+  standalone: true
+})
 export class DllCharacteristicsPipe implements PipeTransform {
   displayNames: Map<DllCharacteristicsType, string>;
 

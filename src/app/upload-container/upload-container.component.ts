@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
 import { PortableExecutable } from '../models/portable-executable';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-upload-container',
   templateUrl: './upload-container.component.html',
-  styleUrls: ['./upload-container.component.scss']
+  styleUrls: ['./upload-container.component.scss'],
+  standalone: true,
+  imports: [NgClass, NgIf]
 })
 export class UploadContainerComponent {
   @Output() fileRead: EventEmitter<PortableExecutable> = new EventEmitter();

@@ -1,6 +1,9 @@
 import { PipeTransform, Pipe } from '@angular/core';
 
-@Pipe({ name: 'byte' })
+@Pipe({
+  name: 'byte',
+  standalone: true
+})
 export class BytePipe implements PipeTransform {
   transform(value: number | string): string {
     if (typeof value === 'number') {

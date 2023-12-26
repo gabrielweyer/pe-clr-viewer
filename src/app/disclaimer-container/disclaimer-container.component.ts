@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { AppConfigService } from '../../shared/app.config';
+import { SlicePipe } from '@angular/common';
+import { LinkComponent } from '../link/link.component';
 
 @Component({
   selector: 'app-disclaimer-container',
   templateUrl: './disclaimer-container.component.html',
-  styleUrls: ['./disclaimer-container.component.scss']
+  styleUrls: ['./disclaimer-container.component.scss'],
+  standalone: true,
+  imports: [LinkComponent, SlicePipe]
 })
 export class DisclaimerContainerComponent {
   public build: string;

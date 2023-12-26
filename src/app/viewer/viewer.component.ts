@@ -5,13 +5,18 @@ import { Component, OnDestroy } from '@angular/core';
 import { PortableExecutableConstants } from '../models/portable-executable-constants';
 import { Byte } from '../models/byte';
 import { StoreService } from '../../shared/store.service';
-
 import { Subscription } from 'rxjs';
+import { VaConvertorComponent } from '../va-convertor/va-convertor.component';
+import { LegendHeadersComponent } from '../legend-headers/legend-headers.component';
+import { NgIf } from '@angular/common';
+import { BytesContainerComponent } from '../bytes-container/bytes-container.component';
 
 @Component({
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.scss']
+  styleUrls: ['./viewer.component.scss'],
+  standalone: true,
+  imports: [BytesContainerComponent, NgIf, LegendHeadersComponent, VaConvertorComponent]
 })
 export class ViewerComponent implements OnDestroy {
   public pe!: PortableExecutable;

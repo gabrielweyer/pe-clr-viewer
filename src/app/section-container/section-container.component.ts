@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-section-container',
   templateUrl: './section-container.component.html',
-  styleUrls: ['./section-container.component.scss']
+  styleUrls: ['./section-container.component.scss'],
+  standalone: true,
+  imports: [NgClass]
 })
 export class SectionContainerComponent {
   @Input()

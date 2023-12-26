@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { PortableExecutable } from './models/portable-executable';
 import { StoreService } from '../shared/store.service';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { DisclaimerContainerComponent } from './disclaimer-container/disclaimer-container.component';
+import { UploadContainerComponent } from './upload-container/upload-container.component';
+import { GuideContainerComponent } from './guide-container/guide-container.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [GuideContainerComponent, UploadContainerComponent, RouterOutlet, DisclaimerContainerComponent]
 })
 export class AppComponent {
   constructor(private readonly store: StoreService, private readonly router: Router) {}
