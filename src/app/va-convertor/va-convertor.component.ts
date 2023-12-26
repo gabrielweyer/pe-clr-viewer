@@ -1,11 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
 import { PortableExecutable } from '../models/portable-executable';
+import { HexPipe } from '../../shared/hex.pipe';
+import { LeftPadPipe } from '../../shared/leftpad.pipe';
+import { BytePipe } from '../../shared/byte.pipe';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-va-convertor',
   templateUrl: './va-convertor.component.html',
-  styleUrls: ['./va-convertor.component.scss']
+  styleUrls: ['./va-convertor.component.scss'],
+  standalone: true,
+  imports: [NgIf, BytePipe, LeftPadPipe, HexPipe]
 })
 export class VaConvertorComponent {
   @Input() pe!: PortableExecutable;

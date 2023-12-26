@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-link',
   templateUrl: './link.component.html',
-  styleUrls: ['./link.component.scss']
+  styleUrls: ['./link.component.scss'],
+  standalone: true
 })
 export class LinkComponent {
   @Input()

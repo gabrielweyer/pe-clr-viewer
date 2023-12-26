@@ -2,7 +2,10 @@ import { PipeTransform, Pipe } from '@angular/core';
 import { CharacteristicsType } from '../app/models/characteristics-type.enum';
 import { FlagEnumParser } from './flag-enum-parser';
 
-@Pipe({ name: 'characteristics' })
+@Pipe({
+  name: 'characteristics',
+  standalone: true
+})
 export class CharacteristicsPipe implements PipeTransform {
   displayNames: Map<CharacteristicsType, string>;
 

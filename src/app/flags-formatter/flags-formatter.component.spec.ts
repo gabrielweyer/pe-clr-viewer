@@ -7,7 +7,7 @@ describe('FlagsFormatterComponent', () => {
   let fixture: ComponentFixture<FlagsFormatterComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ declarations: [FlagsFormatterComponent] });
+    TestBed.configureTestingModule({ imports: [FlagsFormatterComponent] });
     fixture = TestBed.createComponent(FlagsFormatterComponent);
     component = fixture.componentInstance;
   });

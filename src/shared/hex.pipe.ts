@@ -1,6 +1,9 @@
 import { PipeTransform, Pipe } from '@angular/core';
 
-@Pipe({ name: 'hex' })
+@Pipe({
+  name: 'hex',
+  standalone: true
+})
 export class HexPipe implements PipeTransform {
   transform(value: string): string {
     let offsetOfFirstNonZeroCharacter = 0;
