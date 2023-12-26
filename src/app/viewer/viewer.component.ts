@@ -14,7 +14,7 @@ import { BytesContainerComponent } from '../bytes-container/bytes-container.comp
 @Component({
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.scss'],
+  styleUrl: './viewer.component.scss',
   standalone: true,
   imports: [BytesContainerComponent, NgIf, LegendHeadersComponent, VaConvertorComponent]
 })

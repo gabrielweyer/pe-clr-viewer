@@ -5,7 +5,7 @@ import { LinkComponent } from '../link/link.component';
 @Component({
   selector: 'app-guide-container',
   templateUrl: './guide-container.component.html',
-  styleUrls: ['./guide-container.component.scss'],
+  styleUrl: './guide-container.component.scss',
   standalone: true,
   imports: [LinkComponent, NgIf]
 })

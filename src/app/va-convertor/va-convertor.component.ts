@@ -9,7 +9,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-va-convertor',
   templateUrl: './va-convertor.component.html',
-  styleUrls: ['./va-convertor.component.scss'],
+  styleUrl: './va-convertor.component.scss',
   standalone: true,
   imports: [NgIf, BytePipe, LeftPadPipe, HexPipe]
 })
