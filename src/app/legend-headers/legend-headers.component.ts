@@ -15,7 +15,7 @@ import { SectionContainerComponent } from '../section-container/section-containe
 @Component({
   selector: 'app-legend-headers',
   templateUrl: './legend-headers.component.html',
-  styleUrls: ['./legend-headers.component.scss'],
+  styleUrl: './legend-headers.component.scss',
   standalone: true,
   imports: [SectionContainerComponent, LinkComponent, FlagsFormatterComponent, NgIf, BytePipe, LeftPadPipe, HexPipe, SubsystemPipe, CharacteristicsPipe, DllCharacteristicsPipe]
 })

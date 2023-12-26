@@ -4,7 +4,7 @@ import { NgFor } from '@angular/common';
 @Component({
   selector: 'app-flags-formatter',
   templateUrl: './flags-formatter.component.html',
-  styleUrls: ['./flags-formatter.component.scss'],
+  styleUrl: './flags-formatter.component.scss',
   standalone: true,
   imports: [NgFor]
 })

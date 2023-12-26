@@ -6,7 +6,7 @@ import { LinkComponent } from '../link/link.component';
 @Component({
   selector: 'app-disclaimer-container',
   templateUrl: './disclaimer-container.component.html',
-  styleUrls: ['./disclaimer-container.component.scss'],
+  styleUrl: './disclaimer-container.component.scss',
   standalone: true,
   imports: [LinkComponent, SlicePipe]
 })

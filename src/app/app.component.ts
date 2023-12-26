@@ -9,7 +9,7 @@ import { GuideContainerComponent } from './guide-container/guide-container.compo
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrl: './app.component.scss',
   standalone: true,
   imports: [GuideContainerComponent, UploadContainerComponent, RouterOutlet, DisclaimerContainerComponent]
 })

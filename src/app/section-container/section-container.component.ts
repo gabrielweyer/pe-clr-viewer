@@ -4,7 +4,7 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-section-container',
   templateUrl: './section-container.component.html',
-  styleUrls: ['./section-container.component.scss'],
+  styleUrl: './section-container.component.scss',
   standalone: true,
   imports: [NgClass]
 })
