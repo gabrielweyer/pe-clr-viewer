@@ -44,7 +44,7 @@ jobs:
       deployPullRequest: ${{ steps.should_deploy_pr.outputs.deployPullRequest }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: yarn install
@@ -58,26 +58,26 @@ jobs:
       - name: Version web artifact
         run: jq --arg formattedDate $(date +%Y%m%d) '.build = $formattedDate + "." + $ENV.GITHUB_RUN_NUMBER | .commit = $ENV.GITHUB_SHA' dist/browser/environment.json > tmp.$$.json && mv tmp.$$.json dist/browser/environment.json
       - name: Upload web artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web
           path: dist/browser
           if-no-files-found: error
       - name: Upload bicep artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: bicep
           path: deploy
           if-no-files-found: error
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results
           path: test-results/test-results.html
           if-no-files-found: error
       - name: Upload coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: coverage
@@ -104,12 +104,12 @@ jobs:
     needs: build
     steps:
       - name: Download bicep artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: bicep
           path: deploy
       - name: Download web artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web
           path: web
