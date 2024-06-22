@@ -3664,12 +3664,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.19.3":
-  version: 18.19.3
-  resolution: "@types/node@npm:18.19.3"
+"@types/node@npm:20.14.7":
+  version: 20.14.7
+  resolution: "@types/node@npm:20.14.7"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 58c4fa45a78fcec75c78182a4b266395905957633654eb0311c5f9c30ac15c179ea2287ab1af034e46c2db7bb0589ef0000ee64c1de8f568a0aad29eaadb100c
+  checksum: 967d100f3853fefa347847ece95226a73cba970ff896efa12cce68ecdd48a9b39b10c8eefd9f11016799a29bdfe19d144ea094f8db3d5987cebe8f06226fccc9
   languageName: node
   linkType: hard
 
@@ -5162,10 +5162,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:3.34.0":
-  version: 3.34.0
-  resolution: "core-js@npm:3.34.0"
-  checksum: 26b0d103716b33fc660ee8737da7bc9475fbc655f93bbf1360ab692966449d18f2fc393805095937283db9f919ca2aa5c88d86d16f2846217983ad7da707e31e
+"core-js@npm:3.37.1":
+  version: 3.37.1
+  resolution: "core-js@npm:3.37.1"
+  checksum: 2d58a5c599f05c3e04abc8bc5e64b88eb17d914c0f552f670fb800afa74ec54b4fcc7f231ad6bd45badaf62c0fb0ce30e6fe89cedb6bb6d54e6f19115c3c17ff
   languageName: node
   linkType: hard
 
@@ -9449,11 +9449,11 @@ __metadata:
     "@angular/platform-browser-dynamic": ^18.0.4
     "@angular/router": ^18.0.4
     "@types/jasmine": 5.1.4
-    "@types/node": 18.19.3
+    "@types/node": 20.14.7
     "@typescript-eslint/eslint-plugin": ^7.2.0
     "@typescript-eslint/parser": ^7.2.0
     "@typescript-eslint/utils": ^7.13.1
-    core-js: 3.34.0
+    core-js: 3.37.1
     eslint: ^8.57.0
     jasmine-core: 5.1.1
     jasmine-spec-reporter: ^7.0.0
@@ -9466,9 +9466,9 @@ __metadata:
     puppeteer: 21.6.1
     rxjs: 7.8.1
     ts-node: 10.9.2
-    tslib: 2.6.2
+    tslib: 2.6.3
     typescript: ~5.4.5
-    zone.js: ~0.14.2
+    zone.js: 0.14.7
   languageName: unknown
   linkType: soft
 
@@ -11162,7 +11162,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0":
+"tslib@npm:2.6.3, tslib@npm:^2.0.0":
   version: 2.6.3
   resolution: "tslib@npm:2.6.3"
   checksum: 74fce0e100f1ebd95b8995fbbd0e6c91bdd8f4c35c00d4da62e285a3363aaa534de40a80db30ecfd388ed7c313c42d930ee0eaf108e8114214b180eec3dbe6f5
@@ -11936,11 +11936,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zone.js@npm:~0.14.2":
-  version: 0.14.2
-  resolution: "zone.js@npm:0.14.2"
-  dependencies:
-    tslib: ^2.3.0
-  checksum: 730411ed2afaddf68613c163d2b2c59e1b2336de12ca798266788b3a633dbbeeba9c8a5f557d75b1c429e18bae2781dd5d91092ec2f6d5440b5d516994a60a18
+"zone.js@npm:0.14.7":
+  version: 0.14.7
+  resolution: "zone.js@npm:0.14.7"
+  checksum: 8b5cd4fd615c367d81c06840fcdde690f3c82e3e1f8ff799c045daac34cbedf9b4b3b53140404db61baf484af5c0fc049cb60cf195580aaf69ba522879e1acd9
   languageName: node
   linkType: hard
