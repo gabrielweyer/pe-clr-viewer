@@ -168,7 +168,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:18.0.5":
+"@angular-devkit/core@npm:18.0.5, @angular-devkit/core@npm:^18.0.5":
   version: 18.0.5
   resolution: "@angular-devkit/core@npm:18.0.5"
   dependencies:
@@ -187,7 +187,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:18.0.5":
+"@angular-devkit/schematics@npm:18.0.5, @angular-devkit/schematics@npm:^18.0.5":
   version: 18.0.5
   resolution: "@angular-devkit/schematics@npm:18.0.5"
   dependencies:
@@ -3856,7 +3856,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:7.13.1":
+"@typescript-eslint/utils@npm:7.13.1, @typescript-eslint/utils@npm:^7.13.1":
   version: 7.13.1
   resolution: "@typescript-eslint/utils@npm:7.13.1"
   dependencies:
@@ -9430,6 +9430,8 @@ __metadata:
   resolution: "pe-clr-viewer@workspace:."
   dependencies:
     "@angular-devkit/build-angular": 18.0.5
+    "@angular-devkit/core": ^18.0.5
+    "@angular-devkit/schematics": ^18.0.5
     "@angular-eslint/builder": ^18.0.1
     "@angular-eslint/eslint-plugin": ^18.0.1
     "@angular-eslint/eslint-plugin-template": ^18.0.1
@@ -9450,6 +9452,7 @@ __metadata:
     "@types/node": 18.19.3
     "@typescript-eslint/eslint-plugin": ^7.2.0
     "@typescript-eslint/parser": ^7.2.0
+    "@typescript-eslint/utils": ^7.13.1
     core-js: 3.34.0
     eslint: ^8.57.0
     jasmine-core: 5.1.1

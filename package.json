@@ -27,6 +27,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "18.0.5",
+    "@angular-devkit/core": "^18.0.5",
+    "@angular-devkit/schematics": "^18.0.5",
     "@angular-eslint/builder": "^18.0.1",
     "@angular-eslint/eslint-plugin": "^18.0.1",
     "@angular-eslint/eslint-plugin-template": "^18.0.1",
@@ -39,6 +41,7 @@
     "@types/node": "18.19.3",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
+    "@typescript-eslint/utils": "^7.13.1",
     "eslint": "^8.57.0",
     "jasmine-core": "5.1.1",
     "jasmine-spec-reporter": "^7.0.0",
