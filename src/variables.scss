@@ -1,9 +1,14 @@
+$background-color: #010409;
+$font-color: #e6edf3;
+
 $action-color: #0b92c4;
 $action-border-color: darken($action-color, 10%);
 
 $action-disabled-color: #7a7a7a;
 $action-disabled-border-color: darken($action-disabled-color, 10%);
 
+$mono-font-color: #e6edf3;
+$mono-font-background-color: #343941;
 $mono-font-family: 'Consolas';
 
 $font-size-big: 20px;

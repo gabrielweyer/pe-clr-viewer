@@ -5,6 +5,8 @@ body {
   margin: 0;
   padding: 0 10px;
   height: 100%;
+  background: $background-color;
+  color: $font-color;
 }
 
 body {
@@ -52,8 +54,8 @@ h1 {
 .mono-font {
   font-family: $mono-font-family;
   font-size: $mono-font-size-normal;
-  background-color: #eee;
+  background-color: $mono-font-background-color;
   border-radius: 5px;
   padding: 0 5px;
-  color: #7a7a7a;
+  color: $mono-font-color;
 }
