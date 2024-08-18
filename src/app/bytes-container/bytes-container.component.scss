@@ -33,13 +33,13 @@ span {
   &__blur {
     &--top {
       @include blur;
-      background-image: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%);
+      background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 90%);
       top: 1.5em;
     }
 
     &--bottom {
       @include blur;
-      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 90%);
+      background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 90%);
       bottom: 0;
     }
   }
