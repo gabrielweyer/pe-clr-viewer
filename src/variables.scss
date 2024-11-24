@@ -1,11 +1,13 @@
+@use "sass:color";
+
 $background-color: #010409;
 $font-color: #e6edf3;
 
 $action-color: #0b92c4;
-$action-border-color: darken($action-color, 10%);
+$action-border-color: color.adjust($action-color, $lightness: -10%);
 
 $action-disabled-color: #7a7a7a;
-$action-disabled-border-color: darken($action-disabled-color, 10%);
+$action-disabled-border-color: color.adjust($action-disabled-color, $lightness: -10%);
 
 $mono-font-color: #e6edf3;
 $mono-font-background-color: #343941;

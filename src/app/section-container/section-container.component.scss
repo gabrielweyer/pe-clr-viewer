@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@use '../../variables.scss';
 
 .section-container {
   border: 2px solid #b5fcff;
@@ -8,7 +8,7 @@
   a {
     float: right;
     line-height: 1em;
-    font-size: $font-size-small;
+    font-size: variables.$font-size-small;
   }
 
   &.collapsed {

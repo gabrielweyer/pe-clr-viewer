@@ -1,8 +1,9 @@
-@import '../../legend.scss';
-@import '../../bytes.scss';
+@use '../../variables.scss';
+@use '../../legend.scss';
+@use '../../bytes.scss';
 
 input {
-  color: $font-color;
-  background: $background-color;
-  border: 1px solid $font-color;
+  color: variables.$font-color;
+  background: variables.$background-color;
+  border: 1px solid variables.$font-color;
 }

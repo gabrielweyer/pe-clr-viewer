@@ -1,14 +1,14 @@
-@import '../../variables.scss';
+@use '../../variables.scss';
 
 .mono-font {
-  font-size: $mono-font-size-small;
+  font-size: variables.$mono-font-size-small;
 }
 
 p {
   line-height: 1.125em;
   padding: 0 18%;
 
-  @include lg {
+  @include variables.lg {
     padding: 0 5px;
   }
 
