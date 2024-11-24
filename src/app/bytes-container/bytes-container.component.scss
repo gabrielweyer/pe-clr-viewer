@@ -1,11 +1,12 @@
-@import '../../variables.scss';
+@use '../../variables.scss';
+@use '../../bytes.scss';
 
 $line-height: 1.5em;
 $blur-height: 3*$line-height;
 
 @mixin blur {
   height: $blur-height;
-  z-index: $bytes-container-blue-z-index;
+  z-index: variables.$bytes-container-blue-z-index;
   width: 100%;
   position: absolute;
   left: 0;
@@ -13,7 +14,7 @@ $blur-height: 3*$line-height;
 
 span {
   flex: 1 0 5.5%;
-  font-size: $mono-font-size-normal;
+  font-size: variables.$mono-font-size-normal;
   line-height: $line-height;
   display: inline-flex;
   align-items: center;
@@ -44,5 +45,3 @@ span {
     }
   }
 }
-
-@import '../../bytes.scss';

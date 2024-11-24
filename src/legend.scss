@@ -1,12 +1,12 @@
-@import './variables.scss';
+@use './variables.scss';
 
 h2 {
-  font-size: $font-size-big - 1;
+  font-size: variables.$font-size-big - 1;
   margin-top: 0;
 }
 
 .mono-font {
-  font-size: $mono-font-size-small + 1;
+  font-size: variables.$mono-font-size-small + 1;
 }
 
 .part {

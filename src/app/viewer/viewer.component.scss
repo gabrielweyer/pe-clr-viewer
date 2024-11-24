@@ -1,7 +1,8 @@
-@import '../../variables.scss';
+@use '../../variables.scss';
+@use '../../bytes.scss';
 
 @mixin bytes {
-  font-family: $mono-font-family;
+  font-family: variables.$mono-font-family;
   display: flex;
   flex-wrap: wrap;
   flex: 1 0 36%;
@@ -36,8 +37,6 @@
 .bytes-legend {
   display: flex;
   flex-direction: column;
-  font-size: $mono-font-size-small + 1;
+  font-size: variables.$mono-font-size-small + 1;
   line-height: 1.2em;
 }
-
-@import '../../bytes.scss';
