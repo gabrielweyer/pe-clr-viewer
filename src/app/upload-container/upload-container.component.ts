@@ -7,7 +7,6 @@ import { NgClass, NgIf } from '@angular/common';
   selector: 'app-upload-container',
   templateUrl: './upload-container.component.html',
   styleUrl: './upload-container.component.scss',
-  standalone: true,
   imports: [NgClass, NgIf]
 })
 export class UploadContainerComponent {

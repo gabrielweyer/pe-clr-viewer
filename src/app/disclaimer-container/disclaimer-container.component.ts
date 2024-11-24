@@ -7,7 +7,6 @@ import { LinkComponent } from '../link/link.component';
   selector: 'app-disclaimer-container',
   templateUrl: './disclaimer-container.component.html',
   styleUrl: './disclaimer-container.component.scss',
-  standalone: true,
   imports: [LinkComponent, SlicePipe]
 })
 export class DisclaimerContainerComponent {

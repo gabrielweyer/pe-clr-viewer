@@ -15,7 +15,6 @@ import { BytesContainerComponent } from '../bytes-container/bytes-container.comp
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
   styleUrl: './viewer.component.scss',
-  standalone: true,
   imports: [BytesContainerComponent, NgIf, LegendHeadersComponent, VaConvertorComponent]
 })
 export class ViewerComponent implements OnDestroy {
