@@ -10,11 +10,10 @@ import { GuideContainerComponent } from './guide-container/guide-container.compo
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  standalone: true,
   imports: [GuideContainerComponent, UploadContainerComponent, RouterOutlet, DisclaimerContainerComponent]
 })
 export class AppComponent {
-  constructor(private readonly store: StoreService, private readonly router: Router) {}
+  constructor(private readonly store: StoreService, private readonly router: Router) { }
 
   fileRead(pe: PortableExecutable | undefined): void {
     this.store.setPortableExecutable(pe);

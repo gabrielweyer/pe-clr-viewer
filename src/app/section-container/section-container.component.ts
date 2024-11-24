@@ -5,7 +5,6 @@ import { NgClass } from '@angular/common';
   selector: 'app-section-container',
   templateUrl: './section-container.component.html',
   styleUrl: './section-container.component.scss',
-  standalone: true,
   imports: [NgClass]
 })
 export class SectionContainerComponent {

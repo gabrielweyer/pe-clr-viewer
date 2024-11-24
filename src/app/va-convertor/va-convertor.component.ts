@@ -10,7 +10,6 @@ import { NgIf } from '@angular/common';
   selector: 'app-va-convertor',
   templateUrl: './va-convertor.component.html',
   styleUrl: './va-convertor.component.scss',
-  standalone: true,
   imports: [NgIf, BytePipe, LeftPadPipe, HexPipe]
 })
 export class VaConvertorComponent {

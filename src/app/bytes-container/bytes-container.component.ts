@@ -8,7 +8,6 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
   selector: 'app-bytes-container',
   templateUrl: './bytes-container.component.html',
   styleUrl: './bytes-container.component.scss',
-  standalone: true,
   imports: [NgIf, NgFor, NgClass, BytePipe, LeftPadPipe]
 })
 export class BytesContainerComponent {

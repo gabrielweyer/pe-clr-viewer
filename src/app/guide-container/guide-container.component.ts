@@ -6,7 +6,6 @@ import { LinkComponent } from '../link/link.component';
   selector: 'app-guide-container',
   templateUrl: './guide-container.component.html',
   styleUrl: './guide-container.component.scss',
-  standalone: true,
   imports: [LinkComponent, NgIf]
 })
 export class GuideContainerComponent {
