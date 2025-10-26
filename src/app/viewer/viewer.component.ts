@@ -1,7 +1,7 @@
 import { Router, NavigationEnd } from '@angular/router';
 import { HexHelper } from './../../shared/hex-helper';
 import { PortableExecutable } from './../models/portable-executable';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { PortableExecutableConstants } from '../models/portable-executable-constants';
 import { Byte } from '../models/byte';
 import { StoreService } from '../../shared/store.service';
@@ -18,6 +18,9 @@ import { BytesContainerComponent } from '../bytes-container/bytes-container.comp
   imports: [BytesContainerComponent, NgIf, LegendHeadersComponent, VaConvertorComponent]
 })
 export class ViewerComponent implements OnDestroy {
+  private readonly router = inject(Router);
+  private readonly store = inject(StoreService);
+
   public pe!: PortableExecutable;
 
   public bytes: Byte[] = [];
@@ -34,10 +37,7 @@ export class ViewerComponent implements OnDestroy {
 
   private readonly navigationSubscription: Subscription;
 
-  constructor(
-    private readonly router: Router,
-    private readonly store: StoreService
-  ) {
+  constructor() {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
         this.initialise();

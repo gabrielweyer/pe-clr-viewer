@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PortableExecutable } from './models/portable-executable';
 import { StoreService } from '../shared/store.service';
 import { Router, RouterOutlet } from '@angular/router';
@@ -13,7 +13,9 @@ import { GuideContainerComponent } from './guide-container/guide-container.compo
   imports: [GuideContainerComponent, UploadContainerComponent, RouterOutlet, DisclaimerContainerComponent]
 })
 export class AppComponent {
-  constructor(private readonly store: StoreService, private readonly router: Router) { }
+  private readonly store = inject(StoreService);
+  private readonly router = inject(Router);
+
 
   fileRead(pe: PortableExecutable | undefined): void {
     this.store.setPortableExecutable(pe);
