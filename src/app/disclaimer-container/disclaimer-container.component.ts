@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AppConfigService } from '../../shared/app.config';
 import { SlicePipe } from '@angular/common';
 import { LinkComponent } from '../link/link.component';
@@ -13,7 +13,9 @@ export class DisclaimerContainerComponent {
   public build: string;
   public commit: string;
 
-  constructor(appConfig: AppConfigService) {
+  constructor() {
+    const appConfig = inject(AppConfigService);
+
     this.build = appConfig.build;
     this.commit = appConfig.commit;
   }
