@@ -69,13 +69,6 @@ jobs:
           name: bicep
           path: deploy
           if-no-files-found: error
-      - name: Upload coverage
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: coverage
-          path: coverage
-          if-no-files-found: error
       - name: Determine if we're deploying on Pull Request
         id: should_deploy_pr
         if: ${{ github.event_name == 'pull_request' }}
