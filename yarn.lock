@@ -6237,17 +6237,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-htmlfile-reporter@npm:^0.3.8":
-  version: 0.3.8
-  resolution: "karma-htmlfile-reporter@npm:0.3.8"
-  dependencies:
-    xmlbuilder: ^10.0.0
-  peerDependencies:
-    karma: ">=0.10"
-  checksum: 6c54beb965420528270730fe1a39962a63cb7ca0a1188fb8f589605efbb87d29c23df55ccd8605a593ee4b97bf7982b75e3202e3f408ebc8c6a89d0b58e49f63
-  languageName: node
-  linkType: hard
-
 "karma-jasmine-html-reporter@npm:2.1.0":
   version: 2.1.0
   resolution: "karma-jasmine-html-reporter@npm:2.1.0"
@@ -7473,7 +7462,6 @@ __metadata:
     karma: 6.4.3
     karma-chrome-launcher: 3.2.0
     karma-coverage: 2.2.1
-    karma-htmlfile-reporter: ^0.3.8
     karma-jasmine: ^5.1.0
     karma-jasmine-html-reporter: 2.1.0
     puppeteer: 24.4.0
@@ -9294,13 +9282,6 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 442badcce1f1178ec87a0b5372ae2e9771e07c4929a3180321901f226127f252441e8689d765aa5cfba5f50ac60dd830954afc5aeae81609aefa11d3ddf5cecf
-  languageName: node
-  linkType: hard
-
-"xmlbuilder@npm:^10.0.0":
-  version: 10.1.1
-  resolution: "xmlbuilder@npm:10.1.1"
-  checksum: 1543fdf1489ccaf168d8f39978ea5c59ee438bc869f90365cd455f1729759fbfb92bb8e976b990a2c07ce4d4b2c7530ece4a7235b6d6705bdfc8d1f41ec4aa11
   languageName: node
   linkType: hard
 

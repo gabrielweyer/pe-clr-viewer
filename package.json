@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build-prod": "ng build --configuration production",
     "test": "ng test --browsers=Chrome --reporters=progress",
-    "test-ci": "ng test --watch=false --reporters=progress,html --browsers=ChromeHeadlessNoSandbox --code-coverage",
+    "test-ci": "ng test --watch=false --reporters=progress --browsers=ChromeHeadlessNoSandbox --code-coverage",
     "lint": "ng lint"
   },
   "private": true,
@@ -42,7 +42,6 @@
     "karma": "6.4.3",
     "karma-chrome-launcher": "3.2.0",
     "karma-coverage": "2.2.1",
-    "karma-htmlfile-reporter": "^0.3.8",
     "karma-jasmine": "^5.1.0",
     "karma-jasmine-html-reporter": "2.1.0",
     "puppeteer": "24.4.0",
