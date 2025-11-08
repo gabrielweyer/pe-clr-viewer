@@ -5,7 +5,6 @@ export class FlagEnumParser {
     for (const type of Array.from(displayNames.keys())) {
       const maskValue = Number(type);
 
-      // eslint-disable-next-line no-bitwise
       if ((value & maskValue) === maskValue) {
         const displayName = displayNames.get(type);
         if (displayName) {

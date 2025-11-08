@@ -1,7 +1,6 @@
 import { SectionItem } from './../app/models/section-item';
 import { DataDirectoryItem } from './../app/models/data-directory-item';
 import { FileOffsetSegment, Segment, HexSegment, RvaSegment } from './../app/models/segment';
-import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutableReader } from './portable-executable-reader.service';
 import { NATIVE_X86 } from '../../tests-data/native-x86';
 import { Subsystem } from '../app/models/subsystem';
@@ -18,11 +17,8 @@ describe('PortableExecutableReader', () => {
     const expectedSignatureStartOffsetDec = 248;
     const expectedSectionHeaderSizeDec = 40;
     const expectedCliHeaderSizeHex = '00000000';
-    const expectedCliHeaderSizeDec = 0;
     const expectedTextSectionFileOffsetHex = '00000400';
-    const expectedTextSectionFileOffsetDec = 512;
     const expectedImportAddressTableDirectorySizeHex = '00000214';
-    const expectedImportAddressTableDirectorySizeDec = 532;
 
     describe('When read', () => {
       const pe = target.read();

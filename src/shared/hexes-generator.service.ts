@@ -17,7 +17,7 @@ export class HexesGenerator {
 
     for (let o = 0; o <= endOffsetDec; o++) {
       hexes.push(
-        new Byte(file.bytes[o].toString(16), this.getPart(pe, o, partVisitors), this.getSubPart(o, subPartVisitors))
+        new Byte(file.bytes[o].toString(16), this.getPart(o, partVisitors), this.getSubPart(o, subPartVisitors))
       );
     }
 
@@ -34,7 +34,7 @@ export class HexesGenerator {
     return HexHelper.getNiceEndOffsetDec(endOffsetDec - 1);
   }
 
-  private static generatePartVisitors(pe: PortableExecutable): Array<PartVisitor> {
+  private static generatePartVisitors(pe: PortableExecutable): PartVisitor[] {
     const visitors = new Array<PartVisitor>();
 
     visitors.push(new PartVisitor(pe.dosHeader, PortableExecutablePart.DosHeader));
@@ -56,7 +56,7 @@ export class HexesGenerator {
     return visitors;
   }
 
-  private static getPart(pe: PortableExecutable, offset: number, visitors: Array<PartVisitor>): PortableExecutablePart {
+  private static getPart(offset: number, visitors: PartVisitor[]): PortableExecutablePart {
     for (const visitor of visitors) {
       if (visitor.segment && offset >= visitor.segment.startOffsetDec && offset <= visitor.segment.endOffsetDec) {
         return visitor.part;
@@ -66,7 +66,7 @@ export class HexesGenerator {
     return PortableExecutablePart.None;
   }
 
-  private static generateSubPartVisitors(pe: PortableExecutable): Array<SubPartVisitor> {
+  private static generateSubPartVisitors(pe: PortableExecutable): SubPartVisitor[] {
     const visitors = new Array<SubPartVisitor>();
 
     visitors.push(
@@ -119,7 +119,7 @@ export class HexesGenerator {
 
   private static getSubPart(
     offset: number,
-    visitors: Array<SubPartVisitor>
+    visitors: SubPartVisitor[]
   ): PortableExecutableSubPart {
     for (const visitor of visitors) {
       if (visitor.segment && offset >= visitor.segment.startOffsetDec && offset <= visitor.segment.endOffsetDec) {

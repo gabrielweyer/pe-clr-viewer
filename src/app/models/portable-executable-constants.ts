@@ -1,4 +1,3 @@
-import { CliFlags } from './cli-flags';
 import { File } from './file';
 
 export class PortableExecutableConstants {

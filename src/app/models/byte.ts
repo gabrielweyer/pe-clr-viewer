@@ -1,4 +1,3 @@
-import { CliFlags } from './cli-flags';
 import { PortableExecutablePart } from './portable-executable-part.enum';
 import { PortableExecutableSubPart } from './portable-executable-sub-part.enum';
 

@@ -61,13 +61,13 @@ export class File {
 
   private getHexValue(startOffsetDec: number, endOffsetDec: number): string {
     return this.bytes
-      .filter((v, i) => i >= startOffsetDec && i <= endOffsetDec)
+      .filter((_v, i) => i >= startOffsetDec && i <= endOffsetDec)
       .reduce((previous, current) => File.leftPadPipe.transform(File.bytePipe.transform(current), 2) + previous, '');
   }
 
   private getAsciiValue(startOffsetDec: number, endOffsetDec: number): string {
     return String.fromCharCode
-      .apply(null, [...this.bytes.filter((v, i) => i >= startOffsetDec && i <= endOffsetDec)]);
+      .apply(null, [...this.bytes.filter((_v, i) => i >= startOffsetDec && i <= endOffsetDec)]);
   }
 
   private getOpCode(startOffsetDec: number, endOffsetDec: number): string {
