@@ -38,7 +38,7 @@ export class ViewerComponent implements OnDestroy {
   private readonly navigationSubscription: Subscription;
 
   constructor() {
-    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+    this.navigationSubscription = this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         this.initialise();
       }

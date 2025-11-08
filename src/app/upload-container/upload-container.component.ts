@@ -10,7 +10,7 @@ import { NgClass, NgIf } from '@angular/common';
   imports: [NgClass, NgIf]
 })
 export class UploadContainerComponent {
-  @Output() fileRead: EventEmitter<PortableExecutable> = new EventEmitter();
+  @Output() fileRead: EventEmitter<PortableExecutable> = new EventEmitter<PortableExecutable>();
 
   public isReading = false;
   public hasError = false;
@@ -19,7 +19,7 @@ export class UploadContainerComponent {
   private readonly fileReader = new FileReader();
 
   constructor() {
-    this.fileReader.onload = e => {
+    this.fileReader.onload = _e => {
       this.onRead(this.fileReader.result as ArrayBuffer);
     };
   }
@@ -48,12 +48,14 @@ export class UploadContainerComponent {
 
     const peReader = new PortableExecutableReader(bytes);
 
+    // eslint-disable no-unused-vars
     try {
       this.pe = peReader.read();
-    } catch (error) {
+    } catch (_e) {
       this.hasError = true;
       this.pe = undefined;
     }
+    // eslint-enable no-unused-vars
 
     this.fileRead.emit(this.pe);
 

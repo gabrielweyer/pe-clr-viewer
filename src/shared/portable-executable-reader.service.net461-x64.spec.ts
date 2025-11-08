@@ -2,7 +2,6 @@ import { CliFlags } from './../app/models/cli-flags';
 import { SectionItem } from './../app/models/section-item';
 import { DataDirectoryItem } from './../app/models/data-directory-item';
 import { FileOffsetSegment, Segment, HexSegment, RvaSegment, AsciiSegment } from './../app/models/segment';
-import { PortableExecutablePart } from './../app/models/portable-executable-part.enum';
 import { PortableExecutableReader } from './portable-executable-reader.service';
 import { NET461_X64 } from '../../tests-data/net461-x64';
 import { Subsystem } from '../app/models/subsystem';

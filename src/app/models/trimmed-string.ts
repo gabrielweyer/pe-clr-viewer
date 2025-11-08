@@ -1,3 +1,3 @@
 export class TrimmedString {
-  constructor(public readonly value: string, public readonly removedFromStart: number = 0, public readonly removedFromEnd: number = 0) {}
+  constructor(public readonly value: string, public readonly removedFromStart = 0, public readonly removedFromEnd = 0) {}
 }
