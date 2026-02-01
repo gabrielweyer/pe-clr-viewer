@@ -1,47 +1,49 @@
-<div *ngIf="pe">
-  <h2>
-    <span>Convert RVA and VA to a file offset</span>
-  </h2>
-  <p>
-    Convert a <em>RVA</em> to a file offset:
-  </p>
-  <ul>
-    <li>
-      <span class="mono-font">0x</span><input type="text" (input)="onRva($event)" />
-    </li>
-    <li>
-      <span class="mono-font">-</span>&nbsp;<span class="data-directories cli-header-directory-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>
-      (.text section base RVA)
-    </li>
-    <li>
-      <span class="mono-font">+</span>&nbsp;<span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
-      (.text section file offset)
-    </li>
-    <li>
-      <span class="mono-font">=</span>&nbsp;<span class="mono-font">{{fileOffsetFromRvaDec | byte | leftpad:8}}</span>
-    </li>
-  </ul>
-  <p>
-    Convert a <em>VA</em> to a file offset:
-  </p>
-  <ul>
-    <li>
-      <span class="mono-font">0x</span><input type="text" (input)="onVa($event)" />
-    </li>
-    <li>
-      <span class="mono-font">-</span>&nbsp;<span class="mono-font nt-specific-fields image-base">{{pe.imageBase.hexValue | hex}}</span>
-      (image base VA)
-    </li>
-    <li>
-      <span class="mono-font">-</span>&nbsp;<span class="data-directories cli-header-directory-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>
-      (.text section base RVA)
-    </li>
-    <li>
-      <span class="mono-font">+</span>&nbsp;<span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
-      (.text section file offset)
-    </li>
-    <li>
-      <span class="mono-font">=</span>&nbsp;<span class="mono-font">{{fileOffsetFromVaDec | byte | leftpad:8}}</span>
-    </li>
-  </ul>
-</div>
+@if (pe) {
+  <div>
+    <h2>
+      <span>Convert RVA and VA to a file offset</span>
+    </h2>
+    <p>
+      Convert a <em>RVA</em> to a file offset:
+    </p>
+    <ul>
+      <li>
+        <span class="mono-font">0x</span><input type="text" (input)="onRva($event)" />
+      </li>
+      <li>
+        <span class="mono-font">-</span>&nbsp;<span class="data-directories cli-header-directory-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>
+        (.text section base RVA)
+      </li>
+      <li>
+        <span class="mono-font">+</span>&nbsp;<span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
+        (.text section file offset)
+      </li>
+      <li>
+        <span class="mono-font">=</span>&nbsp;<span class="mono-font">{{fileOffsetFromRvaDec | byte | leftpad:8}}</span>
+      </li>
+    </ul>
+    <p>
+      Convert a <em>VA</em> to a file offset:
+    </p>
+    <ul>
+      <li>
+        <span class="mono-font">0x</span><input type="text" (input)="onVa($event)" />
+      </li>
+      <li>
+        <span class="mono-font">-</span>&nbsp;<span class="mono-font nt-specific-fields image-base">{{pe.imageBase.hexValue | hex}}</span>
+        (image base VA)
+      </li>
+      <li>
+        <span class="mono-font">-</span>&nbsp;<span class="data-directories cli-header-directory-rva mono-font">{{pe.textSectionItem.baseRva.rva | hex}}</span>
+        (.text section base RVA)
+      </li>
+      <li>
+        <span class="mono-font">+</span>&nbsp;<span class="text-section-header text-file-offset mono-font">{{pe.textSectionItem.fileOffset.fileOffset | hex}}</span>
+        (.text section file offset)
+      </li>
+      <li>
+        <span class="mono-font">=</span>&nbsp;<span class="mono-font">{{fileOffsetFromVaDec | byte | leftpad:8}}</span>
+      </li>
+    </ul>
+  </div>
+}

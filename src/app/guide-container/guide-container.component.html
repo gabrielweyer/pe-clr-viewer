@@ -1,14 +1,15 @@
 <div class="guide-container">
-    <p>
-      <span class="mono-font">Portable Executable CLR Viewer</span> is a hex viewer for
-      <span class="mono-font">.NET</span> binaries. It also supports native binaries but highlights fields mainly related to the
-      <span class="mono-font">CLR</span>. If you don't have a binary handy, you could try my
-      <app-link [href]="'https://gabrielweyer.blob.core.windows.net/blog-samples/advanced-dotnet-debugging-2/net461-x86.exe'">net461 x86</app-link>
-      or
-      <app-link [href]="'https://gabrielweyer.blob.core.windows.net/blog-samples/advanced-dotnet-debugging-2/net461-x64.exe'">net461 x64</app-link>
-      samples. <a (click)="handleShowGuide()" href="javascript:void(0)">{{showGuide ? 'Hide guide' : 'Show guide'}}</a>
-    </p>
-    <div *ngIf="showGuide">
+  <p>
+    <span class="mono-font">Portable Executable CLR Viewer</span> is a hex viewer for
+    <span class="mono-font">.NET</span> binaries. It also supports native binaries but highlights fields mainly related to the
+    <span class="mono-font">CLR</span>. If you don't have a binary handy, you could try my
+    <app-link [href]="'https://gabrielweyer.blob.core.windows.net/blog-samples/advanced-dotnet-debugging-2/net461-x86.exe'">net461 x86</app-link>
+    or
+    <app-link [href]="'https://gabrielweyer.blob.core.windows.net/blog-samples/advanced-dotnet-debugging-2/net461-x64.exe'">net461 x64</app-link>
+    samples. <a (click)="handleShowGuide()" href="javascript:void(0)">{{showGuide ? 'Hide guide' : 'Show guide'}}</a>
+  </p>
+  @if (showGuide) {
+    <div>
       <ul>
         <li>
           <em>File offset</em>: expressed in hexadecimal. The bytes are displayed from left to right and top to bottom. The first
@@ -16,26 +17,26 @@
           cell on the third row (<span class="mono-font">00000020</span>)
           and last column (<span class="mono-font">0F</span>) has a file offset of
           <span class="mono-font">0000002F</span>.</li>
-        <li>
-          <em>Little-endian</em>: Windows is a
-          <app-link [href]="'https://en.wikipedia.org/wiki/Endianness'">little-endian</app-link> system. This means than the least significant bytes will appear before the most significant
-          ones. So if you were to find the following value:
-          <span class="mono-font">E0 93 01 00</span>, the address would be
-          <span class="mono-font">00 01 93 E0</span> - only the byte order is inverted, not the order within a byte - which would commonly be written
-          as
-          <span class="mono-font">0x193E0</span> (<span class="mono-font">0x</span> denotes a hex notation and the leading 0s are dropped as they are not significant).</li>
-        <li>
-          <em>Relative Virtual Address (RVA)</em>: the address of an item after it is loaded into memory, with the base address
-          of the image file subtracted from it.</li>
-      </ul>
-
-      <p>If this was not boring enough I recommend a couple of links:</p>
-      <ul>
-        <li>
-          <app-link [href]="'https://www.red-gate.com/simple-talk/blogs/anatomy-of-a-net-assembly-pe-headers/'">Anatomy of a .NET Assembly – PE Headers</app-link> Great blog post</li>
-        <li>
-          <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx'">The PE Format specification</app-link> The official specification from Microsoft
-        </li>
-      </ul>
-    </div>
-  </div>
+          <li>
+            <em>Little-endian</em>: Windows is a
+            <app-link [href]="'https://en.wikipedia.org/wiki/Endianness'">little-endian</app-link> system. This means than the least significant bytes will appear before the most significant
+            ones. So if you were to find the following value:
+            <span class="mono-font">E0 93 01 00</span>, the address would be
+            <span class="mono-font">00 01 93 E0</span> - only the byte order is inverted, not the order within a byte - which would commonly be written
+            as
+            <span class="mono-font">0x193E0</span> (<span class="mono-font">0x</span> denotes a hex notation and the leading 0s are dropped as they are not significant).</li>
+            <li>
+              <em>Relative Virtual Address (RVA)</em>: the address of an item after it is loaded into memory, with the base address
+            of the image file subtracted from it.</li>
+          </ul>
+          <p>If this was not boring enough I recommend a couple of links:</p>
+          <ul>
+            <li>
+              <app-link [href]="'https://www.red-gate.com/simple-talk/blogs/anatomy-of-a-net-assembly-pe-headers/'">Anatomy of a .NET Assembly – PE Headers</app-link> Great blog post</li>
+              <li>
+                <app-link [href]="'https://msdn.microsoft.com/library/windows/desktop/ms680547(v=vs.85).aspx'">The PE Format specification</app-link> The official specification from Microsoft
+              </li>
+            </ul>
+          </div>
+        }
+      </div>
