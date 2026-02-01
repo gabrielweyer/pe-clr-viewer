@@ -1,1 +1,1 @@
-<ng-template ngFor let-flag [ngForOf]="flags" let-isFirst="first">{{isFirst ? '' : ', '}}<span class="mono-font">{{flag}}</span></ng-template>
+@for (flag of flags; track flag;) {{{$first ? '' : ', '}}<span class="mono-font">{{flag}}</span>}

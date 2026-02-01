@@ -2,8 +2,12 @@
   <div class="container">
     <div class="bytes">
       <app-bytes-container class="bytes-section" [bytes]="bytes" [startOffsetDec]="startOffsetDec"></app-bytes-container>
-      <app-bytes-container *ngIf="pe.isManaged" class="bytes-section" [bytes]="cliMetadataHeaderBytes" [startOffsetDec]="cliMetadataHeaderStartOffsetDec"></app-bytes-container>
-      <app-bytes-container *ngIf="pe.isManaged && !pe.is64Bit" class="bytes-section" [bytes]="importTableEntryPointBytes" [startOffsetDec]="importTableEntryPointStartOffsetDec"></app-bytes-container>
+      @if (pe.isManaged) {
+        <app-bytes-container class="bytes-section" [bytes]="cliMetadataHeaderBytes" [startOffsetDec]="cliMetadataHeaderStartOffsetDec"></app-bytes-container>
+      }
+      @if (pe.isManaged && !pe.is64Bit) {
+        <app-bytes-container class="bytes-section" [bytes]="importTableEntryPointBytes" [startOffsetDec]="importTableEntryPointStartOffsetDec"></app-bytes-container>
+      }
     </div>
     <div class="bytes-legend">
       <app-legend-headers [pe]="pe"></app-legend-headers>

@@ -1,23 +1,61 @@
-<div *ngIf="shouldBlurTop()" class="byte-container__blur--top"></div>
-<span *ngIf="!shouldBlurTop()" class="offset unit">Offset</span>
-<span *ngIf="!shouldBlurTop()" class="unit">00</span>
-<span *ngIf="!shouldBlurTop()" class="unit">01</span>
-<span *ngIf="!shouldBlurTop()" class="unit">02</span>
-<span *ngIf="!shouldBlurTop()" class="unit">03</span>
-<span *ngIf="!shouldBlurTop()" class="unit">04</span>
-<span *ngIf="!shouldBlurTop()" class="unit">05</span>
-<span *ngIf="!shouldBlurTop()" class="unit">06</span>
-<span *ngIf="!shouldBlurTop()" class="unit">07</span>
-<span *ngIf="!shouldBlurTop()" class="unit">08</span>
-<span *ngIf="!shouldBlurTop()" class="unit">09</span>
-<span *ngIf="!shouldBlurTop()" class="unit">0A</span>
-<span *ngIf="!shouldBlurTop()" class="unit">0B</span>
-<span *ngIf="!shouldBlurTop()" class="unit">0C</span>
-<span *ngIf="!shouldBlurTop()" class="unit">0D</span>
-<span *ngIf="!shouldBlurTop()" class="unit">0E</span>
-<span *ngIf="!shouldBlurTop()" class="unit">0F</span>
-<ng-template ngFor let-hex [ngForOf]="bytes" let-i="index">
-  <span *ngIf="(startOffsetDec + i) % 16 === 0" class="offset unit">{{(startOffsetDec + i) | byte | leftpad:8 }}</span>
+@if (shouldBlurTop()) {
+  <div class="byte-container__blur--top"></div>
+}
+@if (!shouldBlurTop()) {
+  <span class="offset unit">Offset</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">00</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">01</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">02</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">03</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">04</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">05</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">06</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">07</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">08</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">09</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">0A</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">0B</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">0C</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">0D</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">0E</span>
+}
+@if (!shouldBlurTop()) {
+  <span class="unit">0F</span>
+}
+@for (hex of bytes; track hex; let i = $index) {
+  @if ((startOffsetDec + i) % 16 === 0) {
+    <span class="offset unit">{{(startOffsetDec + i) | byte | leftpad:8 }}</span>
+  }
   <span [ngClass]="{
     'dos-header': hex.isDosHeader(),
     'signature-offset': hex.isSignatureOffset(),
@@ -64,5 +102,5 @@
     'entry-point-method': hex.isEntryPointMethod(),
     'entry-point-executable': hex.isEntryPointExecutable()
   }">{{hex.value | byte | leftpad:2 }}</span>
-</ng-template>
+}
 <div class="byte-container__blur--bottom"></div>
