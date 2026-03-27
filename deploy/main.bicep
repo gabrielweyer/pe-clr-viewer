@@ -2,7 +2,7 @@
 @allowed(['westus2','centralus','eastus2','westeurope','eastasia'])
 param staticWebAppLocation string
 
-resource staticWebApp 'Microsoft.Web/staticSites@2022-03-01' = {
+resource staticWebApp 'Microsoft.Web/staticSites@2025-03-01' = {
   name: 'peclr-stapp'
   location: staticWebAppLocation
   sku: {
