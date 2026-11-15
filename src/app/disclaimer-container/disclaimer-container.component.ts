@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AppConfigService } from '../../shared/app.config';
 import { SlicePipe } from '@angular/common';
 import { LinkComponent } from '../link/link.component';
@@ -7,6 +7,7 @@ import { LinkComponent } from '../link/link.component';
   selector: 'app-disclaimer-container',
   templateUrl: './disclaimer-container.component.html',
   styleUrl: './disclaimer-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [LinkComponent, SlicePipe]
 })
 export class DisclaimerContainerComponent {
