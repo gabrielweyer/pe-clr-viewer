@@ -3,8 +3,7 @@ import { DllCharacteristicsType } from '../app/models/dll-characteristics-type.e
 import { FlagEnumParser } from './flag-enum-parser';
 
 @Pipe({
-  name: 'dllCharacteristics',
-  standalone: true
+  name: 'dllCharacteristics'
 })
 export class DllCharacteristicsPipe implements PipeTransform {
   displayNames: Map<DllCharacteristicsType, string>;
