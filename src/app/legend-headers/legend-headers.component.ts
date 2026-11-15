@@ -1,5 +1,5 @@
 import { PortableExecutableConstants } from './../models/portable-executable-constants';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { PortableExecutable } from '../models/portable-executable';
 import { DllCharacteristicsPipe } from '../../shared/dll-characteristics.pipe';
 import { CharacteristicsPipe } from '../../shared/characteristics.pipe';
@@ -19,7 +19,7 @@ import { SectionContainerComponent } from '../section-container/section-containe
   imports: [SectionContainerComponent, LinkComponent, FlagsFormatterComponent, BytePipe, LeftPadPipe, HexPipe, SubsystemPipe, CharacteristicsPipe, DllCharacteristicsPipe]
 })
 export class LegendHeadersComponent {
-  @Input() pe!: PortableExecutable;
+  readonly pe = input.required<PortableExecutable>();
 
   peConstants = PortableExecutableConstants;
 }

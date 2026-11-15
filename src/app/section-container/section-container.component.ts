@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -8,10 +8,9 @@ import { NgClass } from '@angular/common';
   imports: [NgClass]
 })
 export class SectionContainerComponent {
-  @Input()
-  public isExpanded = true;
+  public readonly isExpanded = model(true);
 
   public toggleIsExpanded(): void {
-    this.isExpanded = !this.isExpanded;
+    this.isExpanded.update(isExpanded => !isExpanded);
   }
 }

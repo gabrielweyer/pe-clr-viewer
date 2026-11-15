@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Byte } from '../models/byte';
 import { LeftPadPipe } from '../../shared/leftpad.pipe';
 import { BytePipe } from '../../shared/byte.pipe';
@@ -11,10 +11,10 @@ import { NgClass } from '@angular/common';
   imports: [NgClass, BytePipe, LeftPadPipe]
 })
 export class BytesContainerComponent {
-  @Input() bytes: Byte[] = [];
-  @Input() startOffsetDec = 0;
+  readonly bytes = input<Byte[]>([]);
+  readonly startOffsetDec = input(0);
 
   shouldBlurTop(): boolean {
-    return this.startOffsetDec !== 0;
+    return this.startOffsetDec() !== 0;
   }
 }

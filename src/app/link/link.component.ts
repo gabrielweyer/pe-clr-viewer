@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-link',
@@ -7,6 +7,5 @@ import { Component, Input } from '@angular/core';
   standalone: true
 })
 export class LinkComponent {
-  @Input()
-  href!: string;
+  readonly href = input.required<string>();
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, signal, output } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
 import { PortableExecutable } from '../models/portable-executable';
 import { NgClass } from '@angular/common';
@@ -10,7 +10,7 @@ import { NgClass } from '@angular/common';
   imports: [NgClass]
 })
 export class UploadContainerComponent {
-  @Output() fileRead: EventEmitter<PortableExecutable> = new EventEmitter<PortableExecutable>();
+  readonly fileRead = output<PortableExecutable | undefined>();
 
   // Signals, because they are updated from the FileReader callback, which does not trigger OnPush change detection
   public readonly isReading = signal(false);

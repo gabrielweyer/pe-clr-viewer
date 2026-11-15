@@ -3,13 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlagsFormatterComponent } from './flags-formatter.component';
 
 describe('FlagsFormatterComponent', () => {
-  let component: FlagsFormatterComponent;
   let fixture: ComponentFixture<FlagsFormatterComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [FlagsFormatterComponent] });
     fixture = TestBed.createComponent(FlagsFormatterComponent);
-    component = fixture.componentInstance;
   });
 
   describe('Given flags not set on component', () => {
@@ -23,14 +21,14 @@ describe('FlagsFormatterComponent', () => {
 
   describe('Given single flag set on component', () => {
     it ('Then no trailing comma', () => {
-      component.flags = ['only-one'];
+      fixture.componentRef.setInput('flags', ['only-one']);
       fixture.detectChanges();
       const flagsElement: HTMLElement = fixture.nativeElement;
       expect(flagsElement.textContent).toBe('only-one');
     });
 
     it ('Then flag uses mono font', () => {
-      component.flags = ['set-css-class'];
+      fixture.componentRef.setInput('flags', ['set-css-class']);
       fixture.detectChanges();
       const flagsElement: HTMLElement = fixture.nativeElement;
       const span = flagsElement.querySelector('span');
@@ -41,7 +39,7 @@ describe('FlagsFormatterComponent', () => {
 
   describe('Given two flags set on component', () => {
     it ('Then renders flags separated by a comma', () => {
-      component.flags = ['only-one', 'only-two'];
+      fixture.componentRef.setInput('flags', ['only-one', 'only-two']);
       fixture.detectChanges();
       const flagsElement: HTMLElement = fixture.nativeElement;
       expect(flagsElement.textContent).toBe('only-one, only-two');
