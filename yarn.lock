@@ -153,17 +153,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/animations@npm:^22.2.6":
-  version: 22.2.6
-  resolution: "@angular/animations@npm:22.2.6"
-  dependencies:
-    tslib: ^2.3.0
-  peerDependencies:
-    "@angular/core": 22.2.6
-  checksum: cbae1182b8d3c045c3185f12077b03af500823d611de75bdb17f6666ef0e3523d4869c2455f381b76d70269f404de41a2b84ab3d558bd5db4bd1b0220bd0c896
-  languageName: node
-  linkType: hard
-
 "@angular/build@npm:22.2.7":
   version: 22.2.7
   resolution: "@angular/build@npm:22.2.7"
@@ -339,36 +328,6 @@ __metadata:
     zone.js:
       optional: true
   checksum: c3f387d7513bd729fae029a8ccb8fb67bca6bfb870fc547692693bcc86e911fdbc3c63d37dca2f69256d439e52b609c65536097af75af393d5c1f6677a7d7d39
-  languageName: node
-  linkType: hard
-
-"@angular/forms@npm:^22.2.6":
-  version: 22.2.6
-  resolution: "@angular/forms@npm:22.2.6"
-  dependencies:
-    "@standard-schema/spec": ^1.0.0
-    tslib: ^2.3.0
-    zod: ^4.0.10
-  peerDependencies:
-    "@angular/common": 22.2.6
-    "@angular/core": 22.2.6
-    "@angular/platform-browser": 22.2.6
-    rxjs: ^6.5.3 || ^7.4.0
-  checksum: f3e420e852904018c94c8ea982a5b57442d8ed306e01e52c38e6b03cb71b52843474be15c542f126d0768b9b9eb8e0ccaa7f8f5bfd79c89da97dafec93833db2
-  languageName: node
-  linkType: hard
-
-"@angular/platform-browser-dynamic@npm:^22.2.6":
-  version: 22.2.6
-  resolution: "@angular/platform-browser-dynamic@npm:22.2.6"
-  dependencies:
-    tslib: ^2.3.0
-  peerDependencies:
-    "@angular/common": 22.2.6
-    "@angular/compiler": 22.2.6
-    "@angular/core": 22.2.6
-    "@angular/platform-browser": 22.2.6
-  checksum: bbf14899e5b0409f096b4398062d86c8dc6484c6b764ebd2dde12931861c86fff8fd34227a66f2cee994b9d869253213af8e2ccec5351b95d0498b2ad6135a2c
   languageName: node
   linkType: hard
 
@@ -2224,13 +2183,6 @@ __metadata:
     oxc-parser: 0.156.0
     typescript: 6.0.3
   checksum: 6a906ccb3c695e3e92e112b2a07bab3ea81227fbbc47aa22495f078579431dea646255311519aa9f8dbb2c5123e9e570881fdb830de8bbcb881031b5cc6dd16d
-  languageName: node
-  linkType: hard
-
-"@standard-schema/spec@npm:^1.0.0":
-  version: 1.1.0
-  resolution: "@standard-schema/spec@npm:1.1.0"
-  checksum: 6245ebef5e698bb04752a22e996a7cc40406a404d9f68a9d4e1a7a10f2422da287247508e7b495a2f32bb38f3d57b4daf2c9ab4bf22d9bca13e20a3dc5ec575e
   languageName: node
   linkType: hard
 
@@ -4722,16 +4674,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pe-clr-viewer@workspace:."
   dependencies:
-    "@angular/animations": ^22.2.6
     "@angular/build": 22.2.7
     "@angular/cli": 22.2.7
     "@angular/common": ^22.2.6
     "@angular/compiler": ^22.2.6
     "@angular/compiler-cli": 22.2.6
     "@angular/core": ^22.2.6
-    "@angular/forms": ^22.2.6
     "@angular/platform-browser": ^22.2.6
-    "@angular/platform-browser-dynamic": ^22.2.6
     "@angular/router": ^22.2.6
     "@typescript-eslint/eslint-plugin": 8.72.2
     "@typescript-eslint/parser": 8.72.2
@@ -5987,7 +5936,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^4.0.10, zod@npm:^4.2.0":
+"zod@npm:^4.2.0":
   version: 4.6.7
   resolution: "zod@npm:4.6.7"
   checksum: 6801f5067dd43204d5ed2b4f2f0d09f891365ecfdd385877901e42f6f6ebf67e8943b385c71eaba53081029dd21f4740f16c91497a06f95195e209bffef92056
