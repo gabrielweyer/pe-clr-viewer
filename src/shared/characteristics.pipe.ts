@@ -3,8 +3,7 @@ import { CharacteristicsType } from '../app/models/characteristics-type.enum';
 import { FlagEnumParser } from './flag-enum-parser';
 
 @Pipe({
-  name: 'characteristics',
-  standalone: true
+  name: 'characteristics'
 })
 export class CharacteristicsPipe implements PipeTransform {
   displayNames: Map<CharacteristicsType, string>;

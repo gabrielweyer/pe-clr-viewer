@@ -1,8 +1,7 @@
 import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({
-  name: 'byte',
-  standalone: true
+  name: 'byte'
 })
 export class BytePipe implements PipeTransform {
   transform(value: number | string): string {
