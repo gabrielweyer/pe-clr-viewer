@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
 import { PortableExecutable } from '../models/portable-executable';
 import { HexPipe } from '../../shared/hex.pipe';
@@ -13,13 +13,13 @@ import { BytePipe } from '../../shared/byte.pipe';
   imports: [BytePipe, LeftPadPipe, HexPipe]
 })
 export class VaConvertorComponent {
-  @Input() pe!: PortableExecutable;
+  readonly pe = input.required<PortableExecutable>();
 
   public fileOffsetFromRvaDec = 0;
   public fileOffsetFromVaDec = 0;
 
   public onRva(inputRva: Event): void {
-    const fileOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromRva((inputRva.target as HTMLInputElement).value, this.pe);
+    const fileOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromRva((inputRva.target as HTMLInputElement).value, this.pe());
 
     if (fileOffsetDec > 0) {
       this.fileOffsetFromRvaDec = fileOffsetDec;
@@ -29,7 +29,7 @@ export class VaConvertorComponent {
   }
 
   public onVa(inputVa: Event): void {
-    const fileOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromVa((inputVa.target as HTMLInputElement).value, this.pe);
+    const fileOffsetDec = PortableExecutableReader.getFileOffsetInTextSectionFromVa((inputVa.target as HTMLInputElement).value, this.pe());
 
     if (fileOffsetDec > 0) {
       this.fileOffsetFromVaDec = fileOffsetDec;
