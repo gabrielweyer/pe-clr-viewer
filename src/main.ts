@@ -2,7 +2,7 @@ import { inject, provideAppInitializer, provideZonelessChangeDetection } from '@
 import { AppComponent } from './app/app.component';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { routes } from './app/app.routes';
-import { provideHttpClient, withXhr } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { StoreService } from './shared/store.service';
 import { AppConfigService } from './shared/app.config';
@@ -18,7 +18,7 @@ bootstrapApplication(AppComponent, {
       return config.load();
     }),
     StoreService,
-    provideHttpClient(withXhr())
+    provideHttpClient()
   ]
 })
   .catch(err => console.error(err));
