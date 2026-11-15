@@ -1,4 +1,4 @@
-<label for="file-upload" class="custom-file-upload" [ngClass]="{'disabled': isReading()}">
+<label for="file-upload" class="custom-file-upload" [class.disabled]="isReading()">
   View DLL / EXE
 </label>
 <input id="file-upload" type="file" (change)="fileChanged($event)" [disabled]="isReading()">

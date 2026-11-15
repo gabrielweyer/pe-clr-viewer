@@ -1,11 +1,10 @@
 import { Component, model } from '@angular/core';
-import { NgClass } from '@angular/common';
+
 
 @Component({
   selector: 'app-section-container',
   templateUrl: './section-container.component.html',
-  styleUrl: './section-container.component.scss',
-  imports: [NgClass]
+  styleUrl: './section-container.component.scss'
 })
 export class SectionContainerComponent {
   public readonly isExpanded = model(true);
