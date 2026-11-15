@@ -1,7 +1,7 @@
 import { Router, NavigationEnd } from '@angular/router';
 import { HexHelper } from './../../shared/hex-helper';
 import { PortableExecutable } from './../models/portable-executable';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
 import { PortableExecutableConstants } from '../models/portable-executable-constants';
 import { Byte } from '../models/byte';
 import { StoreService } from '../../shared/store.service';
@@ -15,6 +15,7 @@ import { BytesContainerComponent } from '../bytes-container/bytes-container.comp
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
   styleUrl: './viewer.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [BytesContainerComponent, LegendHeadersComponent, VaConvertorComponent]
 })
 export class ViewerComponent implements OnDestroy {

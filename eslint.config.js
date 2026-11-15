@@ -46,6 +46,9 @@ module.exports = tseslint.config(
         }
       ],
       "@typescript-eslint/no-non-null-assertion": "off",
+      // The Angular 22 migration added `ChangeDetectionStrategy.Eager` to keep the pre-v22 behaviour.
+      // Re-enable once components have been migrated to OnPush.
+      "@angular-eslint/prefer-on-push-component-change-detection": "off",
       "arrow-parens": [
         "off",
         "always"

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { LinkComponent } from '../link/link.component';
 
@@ -6,6 +6,7 @@ import { LinkComponent } from '../link/link.component';
   selector: 'app-guide-container',
   templateUrl: './guide-container.component.html',
   styleUrl: './guide-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [LinkComponent]
 })
 export class GuideContainerComponent {

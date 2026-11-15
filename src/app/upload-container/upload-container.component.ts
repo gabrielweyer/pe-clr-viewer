@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
 import { PortableExecutable } from '../models/portable-executable';
 import { NgClass } from '@angular/common';
@@ -7,6 +7,7 @@ import { NgClass } from '@angular/common';
   selector: 'app-upload-container',
   templateUrl: './upload-container.component.html',
   styleUrl: './upload-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass]
 })
 export class UploadContainerComponent {

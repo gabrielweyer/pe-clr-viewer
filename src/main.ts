@@ -2,7 +2,7 @@ import { enableProdMode, importProvidersFrom, inject, provideAppInitializer, pro
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 import { AppRoutingModule } from './app/app-routing.module';
-import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
+import { withInterceptorsFromDi, provideHttpClient, withXhr } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { PortableExecutableGuard } from './shared/portable-executable-guard.service';
@@ -23,7 +23,7 @@ bootstrapApplication(AppComponent, {
     }),
     StoreService,
     PortableExecutableGuard,
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(withXhr(), withInterceptorsFromDi())
   ]
 })
   .catch(err => console.error(err));
