@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
 import { PortableExecutable } from '../models/portable-executable';
 import { NgClass } from '@angular/common';
@@ -7,15 +7,14 @@ import { NgClass } from '@angular/common';
   selector: 'app-upload-container',
   templateUrl: './upload-container.component.html',
   styleUrl: './upload-container.component.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass]
 })
 export class UploadContainerComponent {
   @Output() fileRead: EventEmitter<PortableExecutable> = new EventEmitter<PortableExecutable>();
 
-  public isReading = false;
-  public hasError = false;
-  public pe: PortableExecutable | undefined;
+  // Signals, because they are updated from the FileReader callback, which does not trigger OnPush change detection
+  public readonly isReading = signal(false);
+  public readonly hasError = signal(false);
 
   private readonly fileReader = new FileReader();
 
@@ -26,21 +25,18 @@ export class UploadContainerComponent {
   }
 
   public fileChanged(event: Event): void {
-    if (this.isReading) {
+    if (this.isReading()) {
       return;
     }
-
-    this.isReading = true;
-    this.hasError = false;
-    this.pe = undefined;
 
     const target = event.target as HTMLInputElement;
     const files = target.files;
 
-    if (files) {
-      const file = files[0];
+    if (files && files.length > 0) {
+      this.isReading.set(true);
+      this.hasError.set(false);
 
-      this.fileReader.readAsArrayBuffer(file);
+      this.fileReader.readAsArrayBuffer(files[0]);
     }
   }
 
@@ -49,17 +45,17 @@ export class UploadContainerComponent {
 
     const peReader = new PortableExecutableReader(bytes);
 
-    // eslint-disable no-unused-vars
+    let pe: PortableExecutable | undefined;
+
     try {
-      this.pe = peReader.read();
+      pe = peReader.read();
     } catch (_e) {
-      this.hasError = true;
-      this.pe = undefined;
+      this.hasError.set(true);
+      pe = undefined;
     }
-    // eslint-enable no-unused-vars
 
-    this.fileRead.emit(this.pe);
+    this.fileRead.emit(pe);
 
-    this.isReading = false;
+    this.isReading.set(false);
   }
 }

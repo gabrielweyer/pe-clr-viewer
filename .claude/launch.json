@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ng-serve",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start"],
+      "port": 4200
+    }
+  ]
+}

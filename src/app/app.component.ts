@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PortableExecutable } from './models/portable-executable';
 import { StoreService } from '../shared/store.service';
 import { Router, RouterOutlet } from '@angular/router';
@@ -10,7 +10,6 @@ import { GuideContainerComponent } from './guide-container/guide-container.compo
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [GuideContainerComponent, UploadContainerComponent, RouterOutlet, DisclaimerContainerComponent]
 })
 export class AppComponent {

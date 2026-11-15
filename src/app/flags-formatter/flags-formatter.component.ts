@@ -1,11 +1,10 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 
 @Component({
   selector: 'app-flags-formatter',
   templateUrl: './flags-formatter.component.html',
   styleUrl: './flags-formatter.component.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: []
 })
 export class FlagsFormatterComponent {
