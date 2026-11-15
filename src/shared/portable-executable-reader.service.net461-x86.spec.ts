@@ -41,7 +41,7 @@ describe('PortableExecutableReader', () => {
           const dosHeader = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           dosHeader.forEach((element, offset) => {
-            expect(element.isDosHeader()).toBeTruthy(offset);
+            expect(element.isDosHeader(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -65,7 +65,7 @@ describe('PortableExecutableReader', () => {
             const signatureOffset = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             signatureOffset.forEach((element, offset) => {
-              expect(element.isSignatureOffset()).toBeTruthy(offset);
+              expect(element.isSignatureOffset(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -86,7 +86,7 @@ describe('PortableExecutableReader', () => {
           const dosStub = pe.hexes.slice(expectedStartOffset, expectedEndOffset);
 
           dosStub.forEach((element, offset) => {
-            expect(element.isDosStub()).toBeTruthy(offset);
+            expect(element.isDosStub(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
@@ -105,7 +105,7 @@ describe('PortableExecutableReader', () => {
           const signature = pe.hexes.slice(expectedSignatureStartOffsetDec, expectedEndOffsetDec);
 
           signature.forEach((element, offset) => {
-            expect(element.isSignature()).toBeTruthy(offset);
+            expect(element.isSignature(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
@@ -125,7 +125,7 @@ describe('PortableExecutableReader', () => {
           const coffHeader = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           coffHeader.forEach((element, offset) => {
-            expect(element.isCoffHeader()).toBeTruthy(offset);
+            expect(element.isCoffHeader(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -149,7 +149,7 @@ describe('PortableExecutableReader', () => {
             const characteristics = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             characteristics.forEach((element, offset) => {
-              expect(element.isCharacteristics()).toBeTruthy(offset);
+              expect(element.isCharacteristics(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -170,7 +170,7 @@ describe('PortableExecutableReader', () => {
           const standardFields = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           standardFields.forEach((element, offset) => {
-            expect(element.isStandardFields()).toBeTruthy(offset);
+            expect(element.isStandardFields(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -198,7 +198,7 @@ describe('PortableExecutableReader', () => {
             const magicNumber = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             magicNumber.forEach((element, offset) => {
-              expect(element.isMagicNumber()).toBeTruthy(offset);
+              expect(element.isMagicNumber(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -223,7 +223,7 @@ describe('PortableExecutableReader', () => {
             const addressOfEntryPoint = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             addressOfEntryPoint.forEach((element, offset) => {
-              expect(element.isAddressOfEntryPoint()).toBeTruthy(offset);
+              expect(element.isAddressOfEntryPoint(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -244,7 +244,7 @@ describe('PortableExecutableReader', () => {
           const ntSpecificFields = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           ntSpecificFields.forEach((element, offset) => {
-            expect(element.isNtSpecificFields()).toBeTruthy(offset);
+            expect(element.isNtSpecificFields(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -268,7 +268,7 @@ describe('PortableExecutableReader', () => {
             const imageBase = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             imageBase.forEach((element, offset) => {
-              expect(element.isImageBase()).toBeTruthy(offset);
+              expect(element.isImageBase(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -297,7 +297,7 @@ describe('PortableExecutableReader', () => {
             const subsystem = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             subsystem.forEach((element, offset) => {
-              expect(element.isSubsystem()).toBeTruthy(offset);
+              expect(element.isSubsystem(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -322,7 +322,7 @@ describe('PortableExecutableReader', () => {
             const dllCharacteristics = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             dllCharacteristics.forEach((element, offset) => {
-              expect(element.isDllCharacteristics()).toBeTruthy(offset);
+              expect(element.isDllCharacteristics(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -344,7 +344,7 @@ describe('PortableExecutableReader', () => {
           const dataDirectories = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           dataDirectories.forEach((element, offset) => {
-            expect(element.isDataDirectories()).toBeTruthy(offset);
+            expect(element.isDataDirectories(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -376,7 +376,7 @@ describe('PortableExecutableReader', () => {
             const rva = pe.hexes.slice(expectedRvaStartOffsetDec, expectedRvaEndOffsetDec);
 
             rva.forEach((element, offset) => {
-              expect(element.isImportTableDirectoryRva()).toBeTruthy(offset);
+              expect(element.isImportTableDirectoryRva(), `offset ${offset}`).toBeTruthy();
             });
           });
 
@@ -384,7 +384,7 @@ describe('PortableExecutableReader', () => {
             const size = pe.hexes.slice(expectedHexStartOffsetDec, expectedHexEndOffsetDec);
 
             size.forEach((element, offset) => {
-              expect(element.isImportTableDirectorySize()).toBeTruthy(offset);
+              expect(element.isImportTableDirectorySize(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -417,7 +417,7 @@ describe('PortableExecutableReader', () => {
             const rva = pe.hexes.slice(expectedRvaStartOffsetDec, expectedRvaEndOffsetDec);
 
             rva.forEach((element, offset) => {
-              expect(element.isImportAddressTableDirectoryRva()).toBeTruthy(offset);
+              expect(element.isImportAddressTableDirectoryRva(), `offset ${offset}`).toBeTruthy();
             });
           });
 
@@ -425,7 +425,7 @@ describe('PortableExecutableReader', () => {
             const size = pe.hexes.slice(expectedHexStartOffsetDec, expectedHexEndOffsetDec);
 
             size.forEach((element, offset) => {
-              expect(element.isImportAddressTableDirectorySize()).toBeTruthy(offset);
+              expect(element.isImportAddressTableDirectorySize(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -458,7 +458,7 @@ describe('PortableExecutableReader', () => {
             const rva = pe.hexes.slice(expectedRvaStartOffsetDec, expectedRvaEndOffsetDec);
 
             rva.forEach((element, offset) => {
-              expect(element.isCliHeaderDirectoryRva()).toBeTruthy(offset);
+              expect(element.isCliHeaderDirectoryRva(), `offset ${offset}`).toBeTruthy();
             });
           });
 
@@ -466,7 +466,7 @@ describe('PortableExecutableReader', () => {
             const size = pe.hexes.slice(expectedHexStartOffsetDec, expectedHexEndOffsetDec);
 
             size.forEach((element, offset) => {
-              expect(element.isCliHeaderDirectorySize()).toBeTruthy(offset);
+              expect(element.isCliHeaderDirectorySize(), `offset ${offset}`).toBeTruthy();
             });
           });
 
@@ -494,7 +494,7 @@ describe('PortableExecutableReader', () => {
           const textSectionHeader = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           textSectionHeader.forEach((element, offset) => {
-            expect(element.isTextSectionHeader()).toBeTruthy(offset);
+            expect(element.isTextSectionHeader(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -520,7 +520,7 @@ describe('PortableExecutableReader', () => {
           const baseRva = pe.hexes.slice(expectedBaseRvaStartOffsetDec, expectedBaseRvaEndOffsetDec);
 
           baseRva.forEach((element, offset) => {
-            expect(element.isTextBaseRva()).toBeTruthy(offset);
+            expect(element.isTextBaseRva(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -528,7 +528,7 @@ describe('PortableExecutableReader', () => {
           const fileOffset = pe.hexes.slice(expectedFileOffsetStartOffsetDec, expectedFileOffsetEndOffsetDec);
 
           fileOffset.forEach((element, offset) => {
-            expect(element.isTextFileOffset()).toBeTruthy(offset);
+            expect(element.isTextFileOffset(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
@@ -551,7 +551,7 @@ describe('PortableExecutableReader', () => {
           const rsrcSectionHeader = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           rsrcSectionHeader.forEach((element, offset) => {
-            expect(element.isRsrcSectionHeader()).toBeTruthy(offset);
+            expect(element.isRsrcSectionHeader(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -577,7 +577,7 @@ describe('PortableExecutableReader', () => {
           const baseRva = pe.hexes.slice(expectedBaseRvaStartOffsetDec, expectedBaseRvaEndOffsetDec);
 
           baseRva.forEach((element, offset) => {
-            expect(element.isRsrcBaseRva()).toBeTruthy(offset);
+            expect(element.isRsrcBaseRva(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -585,7 +585,7 @@ describe('PortableExecutableReader', () => {
           const fileOffset = pe.hexes.slice(expectedFileOffsetStartOffsetDec, expectedFileOffsetEndOffsetDec);
 
           fileOffset.forEach((element, offset) => {
-            expect(element.isRsrcFileOffset()).toBeTruthy(offset);
+            expect(element.isRsrcFileOffset(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
@@ -608,7 +608,7 @@ describe('PortableExecutableReader', () => {
           const relocSectionHeader = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           relocSectionHeader.forEach((element, offset) => {
-            expect(element.isRelocSectionHeader()).toBeTruthy(offset);
+            expect(element.isRelocSectionHeader(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -634,7 +634,7 @@ describe('PortableExecutableReader', () => {
           const baseRva = pe.hexes.slice(expectedBaseRvaStartOffsetDec, expectedBaseRvaEndOffsetDec);
 
           baseRva.forEach((element, offset) => {
-            expect(element.isRelocBaseRva()).toBeTruthy(offset);
+            expect(element.isRelocBaseRva(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -642,7 +642,7 @@ describe('PortableExecutableReader', () => {
           const fileOffset = pe.hexes.slice(expectedFileOffsetStartOffsetDec, expectedFileOffsetEndOffsetDec);
 
           fileOffset.forEach((element, offset) => {
-            expect(element.isRelocFileOffset()).toBeTruthy(offset);
+            expect(element.isRelocFileOffset(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
@@ -663,7 +663,7 @@ describe('PortableExecutableReader', () => {
           const importAddressTable = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           importAddressTable.forEach((element, offset) => {
-            expect(element.isImportAddressTable()).toBeTruthy(offset);
+            expect(element.isImportAddressTable(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
@@ -683,7 +683,7 @@ describe('PortableExecutableReader', () => {
           const cliHeader = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           cliHeader.forEach((element, offset) => {
-            expect(element.isCliHeader()).toBeTruthy(offset);
+            expect(element.isCliHeader(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -716,7 +716,7 @@ describe('PortableExecutableReader', () => {
             const rva = pe.hexes.slice(expectedRvaStartOffsetDec, expectedRvaEndOffsetDec);
 
             rva.forEach((element, offset) => {
-              expect(element.isCliMetadataHeaderDirectoryRva()).toBeTruthy(offset);
+              expect(element.isCliMetadataHeaderDirectoryRva(), `offset ${offset}`).toBeTruthy();
             });
           });
 
@@ -724,7 +724,7 @@ describe('PortableExecutableReader', () => {
             const size = pe.hexes.slice(expectedHexStartOffsetDec, expectedHexEndOffsetDec);
 
             size.forEach((element, offset) => {
-              expect(element.isCliMetadataHeaderDirectorySize()).toBeTruthy(offset);
+              expect(element.isCliMetadataHeaderDirectorySize(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -751,7 +751,7 @@ describe('PortableExecutableReader', () => {
           const cliMetadataHeader = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           cliMetadataHeader.forEach((element, offset) => {
-            expect(element.isCliMetadataHeader()).toBeTruthy(offset);
+            expect(element.isCliMetadataHeader(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -770,7 +770,7 @@ describe('PortableExecutableReader', () => {
             const clrVersionSize = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             clrVersionSize.forEach((element, offset) => {
-              expect(element.isClrVersionSize()).toBeTruthy(offset);
+              expect(element.isClrVersionSize(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -789,7 +789,7 @@ describe('PortableExecutableReader', () => {
             const clrVersion = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             clrVersion.forEach((element, offset) => {
-              expect(element.isClrVersion()).toBeTruthy(offset);
+              expect(element.isClrVersion(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -811,7 +811,7 @@ describe('PortableExecutableReader', () => {
           const importTable = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           importTable.forEach((element, offset) => {
-            expect(element.isImportTable()).toBeTruthy(offset);
+            expect(element.isImportTable(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
@@ -831,7 +831,7 @@ describe('PortableExecutableReader', () => {
           const entrypoint = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           entrypoint.forEach((element, offset) => {
-            expect(element.isEntryPoint()).toBeTruthy(offset);
+            expect(element.isEntryPoint(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -850,7 +850,7 @@ describe('PortableExecutableReader', () => {
             const entryPointOpCode = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             entryPointOpCode.forEach((element, offset) => {
-              expect(element.isEntryPointOpCode()).toBeTruthy(offset);
+              expect(element.isEntryPointOpCode(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -870,7 +870,7 @@ describe('PortableExecutableReader', () => {
             const entryPointRva = pe.hexes.slice(expectedSubStartOffsetDec, expectedSubEndOffsetDec);
 
             entryPointRva.forEach((element, offset) => {
-              expect(element.isEntryPointVa()).toBeTruthy(offset);
+              expect(element.isEntryPointVa(), `offset ${offset}`).toBeTruthy();
             });
           });
         });
@@ -891,7 +891,7 @@ describe('PortableExecutableReader', () => {
           const iatEntryPointRva = pe.hexes.slice(expectedStartOffsetDec, expectedEndOffsetDec);
 
           iatEntryPointRva.forEach((element, offset) => {
-            expect(element.isIatEntryPointRva()).toBeTruthy(offset);
+            expect(element.isIatEntryPointRva(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
@@ -910,7 +910,7 @@ describe('PortableExecutableReader', () => {
           const entryPointMethod = pe.hexes.slice(expectedMethod.startOffsetDec, expectedMethod.endOffsetDec);
 
           entryPointMethod.forEach((element, offset) => {
-            expect(element.isEntryPointMethod()).toBeTruthy(offset);
+            expect(element.isEntryPointMethod(), `offset ${offset}`).toBeTruthy();
           });
         });
 
@@ -918,7 +918,7 @@ describe('PortableExecutableReader', () => {
           const entryPointExecutable = pe.hexes.slice(expectedExecutable.startOffsetDec, expectedExecutable.endOffsetDec);
 
           entryPointExecutable.forEach((element, offset) => {
-            expect(element.isEntryPointExecutable()).toBeTruthy(offset);
+            expect(element.isEntryPointExecutable(), `offset ${offset}`).toBeTruthy();
           });
         });
       });
