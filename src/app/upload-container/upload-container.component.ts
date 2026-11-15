@@ -1,13 +1,12 @@
 import { Component, signal, output } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
 import { PortableExecutable } from '../models/portable-executable';
-import { NgClass } from '@angular/common';
+
 
 @Component({
   selector: 'app-upload-container',
   templateUrl: './upload-container.component.html',
-  styleUrl: './upload-container.component.scss',
-  imports: [NgClass]
+  styleUrl: './upload-container.component.scss'
 })
 export class UploadContainerComponent {
   readonly fileRead = output<PortableExecutable | undefined>();
