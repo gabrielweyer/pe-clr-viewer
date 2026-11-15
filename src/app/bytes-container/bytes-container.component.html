@@ -1,56 +1,10 @@
 @if (shouldBlurTop()) {
   <div class="byte-container__blur--top"></div>
-}
-@if (!shouldBlurTop()) {
+} @else {
   <span class="offset unit">Offset</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">00</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">01</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">02</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">03</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">04</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">05</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">06</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">07</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">08</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">09</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">0A</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">0B</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">0C</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">0D</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">0E</span>
-}
-@if (!shouldBlurTop()) {
-  <span class="unit">0F</span>
+  @for (column of columns; track column) {
+    <span class="unit">{{column}}</span>
+  }
 }
 @for (hex of bytes(); track hex; let i = $index) {
   @if ((startOffsetDec() + i) % 16 === 0) {
