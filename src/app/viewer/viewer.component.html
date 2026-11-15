@@ -2,18 +2,18 @@
   <div class="bytes-container">
     <div class="container">
       <div class="bytes">
-        <app-bytes-container class="bytes-section" [bytes]="view.bytes" [startOffsetDec]="view.startOffsetDec"></app-bytes-container>
+        <app-bytes-container class="bytes-section" [bytes]="view.bytes" [startOffsetDec]="view.startOffsetDec" />
         @if (view.pe.isManaged) {
-          <app-bytes-container class="bytes-section" [bytes]="view.cliMetadataHeaderBytes" [startOffsetDec]="view.cliMetadataHeaderStartOffsetDec"></app-bytes-container>
+          <app-bytes-container class="bytes-section" [bytes]="view.cliMetadataHeaderBytes" [startOffsetDec]="view.cliMetadataHeaderStartOffsetDec" />
         }
         @if (view.pe.isManaged && !view.pe.is64Bit) {
-          <app-bytes-container class="bytes-section" [bytes]="view.importTableEntryPointBytes" [startOffsetDec]="view.importTableEntryPointStartOffsetDec"></app-bytes-container>
+          <app-bytes-container class="bytes-section" [bytes]="view.importTableEntryPointBytes" [startOffsetDec]="view.importTableEntryPointStartOffsetDec" />
         }
       </div>
       <div class="bytes-legend">
-        <app-legend-headers [pe]="view.pe"></app-legend-headers>
+        <app-legend-headers [pe]="view.pe" />
       </div>
     </div>
   </div>
-  <app-va-convertor [pe]="view.pe"></app-va-convertor>
+  <app-va-convertor [pe]="view.pe" />
 }

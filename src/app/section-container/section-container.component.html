@@ -1,4 +1,4 @@
 <div class="section-container" [class.collapsed]="!isExpanded()">
   <a (click)="toggleIsExpanded()" href="javascript:void(0)">{{isExpanded() ? 'Collapse' : 'Expand'}}</a>
-  <ng-content></ng-content>
+  <ng-content />
 </div>
