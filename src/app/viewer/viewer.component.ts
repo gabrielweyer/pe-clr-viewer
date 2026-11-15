@@ -1,104 +1,75 @@
-import { Router, NavigationEnd } from '@angular/router';
 import { HexHelper } from './../../shared/hex-helper';
 import { PortableExecutable } from './../models/portable-executable';
-import { Component, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
-import { PortableExecutableConstants } from '../models/portable-executable-constants';
+import { Component, computed, inject } from '@angular/core';
 import { Byte } from '../models/byte';
 import { StoreService } from '../../shared/store.service';
-import { Subscription } from 'rxjs';
 import { VaConvertorComponent } from '../va-convertor/va-convertor.component';
 import { LegendHeadersComponent } from '../legend-headers/legend-headers.component';
 
 import { BytesContainerComponent } from '../bytes-container/bytes-container.component';
 
+export interface PortableExecutableView {
+  pe: PortableExecutable;
+
+  bytes: Byte[];
+  startOffsetDec: number;
+
+  cliMetadataHeaderBytes: Byte[];
+  cliMetadataHeaderStartOffsetDec: number;
+
+  importTableEntryPointBytes: Byte[];
+  importTableEntryPointStartOffsetDec: number;
+}
+
 @Component({
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
   styleUrl: './viewer.component.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [BytesContainerComponent, LegendHeadersComponent, VaConvertorComponent]
 })
-export class ViewerComponent implements OnDestroy {
-  private readonly router = inject(Router);
+export class ViewerComponent {
   private readonly store = inject(StoreService);
 
-  public pe!: PortableExecutable;
+  public readonly view = computed(() => {
+    const pe = this.store.portableExecutable();
 
-  public bytes: Byte[] = [];
-  public startOffsetDec = 0;
-  public endOffsetDec = 0;
+    return pe === undefined ? undefined : ViewerComponent.toView(pe);
+  });
 
-  public cliMetadataHeaderBytes: Byte[] = [];
-  public cliMetadataHeaderStartOffsetDec = 0;
+  private static toView(pe: PortableExecutable): PortableExecutableView {
+    const startOffsetDec = 0;
 
-  public importTableEntryPointBytes: Byte[] = [];
-  public importTableEntryPointStartOffsetDec = 0;
+    let cliMetadataHeaderBytes: Byte[] = [];
+    let cliMetadataHeaderStartOffsetDec = 0;
+    let importTableEntryPointBytes: Byte[] = [];
+    let importTableEntryPointStartOffsetDec = 0;
 
-  public peConstants = PortableExecutableConstants;
+    let endOffsetDec = pe.relocSectionHeader.endOffsetDec + 48 - 1;
 
-  private readonly navigationSubscription: Subscription;
+    if (pe.isManaged && pe.cliHeader && pe.cliMetadataHeader && pe.clrVersion) {
+      endOffsetDec = pe.cliHeader.endOffsetDec + 48;
 
-  constructor() {
-    this.navigationSubscription = this.router.events.subscribe((e) => {
-      if (e instanceof NavigationEnd) {
-        this.initialise();
-      }
-    });
-  }
+      cliMetadataHeaderStartOffsetDec = HexHelper.getNiceEndOffsetDec(pe.cliMetadataHeader.startOffsetDec - 48);
+      const cliMetadataHeaderEndOffsetDec = HexHelper.getNiceEndOffsetDec(pe.clrVersion.endOffsetDec + 48);
+      cliMetadataHeaderBytes = pe.hexes.slice(cliMetadataHeaderStartOffsetDec, cliMetadataHeaderEndOffsetDec);
 
-  ngOnDestroy() {
-    if (this.navigationSubscription) {
-      this.navigationSubscription.unsubscribe();
-    }
-  }
-
-  private initialise(): void {
-    const pe = this.store.getPortableExecutable();
-    this.setBytes(pe);
-  }
-
-  private setBytes(pe: PortableExecutable | undefined): void {
-    this.bytes = [];
-    this.startOffsetDec = 0;
-    this.cliMetadataHeaderBytes = [];
-    this.cliMetadataHeaderStartOffsetDec = 0;
-    this.importTableEntryPointBytes = [];
-    this.importTableEntryPointStartOffsetDec = 0;
-
-    if (pe === undefined) {
-      return;
-    }
-
-    this.pe = pe;
-
-    let endOffsetDec = this.pe.relocSectionHeader.endOffsetDec + 48 - 1;
-
-    if (this.pe.isManaged && this.pe.cliHeader && this.pe.cliMetadataHeader && this.pe.clrVersion) {
-      endOffsetDec = this.pe.cliHeader.endOffsetDec + 48;
-
-      this.cliMetadataHeaderStartOffsetDec = HexHelper.getNiceEndOffsetDec(
-        this.pe.cliMetadataHeader.startOffsetDec - 48
-      );
-      const cliMetadataHeaderEndOffsetDec = HexHelper.getNiceEndOffsetDec(this.pe.clrVersion.endOffsetDec + 48);
-      this.cliMetadataHeaderBytes = this.pe.hexes.slice(
-        this.cliMetadataHeaderStartOffsetDec,
-        cliMetadataHeaderEndOffsetDec
-      );
-
-      if (!this.pe.is64Bit && this.pe.importTable && this.pe.entryPoint) {
-        this.importTableEntryPointStartOffsetDec = HexHelper.getNiceEndOffsetDec(
-          this.pe.importTable.startOffsetDec - 48
-        );
-        const importTableEntryPointEndOffsetDec = HexHelper.getNiceEndOffsetDec(this.pe.entryPoint.endOffsetDec + 48);
-        this.importTableEntryPointBytes = this.pe.hexes.slice(
-          this.importTableEntryPointStartOffsetDec,
-          importTableEntryPointEndOffsetDec
-        );
+      if (!pe.is64Bit && pe.importTable && pe.entryPoint) {
+        importTableEntryPointStartOffsetDec = HexHelper.getNiceEndOffsetDec(pe.importTable.startOffsetDec - 48);
+        const importTableEntryPointEndOffsetDec = HexHelper.getNiceEndOffsetDec(pe.entryPoint.endOffsetDec + 48);
+        importTableEntryPointBytes = pe.hexes.slice(importTableEntryPointStartOffsetDec, importTableEntryPointEndOffsetDec);
       }
     }
 
-    this.endOffsetDec = HexHelper.getNiceEndOffsetDec(endOffsetDec);
+    const bytes = pe.hexes.slice(startOffsetDec, HexHelper.getNiceEndOffsetDec(endOffsetDec));
 
-    this.bytes = this.pe.hexes.slice(this.startOffsetDec, this.endOffsetDec);
+    return {
+      pe,
+      bytes,
+      startOffsetDec,
+      cliMetadataHeaderBytes,
+      cliMetadataHeaderStartOffsetDec,
+      importTableEntryPointBytes,
+      importTableEntryPointStartOffsetDec
+    };
   }
 }

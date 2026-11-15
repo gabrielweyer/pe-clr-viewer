@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PortableExecutableReader } from '../../shared/portable-executable-reader.service';
 import { PortableExecutable } from '../models/portable-executable';
 import { HexPipe } from '../../shared/hex.pipe';
@@ -10,7 +10,6 @@ import { BytePipe } from '../../shared/byte.pipe';
   selector: 'app-va-convertor',
   templateUrl: './va-convertor.component.html',
   styleUrl: './va-convertor.component.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [BytePipe, LeftPadPipe, HexPipe]
 })
 export class VaConvertorComponent {
