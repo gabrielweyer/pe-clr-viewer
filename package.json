@@ -29,8 +29,8 @@
     "@angular/cli": "21.2.2",
     "@angular/compiler-cli": "21.2.4",
     "@types/jasmine": "5.1.4",
-    "@typescript-eslint/eslint-plugin": "8.33.1",
-    "@typescript-eslint/parser": "8.33.1",
+    "@typescript-eslint/eslint-plugin": "8.72.2",
+    "@typescript-eslint/parser": "8.72.2",
     "angular-eslint": "21.3.0",
     "eslint": "9.28.0",
     "jasmine-core": "5.1.2",
@@ -41,7 +41,7 @@
     "karma-jasmine-html-reporter": "2.1.0",
     "puppeteer": "24.4.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.33.1"
+    "typescript-eslint": "8.72.2"
   },
   "packageManager": "yarn@3.5.0"
 }
