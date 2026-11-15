@@ -6,8 +6,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build-prod": "ng build --configuration production",
-    "test": "ng test --browsers=Chrome --reporters=progress",
-    "test-ci": "ng test --watch=false --reporters=progress --browsers=ChromeHeadlessNoSandbox",
+    "test": "ng test",
+    "test-ci": "ng test --watch=false",
     "lint": "ng lint"
   },
   "private": true,
@@ -28,21 +28,15 @@
     "@angular/build": "22.2.7",
     "@angular/cli": "22.2.7",
     "@angular/compiler-cli": "22.2.6",
-    "@types/jasmine": "5.1.4",
     "@typescript-eslint/eslint-plugin": "8.72.2",
     "@typescript-eslint/parser": "8.72.2",
+    "@vitest/coverage-v8": "^5.0.0",
     "angular-eslint": "22.6.0",
     "eslint": "9.39.5",
-    "istanbul-lib-instrument": "^6.0.3",
-    "jasmine-core": "5.1.2",
-    "jasmine-spec-reporter": "^7.0.0",
-    "karma": "6.4.3",
-    "karma-chrome-launcher": "3.2.0",
-    "karma-jasmine": "^5.1.0",
-    "karma-jasmine-html-reporter": "2.1.0",
-    "puppeteer": "25.17.0",
+    "jsdom": "^31.0.1",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.72.2"
+    "typescript-eslint": "8.72.2",
+    "vitest": "^5.0.0"
   },
   "packageManager": "yarn@3.5.0"
 }

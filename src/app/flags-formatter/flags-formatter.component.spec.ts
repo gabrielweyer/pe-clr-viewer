@@ -26,7 +26,7 @@ describe('FlagsFormatterComponent', () => {
       component.flags = ['only-one'];
       fixture.detectChanges();
       const flagsElement: HTMLElement = fixture.nativeElement;
-      expect(flagsElement.innerText).toBe('only-one');
+      expect(flagsElement.textContent).toBe('only-one');
     });
 
     it ('Then flag uses mono font', () => {
@@ -44,7 +44,7 @@ describe('FlagsFormatterComponent', () => {
       component.flags = ['only-one', 'only-two'];
       fixture.detectChanges();
       const flagsElement: HTMLElement = fixture.nativeElement;
-      expect(flagsElement.innerText).toBe('only-one, only-two');
+      expect(flagsElement.textContent).toBe('only-one, only-two');
     });
   });
 });
